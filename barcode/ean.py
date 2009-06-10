@@ -106,7 +106,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
         EuropeanArticleNumber13.__init__(self, jan, writer)
 
 
-class EuropeanArticleNumber8(Barcode):
+class EuropeanArticleNumber8(EuropeanArticleNumber13):
 
     def __init__(self, ean, writer=None):
         ean = ean[:7]
@@ -123,7 +123,23 @@ class EuropeanArticleNumber8(Barcode):
         sum_ = lambda x, y: int(x) + int(y)
         evensum = reduce(sum_, self.ean[::2])
         oddsum = reduce(sum_, self.ean[1::2])
-        return 10 - ((evensum + oddsum * 3) % 10)
+        return 10 - ((evensum * 3 + oddsum) % 10)
+
+    def build(self):
+        """Builds the barcode pattern from `self.ean`.
+
+        :returns: The pattern as Unicodestring
+        :rtype: Unicode
+        """
+        code = EDGE
+        for i, number in enumerate(self.ean[:4]):
+            code += CODES['A'][int(number)]
+        code += MIDDLE
+        for number in self.ean[6:]:
+            code += CODES['C'][int(number)]
+        code += EDGE
+        return [code]
+
 
 # Shortcuts
 EAN13 = EuropeanArticleNumber13
