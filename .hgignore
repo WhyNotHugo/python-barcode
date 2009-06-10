@@ -1,0 +1,11 @@
+syntax: glob
+*.pyc
+*.bak
+*~
+*.e*
+*.dir*
+*.pdf
+*.svg
+build/*
+dist/*
+
