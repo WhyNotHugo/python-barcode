@@ -31,6 +31,14 @@ class Barcode(object):
     def build(self):
         raise NotImplementedError
 
+    def get_fullcode(self):
+        """Returns the full code, encoded in the barcode.
+
+        :returns: Full human readable code.
+        :rtype: Unicode
+        """
+        raise NotImplementedError
+
     def save(self, filename, **kw):
         """Renders the barcode and saves it in `filename`.
 
@@ -57,7 +65,7 @@ class Barcode(object):
         """
         options = Barcode.default_writer_options.copy()
         if write_text:
-            options['text'] = self.ean
+            options['text'] = self.get_fullcode()
         if writer_options is not None:
             options.update(writer_options)
         self.writer.set_options(**options)

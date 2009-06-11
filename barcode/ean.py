@@ -52,6 +52,9 @@ class EuropeanArticleNumber13(Barcode):
     def __unicode__(self):
         return self.ean
 
+    def get_fullcode(self):
+        return self.ean
+
     def calculate_checksum(self):
         """Calculates the checksum for EAN13-Code.
 
@@ -109,6 +112,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 class EuropeanArticleNumber8(EuropeanArticleNumber13):
 
     def __init__(self, ean, writer=None):
+        """See EuropeanArticleNumber13.__init__ for details."""
         ean = ean[:7]
         if not ean.isdigit():
             raise IllegalCharacterError('Code can only contain numbers.')
@@ -120,6 +124,11 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         self.writer = writer or Barcode.default_writer
 
     def calculate_checksum(self):
+        """Calculates the checksum for EAN13-Code.
+
+        :returns: The checksum for `self.ean`.
+        :rtype: Integer
+        """
         sum_ = lambda x, y: int(x) + int(y)
         evensum = reduce(sum_, self.ean[::2])
         oddsum = reduce(sum_, self.ean[1::2])

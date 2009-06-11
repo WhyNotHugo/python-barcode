@@ -2,6 +2,24 @@
 
 """barcode.isxn
 
+This module provides some special codes, which are no standalone barcodes.
+All codes where transformed to EAN-13 barcodes. In every case, the checksum
+is new calculated.
+
+Example::
+
+    >>> from barcode import get_barcode
+    >>> ISBN = get_barcode('isbn10')
+    >>> isbn = ISBN(u'0132354187')
+    >>> unicode(isbn)
+    u'0132354187'
+    >>> isbn.get_fullcode()
+    u'9780132354189'
+    >>> # Test with wrong checksum
+    >>> isbn = ISBN(u'0132354180')
+    >>> unicode(isbn)
+    u'0132354187'
+
 """
 __docformat__ = 'restructuredtext en'
 
@@ -25,9 +43,9 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         if len(isbn) != 9:
             raise NumberOfDigitsError('ISBN-10 has 9 or 10 digits, not '
                                       '%d.' % len(isbn))
-        isbn += unicode(self._calculate_checksum())
-        InternationalStandardBookNumber13.__init__(self, u'978'+isbn, writer)
         self.isbn10 = isbn
+        self.isbn10 += unicode(self._calculate_checksum())
+        InternationalStandardBookNumber13.__init__(self, u'978'+isbn, writer)
 
     def _calculate_checksum(self):
         tmp = sum([x*int(y) for x, y in enumerate(self.isbn10[:9],
@@ -47,9 +65,9 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
         issn = issn[:7]
         if len(issn) != 7:
             raise NumberOfDigitsError('ISSN has 7 digits, not %d.' % len(issn))
-        issn += unicode(self._calculate_checksum())
-        EuropeanArticleNumber13.__init__(self, self.make_ean(), writer)
         self.issn = issn
+        self.issn += unicode(self._calculate_checksum())
+        EuropeanArticleNumber13.__init__(self, self.make_ean(), writer)
 
     def _calculate_checksum(self):
         tmp = 11 - sum([x*int(y) for x, y in enumerate(reversed(self.issn[:7]),
