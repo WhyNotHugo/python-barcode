@@ -5,6 +5,8 @@
 """
 __docformat__ = 'restructuredtext en'
 
+import codecs
+
 from writer.svg import SVGWriter
 
 
@@ -13,7 +15,7 @@ class Barcode(object):
     default_writer = SVGWriter()
 
     default_writer_options = {
-        'module_width': 0.5,
+        'module_width': 0.2,
         'module_height': 15.0,
         'quiet_zone': 6.5,
         'font_size': 8,

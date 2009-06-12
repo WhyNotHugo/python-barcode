@@ -5,8 +5,6 @@
 """
 __docformat__ = 'restructuredtext en'
 
-import codecs
-
 from base import Barcode
 from errors import *
 
