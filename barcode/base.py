@@ -12,6 +12,8 @@ from writer.svg import SVGWriter
 
 class Barcode(object):
 
+    name = u''
+
     default_writer = SVGWriter()
 
     default_writer_options = {

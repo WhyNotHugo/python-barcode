@@ -10,6 +10,8 @@ from ean import EuropeanArticleNumber13
 
 class UniversalProductCodeA(EuropeanArticleNumber13):
 
+    name = u'UPC A'
+
     def __init__(self, upc, writer=None):
         self.upc = upc
         upc = u'0' + upc

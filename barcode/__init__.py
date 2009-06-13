@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
 
+"""barcode
+
+pyBarcode
+=========
+
+This package provides a simple way to create standard barcodes.
+It needs no external packages to be installed, because the barcodes where
+created as SVG images.
+"""
+__docformat__ = 'restructuredtext en'
+
 from errors import BarcodeNotFoundError
+import codex
 import ean
 import isxn
 import upc
@@ -17,6 +29,7 @@ BARCODE_MAP = {
     'isbn13': isxn.ISBN13,
     'isbn10': isxn.ISBN10,
     'issn': isxn.ISSN,
+    'code39': codex.Code39,
 }
 
 def get_barcode(name, code=None, writer=None):

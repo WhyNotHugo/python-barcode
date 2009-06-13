@@ -8,4 +8,5 @@ syntax: glob
 *.svg
 build/*
 dist/*
+tests/*
 

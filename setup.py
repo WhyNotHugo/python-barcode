@@ -10,7 +10,7 @@ setup(
     name='pyBarcode',
     version='0.1',
     packages=['barcode', 'barcode.writer'],
-    #url='http://www.dieweimanns.de/python',
+    url='http://trac-hg.assembla.com/pybarcode',
     #download_url='',
     license='BSD',
     author='Thorsten Weimann',

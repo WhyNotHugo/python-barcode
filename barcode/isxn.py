@@ -29,7 +29,10 @@ from errors import *
 
 class InternationalStandardBookNumber13(EuropeanArticleNumber13):
 
+    name = u'ISBN-13'
+
     def __init__(self, isbn, writer=None):
+        isbn = isbn.replace(u'-', u'')
         self.isbn13 = isbn
         if isbn[:3] not in (u'978', '979'):
             raise WrongCountryCodeError('ISBN must start with 978 or 979.')
@@ -38,7 +41,10 @@ class InternationalStandardBookNumber13(EuropeanArticleNumber13):
 
 class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
+    name = u'ISBN-10'
+
     def __init__(self, isbn, writer=None):
+        isbn = isbn.replace(u'-', u'')
         isbn = isbn[:9]
         if len(isbn) != 9:
             raise NumberOfDigitsError('ISBN-10 has 9 or 10 digits, not '
@@ -61,7 +67,10 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
 class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
+    name = u'ISSN'
+
     def __init__(self, issn, writer=None):
+        issn = issn.replace(u'-', u'')
         issn = issn[:7]
         if len(issn) != 7:
             raise NumberOfDigitsError('ISSN has 7 digits, not %d.' % len(issn))

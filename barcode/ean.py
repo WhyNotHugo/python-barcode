@@ -28,6 +28,8 @@ LEFT_PATTERN = (u'AAAAAA', u'AABABB', u'AABBAB', u'AABBBA', u'ABAABB',
 
 class EuropeanArticleNumber13(Barcode):
 
+    name = u'EAN-13'
+
     def __init__(self, ean, writer=None):
         """Initializes EAN13 object.
 
@@ -99,6 +101,8 @@ class EuropeanArticleNumber13(Barcode):
 
 class JapanArticleNumber(EuropeanArticleNumber13):
 
+    name = u'JAN'
+
     valid_country_codes = range(450, 460) + range(490, 500)
 
     def __init__(self, jan, writer=None):
@@ -108,6 +112,8 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
 
 class EuropeanArticleNumber8(EuropeanArticleNumber13):
+
+    name = u'EAN-8'
 
     def __init__(self, ean, writer=None):
         """See EuropeanArticleNumber13.__init__ for details."""

@@ -45,6 +45,8 @@ MAP = dict(zip(REF, enumerate(CODES)))
 
 class Code39(Barcode):
 
+    name = u'Code 39'
+
     def __init__(self, code, writer=None, add_checksum=True):
         """Initializes a new Code39 instance.
 
