@@ -1,0 +1,44 @@
+pyBarcode
+=========
+
+This library provides a simple way to create barcodes using only the
+Python standardlib. The barcodes where created as SVG images.
+
+
+Installation
+------------
+
+Unpack the downloaded file, cd into the pyBarcode directory and run
+`python setup.py install`. Or just copy the barcode dir somewhere in
+your PYTHONPATH.
+
+
+Provided Barcodes
+-----------------
+
+EAN-8, EAN-13, UPC-A, JAN, ISBN-10, ISBN-13, ISSN, Code 39, PZN
+
+
+Todo
+----
+
+    - Add documentation
+    - Add more codes
+
+Usage
+-----
+
+    >>> from barcode import get_barcode
+    >>> EAN = get_barcode('ean13')
+    >>> ean = EAN(u'5901234123457')
+    >>> ean.save('ean13_barcode.svg')
+
+Now open ean13_barcode.svg in a graphic app or simply in your browser
+and see the created barcode. That's it.
+
+
+Changelog
+---------
+
+v0.1: First release.
+
