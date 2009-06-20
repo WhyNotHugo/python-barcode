@@ -10,7 +10,7 @@ It needs no external packages to be installed, because the barcodes where
 created as SVG images.
 
 :Author: Thorsten Weimann <thorsten.weimann@gmx.net>
-:Version: 0.1
+:Version: 0.2
 :Date: 2009/06/20
 :License: BSD
 
@@ -18,7 +18,7 @@ created as SVG images.
 __docformat__ = 'restructuredtext en'
 
 __author__ = u'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = u'0.1'
+__version__ = u'0.2'
 __license__ = u'BSD'
 
 

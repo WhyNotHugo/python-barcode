@@ -22,11 +22,11 @@ HTML = u"""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
-        <title>pyBarcode v0.1 Test</title>
+        <title>pyBarcode v0.2 Test</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body>
-        <h1>pyBarcode v0.1 Tests</h1>
+        <h1>pyBarcode v0.2 Tests</h1>
         %s
     </body>
 </html>

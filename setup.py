@@ -8,7 +8,7 @@ from distutils.core import setup
 
 setup(
     name='pyBarcode',
-    version='0.1',
+    version='0.2',
     packages=['barcode', 'barcode.writer'],
     url='http://trac-hg.assembla.com/pybarcode',
     #download_url='',
