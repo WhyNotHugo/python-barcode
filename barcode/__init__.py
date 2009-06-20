@@ -8,8 +8,19 @@ pyBarcode
 This package provides a simple way to create standard barcodes.
 It needs no external packages to be installed, because the barcodes where
 created as SVG images.
+
+:Author: Thorsten Weimann <thorsten.weimann@gmx.net>
+:Version: 0.1
+:Date: 2009/06/20
+:License: BSD
+
 """
 __docformat__ = 'restructuredtext en'
+
+__author__ = u'Thorsten Weimann <thorsten.weimann@gmx.net>'
+__version__ = u'0.1'
+__license__ = u'BSD'
+
 
 from errors import BarcodeNotFoundError
 import codex
@@ -30,6 +41,7 @@ BARCODE_MAP = {
     'isbn10': isxn.ISBN10,
     'issn': isxn.ISSN,
     'code39': codex.Code39,
+    'pzn': codex.PZN,
 }
 
 def get_barcode(name, code=None, writer=None):

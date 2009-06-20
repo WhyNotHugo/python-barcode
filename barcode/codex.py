@@ -94,3 +94,31 @@ class Code39(Barcode):
         if writer_options is not None:
             options.update(writer_options)
         return Barcode.render(self, write_text, options)
+
+
+class PZN(Code39):
+    """German number for pharmaceutical products."""
+
+    name = u'Pharmazentralnummer'
+
+    def __init__(self, pzn, writer=None):
+        pzn = pzn[:6]
+        if not pzn.isdigit():
+            raise IllegalCharacterError('PZN can only contain numbers.')
+        if len(pzn) != 6:
+            raise NumberOfDigitsError('PZN must have 6 digits, not '
+                                      '%d.' % len(pzn))
+        self.pzn = pzn
+        self.pzn += self.calculate_checksum()
+        Code39.__init__(self, u'PZN-%s' % self.pzn, writer, add_checksum=False)
+
+    def get_fullcode(self):
+        return u'PZN-%s' % self.pzn
+
+    def calculate_checksum(self):
+        sum_ = sum([int(x) * int(y) for x, y in enumerate(self.pzn, start=2)])
+        checksum = sum_ % 11
+        if checksum == 10:
+            raise BarcodeError('Checksum can not be 10 for PZN.')
+        else:
+            return unicode(checksum)

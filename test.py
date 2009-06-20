@@ -67,6 +67,14 @@ def test():
     issn = get_barcode('issn', u'1144875X')
     issn.save(os.path.join(TESTPATH, 'issn.svg'))
     objects.append(OBJECTS % {'file': u'issn.svg', 'name': issn.name})
+    # Test Code 39
+    code39 = get_barcode('code39', u'Example Code 39')
+    code39.save(os.path.join(TESTPATH, 'code39.svg'))
+    objects.append(OBJECTS % {'file': u'code39.svg', 'name': code39.name})
+    # Test PZN
+    pzn = get_barcode('pzn', u'487780')
+    pzn.save(os.path.join(TESTPATH, 'pzn.svg'))
+    objects.append(OBJECTS % {'file': u'pzn.svg', 'name': pzn.name})
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, 'w', encoding='utf-8') as f:
         obj = u'\n'.join(objects)
