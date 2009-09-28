@@ -2,7 +2,7 @@
 
 """
 
-Perform some tests with pyBarcode. All created barcodes where saved in the
+Performs some tests with pyBarcode. All created barcodes where saved in the
 tests subdirectory with a tests.html to watch them.
 
 """
@@ -10,6 +10,7 @@ __docformat__ = 'restructuredtext en'
 
 import codecs
 import os
+import webbrowser
 
 from barcode import BARCODE_MAP, get_barcode
 
@@ -22,7 +23,7 @@ HTML = u"""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
-        <title>pyBarcode v0.2 Test</title>
+        <title>pyBarcode v0.2.1 Test</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body>
@@ -83,3 +84,4 @@ def test():
 
 if __name__ == '__main__':
     test()
+    webbrowser.open(HTMLFILE)

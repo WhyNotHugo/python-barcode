@@ -89,11 +89,10 @@ class Code39(Barcode):
         c += EDGE
         return [c]
 
-    def render(self, write_text=True, writer_options=None):
+    def render(self, write_text=True, **writer_options):
         options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
-        if writer_options is not None:
-            options.update(writer_options)
-        return Barcode.render(self, write_text, options)
+        options.update(writer_options)
+        return Barcode.render(self, write_text, **options)
 
 
 class PZN(Code39):

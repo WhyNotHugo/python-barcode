@@ -27,6 +27,7 @@ LEFT_PATTERN = (u'AAAAAA', u'AABABB', u'AABBAB', u'AABBBA', u'ABAABB',
 
 
 class EuropeanArticleNumber13(Barcode):
+    """Represents an EAN-13 barcode."""
 
     name = u'EAN-13'
 
@@ -92,14 +93,14 @@ class EuropeanArticleNumber13(Barcode):
             code[i] = line.replace(u'1', u'|').replace(u'0', u' ')
         return u'\n'.join(code)
 
-    def render(self, write_text=True, writer_options=None):
+    def render(self, write_text=True, **writer_options):
         options = dict(module_width=SIZES['SC2'])
-        if writer_options is not None:
-            options.update(writer_options)
-        return Barcode.render(self, write_text, options)
+        options.update(writer_options)
+        return Barcode.render(self, write_text, **options)
 
 
 class JapanArticleNumber(EuropeanArticleNumber13):
+    """Represents an JAN barcode."""
 
     name = u'JAN'
 
@@ -112,6 +113,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
 
 class EuropeanArticleNumber8(EuropeanArticleNumber13):
+    """Represents an EAN-8 barcode."""
 
     name = u'EAN-8'
 

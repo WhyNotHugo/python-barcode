@@ -56,13 +56,13 @@ class Barcode(object):
         with codecs.open(filename, 'wb', encoding='utf-8') as f:
             f.write(output)
 
-    def render(self, write_text=True, writer_options=None):
+    def render(self, write_text=True, **writer_options):
         """Renders the barcode using `self.writer`.
 
         :parameters:
             write_text : Boolean
                 Write the EAN-Code number under the barcode.
-            writer_options : Dict
+            writer_options : Keyword arguments
                 Options for `self.writer`, see writer docs for details.
 
         :returns: Output of the writers render method.
@@ -70,8 +70,7 @@ class Barcode(object):
         options = Barcode.default_writer_options.copy()
         if write_text:
             options['text'] = self.get_fullcode()
-        if writer_options is not None:
-            options.update(writer_options)
+        options.update(writer_options)
         self.writer.set_options(**options)
         code = self.build()
         return self.writer.render(code)

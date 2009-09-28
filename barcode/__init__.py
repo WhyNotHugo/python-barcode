@@ -10,15 +10,15 @@ It needs no external packages to be installed, because the barcodes where
 created as SVG images.
 
 :Author: Thorsten Weimann <thorsten.weimann@gmx.net>
-:Version: 0.2
-:Date: 2009/06/20
+:Version: 0.2.1
+:Date: 2009/09/28
 :License: BSD
 
 """
 __docformat__ = 'restructuredtext en'
 
 __author__ = u'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = u'0.2'
+__version__ = u'0.2.1'
 __license__ = u'BSD'
 
 
@@ -33,11 +33,13 @@ BARCODE_MAP = {
     'ean8': ean.EAN8,
     'ean13': ean.EAN13,
     'ean': ean.EAN13,
+    'gtin': ean.EAN13,
     'jan': ean.JAN,
     'upc': upc.UPCA,
     'upca': upc.UPCA,
     'isbn': isxn.ISBN13,
     'isbn13': isxn.ISBN13,
+    'gs1': isxn.ISBN13,
     'isbn10': isxn.ISBN10,
     'issn': isxn.ISSN,
     'code39': codex.Code39,
