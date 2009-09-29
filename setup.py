@@ -11,7 +11,7 @@ setup(
     version='0.2.1',
     packages=['barcode', 'barcode.writer'],
     url='http://trac-hg.assembla.com/pybarcode',
-    download_url='http://www.dieweimanns.de/whitie/pyBarcode-0.2.1.tar.gz',
+    #download_url='http://trac-hg.assembla.com/pybarcode',
     license='BSD',
     author='Thorsten Weimann',
     author_email='thorsten.weimann@gmx.net',

@@ -43,12 +43,15 @@ class Barcode(object):
         """
         raise NotImplementedError
 
-    def save(self, filename, **kw):
+    def save(self, filename, compression=False, **kw):
         """Renders the barcode and saves it in `filename`.
 
         :parameters:
             filename : String
-                Filename to save the barcode in.
+                Filename to save the barcode in (without filename extension).
+            compression : Boolean
+                If this is true, the barcode will be saved compressed in the
+                gzip format (extension .svgz instead of .svg).
             kw : Keyword Arguments
                 The same as in `self.render`.
         """
