@@ -56,10 +56,10 @@ class Barcode(object):
         :rtype: String
         """
         extension, output = self.render(**kw)
-        filename = '{0}.{1}'.format(filename.split('.')[0], extension)
-        with codecs.open(filename, 'wb', encoding='utf-8') as f:
+        _filename = '{0}.{1}'.format(filename.split('.')[0], extension)
+        with codecs.open(_filename, 'wb', encoding='utf-8') as f:
             f.write(output)
-        return filename
+        return _filename
 
     def render(self, write_text=True, **writer_options):
         """Renders the barcode using `self.writer`.
