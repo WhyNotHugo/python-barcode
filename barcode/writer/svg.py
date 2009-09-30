@@ -51,6 +51,7 @@ class SVGWriter(BaseWriter):
 
     def __init__(self, **options):
         BaseWriter.__init__(self)
+        self.compress = False
         self.set_options(**options)
         #self._document = DOCUMENT
         self._document = create_svg_object()
@@ -98,7 +99,11 @@ class SVGWriter(BaseWriter):
             ypos += self.font_size / 3.54 + 1
             xpos = xpos / 2.0
             root.appendChild(self._create_text_element(xpos, ypos))
-        return self._document.toprettyxml(encoding='UTF-8')
+        svg = self._document.toprettyxml(encoding='UTF-8')
+        if self.compress:
+            # Do compression
+            return ('svgz', None)
+        return ('svg', svg)
 
 #    def render(self, code):
 #        lines = []
