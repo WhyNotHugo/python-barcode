@@ -26,7 +26,7 @@ finish
 
 Is called::
 
-    callback_finish(rendered_output)
+    return callback_finish() and should return the rendered output
 
 """
 __docformat__ = 'restructuredtext en'
@@ -101,5 +101,22 @@ class BaseWriter(object):
             code : List
                 List of strings matching the writer spec (only contain 0 or 1).
         """
-        # Todo
-        raise NotImplementedError
+        ypos = 1.0
+        for line in code:
+            # Left quiet zone is x startposition
+            xpos = self.quiet_zone
+            for mod in line:
+                if mod == '0':
+                    color = self.background
+                else:
+                    color = self.foreground
+                self.__paint_module(xpos, ypos, self.module_width, color)
+                xpos += self.module_width
+            # Add right quiet zone to every line
+            self.__paint_module(xpos, ypos, self.quiet_zone, self.background)
+            ypos += self.module_height
+        if self.text:
+            ypos += self.font_size / 3.54 + 1
+            xpos = xpos / 2.0
+            self.__paint_text(xpos, ypos)
+        return self.__finish()

@@ -41,7 +41,7 @@ def create_svg_object():
         '-//W3C//DTD SVG 1.1//EN',
         'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'
     )
-    document = imp.createDocument('http://www.w3.org/2000/svg', 'svg', doctype)
+    document = imp.createDocument(None, 'svg', doctype)
     _set_attributes(document.documentElement, version='1.1',
                     xmlns='http://www.w3.org/2000/svg')
     return document
@@ -50,22 +50,24 @@ def create_svg_object():
 class SVGWriter(BaseWriter):
 
     def __init__(self, **options):
-        BaseWriter.__init__(self)
+        BaseWriter.__init__(self, self._create_module, self._create_text,
+                            self._finish)
         self.compress = False
         self.set_options(**options)
         #self._document = DOCUMENT
         self._document = create_svg_object()
+        self._root = self._document.documentElement
 
-    def _create_bar_element(self, xpos, ypos, width, color):
+    def _create_module(self, xpos, ypos, width, color):
         element = self._document.createElement('rect')
         attributes = dict(x=SIZE.format(xpos), y=SIZE.format(ypos),
                           width=SIZE.format(width),
                           height=SIZE.format(self.module_height),
                           style='fill:{0};'.format(color))
         _set_attributes(element, **attributes)
-        return element
+        self._root.appendChild(element)
 
-    def _create_text_element(self, xpos, ypos):
+    def _create_text(self, xpos, ypos):
         element = self._document.createElement('text')
         element.data = self.text
         attributes = dict(x=SIZE.format(xpos), y=SIZE.format(ypos),
@@ -73,38 +75,47 @@ class SVGWriter(BaseWriter):
                                 'middle;'.format(self.foreground,
                                                  self.font_size))
         _set_attributes(element, **attributes)
-        return element
+        self._root.appendChild(element)
 
-    def render(self, code):
-        root = self._document.documentElement
-        ypos = 1.0
-        for line in code:
-            # Left quiet zone is x startposition
-            xpos = self.quiet_zone
-            for mod in line:
-                if mod == '0':
-                    color = self.background
-                else:
-                    color = self.foreground
-                new_child = self._create_bar_element(xpos, ypos,
-                                                     self.module_width, color)
-                root.appendChild(new_child)
-                xpos += self.module_width
-            # Add right quiet zone to every line
-            new_child = self._create_bar_element(xpos, ypos, self.quiet_zone,
-                                                 self.background)
-            root.appendChild(new_child)
-            ypos += self.module_height
-        if self.text:
-            # Todo
-            ypos += self.font_size / 3.54 + 1
-            xpos = xpos / 2.0
-            root.appendChild(self._create_text_element(xpos, ypos))
-        svg = self._document.toprettyxml(encoding='UTF-8')
+    def _finish(self):
         if self.compress:
-            # Do compression
-            return ('svgz', None)
-        return ('svg', svg)
+            svg = self._document.toxml(encoding='UTF-8')
+            # Do compression using gzip
+            return ('svgz', svg)
+        else:
+            svg = self._document.toprettyxml(indent=4*' ', encoding='UTF-8')
+            return ('svg', svg)
+
+    # def render(self, code):
+        # root = self._document.documentElement
+        # ypos = 1.0
+        # for line in code:
+            # # Left quiet zone is x startposition
+            # xpos = self.quiet_zone
+            # for mod in line:
+                # if mod == '0':
+                    # color = self.background
+                # else:
+                    # color = self.foreground
+                # new_child = self._create_bar_element(xpos, ypos,
+                                                     # self.module_width, color)
+                # root.appendChild(new_child)
+                # xpos += self.module_width
+            # # Add right quiet zone to every line
+            # new_child = self._create_bar_element(xpos, ypos, self.quiet_zone,
+                                                 # self.background)
+            # root.appendChild(new_child)
+            # ypos += self.module_height
+        # if self.text:
+            # # Todo
+            # ypos += self.font_size / 3.54 + 1
+            # xpos = xpos / 2.0
+            # root.appendChild(self._create_text_element(xpos, ypos))
+        # svg = self._document.toprettyxml(encoding='UTF-8')
+        # if self.compress:
+            # # Do compression
+            # return ('svgz', None)
+        # return ('svg', svg)
 
 #    def render(self, code):
 #        lines = []
