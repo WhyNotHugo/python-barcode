@@ -96,6 +96,7 @@ class SVGWriter(BaseWriter):
             root.appendChild(new_child)
             ypos += self.module_height
         if self.text:
+            # Todo
             ypos += self.font_size / 3.54 + 1
             xpos = xpos / 2.0
             root.appendChild(self._create_text_element(xpos, ypos))

@@ -10,7 +10,24 @@ Callback specification
 paint_module
 ------------
 
-Todo
+Is called::
+
+    callback_paint_module(xpos, ypos, width, color)
+
+paint_text
+----------
+
+Is called::
+
+    callback_paint_text(xpos, ypos) using self.text as text
+    
+finish
+------
+
+Is called::
+
+    callback_finish(rendered_output)
+
 """
 __docformat__ = 'restructuredtext en'
 
