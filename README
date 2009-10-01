@@ -5,6 +5,13 @@ This library provides a simple way to create barcodes using only the
 Python standardlib. The barcodes where created as SVG images.
 
 
+Requirements
+------------
+
+    - Python 2.6 or above, but not the 3.x series
+    - Program to open SVG images (your browser should do it)
+
+
 Installation
 ------------
 
@@ -28,12 +35,21 @@ Todo
 Usage
 -----
 
-    >>> from barcode import get_barcode
-    >>> EAN = get_barcode('ean13')
-    >>> ean = EAN('5901234123457')
+Interactive::
+
+    >>> import barcode
+    >>> barcode.PROVIDED_BARCODES
+    [u'ean13', u'isbn', u'ean', u'code39', u'pzn', u'gtin', u'gs1', u'jan',
+    u'isbn10', u'isbn13', u'issn', u'upc', u'upca', u'ean8']
+    >>> EAN = barcode.get_barcode('ean13')
+    >>> EAN
+    <class 'barcode.ean.EuropeanArticleNumber13'>
+    >>> ean = EAN(u'5901234123457')
+    >>> ean
+    <barcode.ean.EuropeanArticleNumber13 object at 0x00BE98F0>
     >>> fullname = ean.save('ean13_barcode')
     >>> fullname
-    u'/path/to/code/ean13_barcode.svg'
+    u'ean13_barcode.svg'
 
 Now open ean13_barcode.svg in a graphic app or simply in your browser
 and see the created barcode. That's it.

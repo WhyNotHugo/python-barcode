@@ -45,6 +45,10 @@ BARCODE_MAP = {
     'pzn': codex.PZN,
 }
 
+PROVIDED_BARCODES = BARCODE_MAP.keys()
+PROVIDED_BARCODES.sort()
+
+
 def get_barcode(name, code=None, writer=None):
     try:
         barcode = BARCODE_MAP[name.lower()]
