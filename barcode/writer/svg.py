@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 __docformat__ = 'restructuredtext en'
 
 import xml.dom
+import zlib
 
 from barcode import __version__
 from barcode.writer.writerbase import BaseWriter
@@ -70,8 +71,8 @@ class SVGWriter(BaseWriter):
     def _finish(self):
         if self.compress:
             svg = self._document.toxml(encoding='UTF-8')
-            # Do compression using gzip
-            return ('svgz', svg)
+            svgz = zlib.compress(svg, 9)
+            return ('svgz', svgz)
         else:
             svg = self._document.toprettyxml(indent=4*' ', encoding='UTF-8')
             return ('svg', svg)
