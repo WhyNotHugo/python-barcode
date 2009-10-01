@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 
 """
 
@@ -12,9 +12,10 @@ __docformat__ = 'restructuredtext en'
 
 import codecs
 import os
+import sys
 import webbrowser
 
-from barcode import BARCODE_MAP, get_barcode
+from barcode import BARCODE_MAP, get_barcode, __version__
 
 
 PATH = os.path.dirname(os.path.abspath(__file__))
@@ -25,12 +26,12 @@ HTML = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
-        <title>pyBarcode v0.2.1 Test</title>
+        <title>pyBarcode {version} Test</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body>
-        <h1>pyBarcode v0.2 Tests</h1>
-        %s
+        <h1>pyBarcode {version} Tests</h1>
+        {body}
     </body>
 </html>
 """
@@ -41,6 +42,13 @@ OBJECTS = ('<p><h2>%(name)s</h2><br />\n'
 
 
 def test():
+    if not os.path.isdir(TESTPATH):
+        try:
+            os.mkdir(TESTPATH)
+        except OSError, e:
+            print('Test not run.')
+            print('Error:', e)
+            sys.exit(1)
     objects = []
     # Test EAN-8
     ean8 = get_barcode('ean8', '40267708')
@@ -81,7 +89,7 @@ def test():
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, 'w', encoding='utf-8') as f:
         obj = '\n'.join(objects)
-        f.write(HTML % obj)
+        f.write(HTML.format(version=__version__, body=obj))
 
 
 if __name__ == '__main__':

@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 """
 __docformat__ = 'restructuredtext en'
 
+import os
 import xml.dom
 import zlib
 
@@ -74,5 +75,6 @@ class SVGWriter(BaseWriter):
             svgz = zlib.compress(svg, 9)
             return ('svgz', svgz)
         else:
-            svg = self._document.toprettyxml(indent=4*' ', encoding='UTF-8')
+            svg = self._document.toprettyxml(indent=4*' ', newl=os.linesep,
+                                             encoding='UTF-8')
             return ('svg', svg)
