@@ -12,8 +12,8 @@ It needs no external packages to be installed, because the barcodes where
 created as SVG images.
 
 :Author: Thorsten Weimann <thorsten.weimann@gmx.net>
-:Version: 0.2.1
-:Date: 2009/09/28
+:Version: 0.3b1
+:Date: 2009/10/01
 :License: BSD
 
 """
