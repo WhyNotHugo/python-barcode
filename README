@@ -30,8 +30,10 @@ Usage
 
     >>> from barcode import get_barcode
     >>> EAN = get_barcode('ean13')
-    >>> ean = EAN(u'5901234123457')
-    >>> ean.save('ean13_barcode.svg')
+    >>> ean = EAN('5901234123457')
+    >>> fullname = ean.save('ean13_barcode')
+    >>> fullname
+    u'/path/to/code/ean13_barcode.svg'
 
 Now open ean13_barcode.svg in a graphic app or simply in your browser
 and see the created barcode. That's it.
@@ -39,6 +41,10 @@ and see the created barcode. That's it.
 
 Changelog
 ---------
+
+v0.3b1: Writer API has changed for simple adding new (own) writers.
+        SVG output is now generated with xml.dom module instead of
+        stringformatting (makes it more robust).
 
 v0.2.1: API of render changed. Now render takes keyword arguments
         instead of a dict.
