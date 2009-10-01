@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 """barcode.ean
 
 """
@@ -12,31 +14,31 @@ from errors import *
 # EAN13 Specs (all sizes in mm)
 SIZES = dict(SC0=0.27, SC1=0.297, SC2=0.33, SC3=0.363, SC4=0.396, SC5=0.445,
              SC6=0.495, SC7=0.544, SC8=0.61, SC9=0.66)
-EDGE = u'101'
-MIDDLE = u'01010'
+EDGE = '101'
+MIDDLE = '01010'
 CODES = {
-    'A': (u'0001101', u'0011001', u'0010011', u'0111101', u'0100011',
-          u'0110001', u'0101111', u'0111011', u'0110111', u'0001011'),
-    'B': (u'0100111', u'0110011', u'0011011', u'0100001', u'0011101',
-          u'0111001', u'0000101', u'0010001', u'0001001', u'0010111'),
-    'C': (u'1110010', u'1100110', u'1101100', u'1000010', u'1011100',
-          u'1001110', u'1010000', u'1000100', u'1001000', u'1110100'),
+    'A': ('0001101', '0011001', '0010011', '0111101', '0100011',
+          '0110001', '0101111', '0111011', '0110111', '0001011'),
+    'B': ('0100111', '0110011', '0011011', '0100001', '0011101',
+          '0111001', '0000101', '0010001', '0001001', '0010111'),
+    'C': ('1110010', '1100110', '1101100', '1000010', '1011100',
+          '1001110', '1010000', '1000100', '1001000', '1110100'),
 }
-LEFT_PATTERN = (u'AAAAAA', u'AABABB', u'AABBAB', u'AABBBA', u'ABAABB',
-                u'ABBAAB', u'ABBBAA', u'ABABAB', u'ABABBA', u'ABBABA')
+LEFT_PATTERN = ('AAAAAA', 'AABABB', 'AABBAB', 'AABBBA', 'ABAABB',
+                'ABBAAB', 'ABBBAA', 'ABABAB', 'ABABBA', 'ABBABA')
 
 
 class EuropeanArticleNumber13(Barcode):
     """Represents an EAN-13 barcode."""
 
-    name = u'EAN-13'
+    name = 'EAN-13'
 
     def __init__(self, ean, writer=None):
         """Initializes EAN13 object.
 
         :parameters:
-            ean : Unicode
-                The ean number as Unicodestring.
+            ean : String
+                The ean number as string.
             writer : barcode.writer Instance
                 The writer to render the barcode (default: SVGWriter).
         """
@@ -45,9 +47,9 @@ class EuropeanArticleNumber13(Barcode):
             raise IllegalCharacterError('Code can only contain numbers.')
         if len(ean) != 12:
             raise NumberOfDigitsError('EAN-Code must have 12 digits, not '
-                                      '%d.' % len(ean))
+                                      '{0}.'.format(len(ean)))
         self.ean = ean
-        self.ean += unicode(self.calculate_checksum())
+        self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer
 
     def __unicode__(self):
@@ -70,8 +72,8 @@ class EuropeanArticleNumber13(Barcode):
     def build(self):
         """Builds the barcode pattern from `self.ean`.
 
-        :returns: The pattern as Unicodestring
-        :rtype: Unicode
+        :returns: The pattern as string
+        :rtype: String
         """
         code = EDGE
         pattern = LEFT_PATTERN[int(self.ean[0])]
@@ -86,12 +88,12 @@ class EuropeanArticleNumber13(Barcode):
     def to_ascii(self):
         """Returns an ascii representation of the barcode.
 
-        :rtype: Unicode
+        :rtype: String
         """
         code = self.build()
         for i, line in enumerate(code):
-            code[i] = line.replace(u'1', u'|').replace(u'0', u' ')
-        return u'\n'.join(code)
+            code[i] = line.replace('1', '|').replace('0', ' ')
+        return '\n'.join(code)
 
     def render(self, write_text=True, **writer_options):
         options = dict(module_width=SIZES['SC2'])
@@ -102,7 +104,7 @@ class EuropeanArticleNumber13(Barcode):
 class JapanArticleNumber(EuropeanArticleNumber13):
     """Represents an JAN barcode."""
 
-    name = u'JAN'
+    name = 'JAN'
 
     valid_country_codes = range(450, 460) + range(490, 500)
 
@@ -115,7 +117,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 class EuropeanArticleNumber8(EuropeanArticleNumber13):
     """Represents an EAN-8 barcode."""
 
-    name = u'EAN-8'
+    name = 'EAN-8'
 
     def __init__(self, ean, writer=None):
         """See EuropeanArticleNumber13.__init__ for details."""
@@ -124,7 +126,7 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
             raise IllegalCharacterError('Code can only contain numbers.')
         if len(ean) != 7:
             raise NumberOfDigitsError('EAN-8 must have 7 digits, not '
-                                      '%d.' % len(ean))
+                                      '{0}.'.format(len(ean)))
         self.ean = ean
         self.ean += unicode(self.calculate_checksum())
         self.writer = writer or Barcode.default_writer
@@ -143,8 +145,8 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
     def build(self):
         """Builds the barcode pattern from `self.ean`.
 
-        :returns: The pattern as Unicodestring
-        :rtype: Unicode
+        :returns: The pattern as string
+        :rtype: String
         """
         code = EDGE
         for i, number in enumerate(self.ean[:4]):

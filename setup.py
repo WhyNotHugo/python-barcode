@@ -8,11 +8,11 @@ from distutils.core import setup
 
 setup(
     name='pyBarcode',
-    version='0.2.1',
+    version=barcode.__version__,
     packages=['barcode', 'barcode.writer'],
     url='http://trac-hg.assembla.com/pybarcode',
     #download_url='http://trac-hg.assembla.com/pybarcode',
-    license='BSD',
+    license=barcode.__license__,
     author='Thorsten Weimann',
     author_email='thorsten.weimann@gmx.net',
     description=('Create standard barcodes with Python and save them as SVG. '

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 """barcode.isxn
 
 This module provides some special codes, which are no standalone barcodes.
@@ -10,13 +12,13 @@ Example::
 
     >>> from barcode import get_barcode
     >>> ISBN = get_barcode('isbn10')
-    >>> isbn = ISBN(u'0132354187')
+    >>> isbn = ISBN('0132354187')
     >>> unicode(isbn)
     u'0132354187'
     >>> isbn.get_fullcode()
     u'9780132354189'
     >>> # Test with wrong checksum
-    >>> isbn = ISBN(u'0132354180')
+    >>> isbn = ISBN('0132354180')
     >>> unicode(isbn)
     u'0132354187'
 
@@ -29,35 +31,35 @@ from errors import *
 
 class InternationalStandardBookNumber13(EuropeanArticleNumber13):
 
-    name = u'ISBN-13'
+    name = 'ISBN-13'
 
     def __init__(self, isbn, writer=None):
-        isbn = isbn.replace(u'-', u'')
+        isbn = isbn.replace('-', '')
         self.isbn13 = isbn
-        if isbn[:3] not in (u'978', '979'):
+        if isbn[:3] not in ('978', '979'):
             raise WrongCountryCodeError('ISBN must start with 978 or 979.')
         EuropeanArticleNumber13.__init__(self, isbn, writer)
 
 
 class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
-    name = u'ISBN-10'
+    name = 'ISBN-10'
 
     def __init__(self, isbn, writer=None):
-        isbn = isbn.replace(u'-', u'')
+        isbn = isbn.replace('-', '')
         isbn = isbn[:9]
         if len(isbn) != 9:
             raise NumberOfDigitsError('ISBN-10 has 9 or 10 digits, not '
-                                      '%d.' % len(isbn))
+                                      '{0}.'.format(len(isbn)))
         self.isbn10 = isbn
-        self.isbn10 += unicode(self._calculate_checksum())
-        InternationalStandardBookNumber13.__init__(self, u'978'+isbn, writer)
+        self.isbn10 = '{0}{1}'.format(isbn, self._calculate_checksum())
+        InternationalStandardBookNumber13.__init__(self, '978'+isbn, writer)
 
     def _calculate_checksum(self):
         tmp = sum([x*int(y) for x, y in enumerate(self.isbn10[:9],
                                                   start=1)]) % 11
         if tmp == 10:
-            return u'X'
+            return 'X'
         else:
             return tmp
 
@@ -67,27 +69,28 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
 class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
-    name = u'ISSN'
+    name = 'ISSN'
 
     def __init__(self, issn, writer=None):
-        issn = issn.replace(u'-', u'')
+        issn = issn.replace('-', '')
         issn = issn[:7]
         if len(issn) != 7:
-            raise NumberOfDigitsError('ISSN has 7 digits, not %d.' % len(issn))
+            raise NumberOfDigitsError('ISSN has 7 digits, not {0}.'.format(
+                                                                len(issn)))
         self.issn = issn
-        self.issn += unicode(self._calculate_checksum())
+        self.issn = '{0}{1}'.format(issn, self._calculate_checksum())
         EuropeanArticleNumber13.__init__(self, self.make_ean(), writer)
 
     def _calculate_checksum(self):
         tmp = 11 - sum([x*int(y) for x, y in enumerate(reversed(self.issn[:7]),
                                                        start=2)]) % 11
         if tmp == 10:
-            return u'X'
+            return 'X'
         else:
             return tmp
 
     def make_ean(self):
-        return u'977%s00%s' % (self.issn[:7], self._calculate_checksum())
+        return '977{0}00{1}'.format(self.issn[:7], self._calculate_checksum())
 
     def __unicode__(self):
         return self.issn

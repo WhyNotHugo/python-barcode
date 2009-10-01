@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 """barcode.codex
 
 """
@@ -14,30 +16,30 @@ from errors import *
 # Code stuff
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 2.54
-REF = (tuple([unicode(x) for x in string.digits + string.ascii_uppercase]) +
-       (u'-', u'.', u' ', u'$', u'/', u'+', u'%'))
-B = u'1'
-E = u'0'
+REF = (tuple([x for x in string.digits + string.ascii_uppercase]) +
+       ('-', '.', ' ', '$', '/', '+', '%'))
+B = '1'
+E = '0'
 CODES = (
-    u'101000111011101', u'111010001010111', u'101110001010111',
-    u'111011100010101', u'101000111010111', u'111010001110101',
-    u'101110001110101', u'101000101110111', u'111010001011101',
-    u'101110001011101', u'111010100010111', u'101110100010111',
-    u'111011101000101', u'101011100010111', u'111010111000101',
-    u'101110111000101', u'101010001110111', u'111010100011101',
-    u'101110100011101', u'101011100011101', u'111010101000111',
-    u'101110101000111', u'111011101010001', u'101011101000111',
-    u'111010111010001', u'101110111010001', u'101010111000111',
-    u'111010101110001', u'101110101110001', u'101011101110001',
-    u'111000101010111', u'100011101010111', u'111000111010101',
-    u'100010111010111', u'111000101110101', u'100011101110101',
-    u'100010101110111', u'111000101011101', u'100011101011101',
-    u'100010001000101', u'100010001010001', u'100010100010001',
-    u'101000100010001',
+    '101000111011101', '111010001010111', '101110001010111',
+    '111011100010101', '101000111010111', '111010001110101',
+    '101110001110101', '101000101110111', '111010001011101',
+    '101110001011101', '111010100010111', '101110100010111',
+    '111011101000101', '101011100010111', '111010111000101',
+    '101110111000101', '101010001110111', '111010100011101',
+    '101110100011101', '101011100011101', '111010101000111',
+    '101110101000111', '111011101010001', '101011101000111',
+    '111010111010001', '101110111010001', '101010111000111',
+    '111010101110001', '101110101110001', '101011101110001',
+    '111000101010111', '100011101010111', '111000111010101',
+    '100010111010111', '111000101110101', '100011101110101',
+    '100010101110111', '111000101011101', '100011101011101',
+    '100010001000101', '100010001010001', '100010100010001',
+    '101000100010001',
 )
 
-EDGE = u'100010111011101'
-MIDDLE = u'0'
+EDGE = '100010111011101'
+MIDDLE = '0'
 
 # MAP for assigning every symbol (REF) to (reference number, barcode)
 MAP = dict(zip(REF, enumerate(CODES)))
@@ -45,13 +47,13 @@ MAP = dict(zip(REF, enumerate(CODES)))
 
 class Code39(Barcode):
 
-    name = u'Code 39'
+    name = 'Code 39'
 
     def __init__(self, code, writer=None, add_checksum=True):
         """Initializes a new Code39 instance.
 
         :parameters:
-            code : Unicode
+            code : String
                 Code39 string without \* and checksum (added automatically if
                 `add_checksum` is True).
             writer : barcode.writer Instance
@@ -62,8 +64,8 @@ class Code39(Barcode):
         code = code.upper()
         for char in code:
             if char not in REF:
-                raise IllegalCharacterError('Character "%s" not valid for '
-                                            'Code 39.' % char)
+                raise IllegalCharacterError('Character {0!r} not valid for '
+                                            'Code 39.'.format(char))
         self.code = code
         if add_checksum:
             self.code += self.calculate_checksum()
@@ -98,7 +100,7 @@ class Code39(Barcode):
 class PZN(Code39):
     """German number for pharmaceutical products."""
 
-    name = u'Pharmazentralnummer'
+    name = 'Pharmazentralnummer'
 
     def __init__(self, pzn, writer=None):
         pzn = pzn[:6]
@@ -106,13 +108,14 @@ class PZN(Code39):
             raise IllegalCharacterError('PZN can only contain numbers.')
         if len(pzn) != 6:
             raise NumberOfDigitsError('PZN must have 6 digits, not '
-                                      '%d.' % len(pzn))
+                                      '{0}.'.format(len(pzn)))
         self.pzn = pzn
-        self.pzn += self.calculate_checksum()
-        Code39.__init__(self, u'PZN-%s' % self.pzn, writer, add_checksum=False)
+        self.pzn = '{0}{1}'.format(pzn, self.calculate_checksum())
+        Code39.__init__(self, 'PZN-{0}'.format(self.pzn), writer,
+                        add_checksum=False)
 
     def get_fullcode(self):
-        return u'PZN-%s' % self.pzn
+        return 'PZN-{0}'.format(self.pzn)
 
     def calculate_checksum(self):
         sum_ = sum([int(x) * int(y) for x, y in enumerate(self.pzn, start=2)])
@@ -120,4 +123,4 @@ class PZN(Code39):
         if checksum == 10:
             raise BarcodeError('Checksum can not be 10 for PZN.')
         else:
-            return unicode(checksum)
+            return checksum

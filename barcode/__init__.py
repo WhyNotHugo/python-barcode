@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 """barcode
 
 pyBarcode
@@ -17,9 +19,9 @@ created as SVG images.
 """
 __docformat__ = 'restructuredtext en'
 
-__author__ = u'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = u'0.2.1'
-__license__ = u'BSD'
+__author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
+__version__ = '0.2.1'
+__license__ = 'BSD'
 
 
 from errors import BarcodeNotFoundError
@@ -50,8 +52,8 @@ def get_barcode(name, code=None, writer=None):
     try:
         barcode = BARCODE_MAP[name.lower()]
     except KeyError:
-        raise BarcodeNotFoundError('The barcode "%s" you requested is not '
-                                   'known.' % name.lower())
+        raise BarcodeNotFoundError('The barcode {0!r} you requested is not '
+                                   'known.'.format(name.lower()))
     if code is not None:
         return barcode(code, writer)
     else:

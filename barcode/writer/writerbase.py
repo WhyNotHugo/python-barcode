@@ -20,7 +20,7 @@ paint_text
 Is called::
 
     callback_paint_text(xpos, ypos) using self.text as text
-    
+
 finish
 ------
 
@@ -39,7 +39,7 @@ class BaseWriter(object):
         """Initializes the basic writer options. Childclasses can add more
         attributes and can set them directly or using
         `self.set_options(option=value)`.
-        
+
         :parameters:
             paint_module : Function
                 Callback for painting one barcode module.
@@ -63,7 +63,7 @@ class BaseWriter(object):
     def register_callback(self, action, callback):
         """Register one of the two callbacks if not given at instance
         creation.
-        
+
         :parameters:
             action : String
                 Can be 'module', 'text' or 'finish'.
@@ -76,7 +76,7 @@ class BaseWriter(object):
             self.__paint_text = callback
         elif action == 'finish':
             self.__finish = callback
-            
+
     def set_options(self, **options):
         """Sets the given keyword arguments as instance attributes (only if
         they are known).
@@ -95,8 +95,9 @@ class BaseWriter(object):
 
     def render(self, code):
         """Renders the barcode to whatever the inheriting writer provides.
-        Calls `self.__paint_module()` and `self.__paint_text`.
-        
+        Calls `self.__paint_module()`, `self.__paint_text` and
+        `self.__finish` callbacks.
+
         :parameters:
             code : List
                 List of strings matching the writer spec (only contain 0 or 1).

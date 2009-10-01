@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 """barcode.base
 
 """
@@ -12,7 +14,7 @@ from writer.svg import SVGWriter
 
 class Barcode(object):
 
-    name = u''
+    name = ''
 
     default_writer = SVGWriter()
 
@@ -23,13 +25,13 @@ class Barcode(object):
         'font_size': 8,
         'background': 'white',
         'foreground': 'black',
-        'text': u'',
+        'text': '',
     }
 
     def to_ascii(self):
         code = self.build()
         for i, line in enumerate(code):
-            code[i] = line.replace(u'1', u'X').replace(u'0', u' ')
+            code[i] = line.replace('1', 'X').replace('0', ' ')
         return '\n'.join(code)
 
     def build(self):
@@ -39,7 +41,7 @@ class Barcode(object):
         """Returns the full code, encoded in the barcode.
 
         :returns: Full human readable code.
-        :rtype: Unicode
+        :rtype: String
         """
         raise NotImplementedError
 
