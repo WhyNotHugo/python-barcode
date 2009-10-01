@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
 
 import xml.dom
 
-from writerbase import BaseWriter
+from barcode.writer.writerbase import BaseWriter
 
 
 SIZE = '{0:.3f}mm'

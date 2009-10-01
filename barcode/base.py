@@ -9,7 +9,7 @@ __docformat__ = 'restructuredtext en'
 
 import codecs
 
-from writer.svg import SVGWriter
+from barcode.writer.svg import SVGWriter
 
 
 class Barcode(object):
@@ -18,14 +18,16 @@ class Barcode(object):
 
     default_writer = SVGWriter()
 
+    # str() function is only a workaround for the unicode_literals
+    # Error: TypeError: set_options() keywords must be strings
     default_writer_options = {
-        'module_width': 0.2,
-        'module_height': 15.0,
-        'quiet_zone': 6.5,
-        'font_size': 8,
-        'background': 'white',
-        'foreground': 'black',
-        'text': '',
+        str('module_width'): 0.2,
+        str('module_height'): 15.0,
+        str('quiet_zone'): 6.5,
+        str('font_size'): 8,
+        str('background'): 'white',
+        str('foreground'): 'black',
+        str('text'): '',
     }
 
     def to_ascii(self):
@@ -76,7 +78,7 @@ class Barcode(object):
         """
         options = Barcode.default_writer_options.copy()
         if write_text:
-            options['text'] = self.get_fullcode()
+            options[str('text')] = self.get_fullcode()
         options.update(writer_options)
         self.writer.set_options(**options)
         code = self.build()

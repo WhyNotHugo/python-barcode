@@ -7,8 +7,8 @@ from __future__ import unicode_literals
 """
 __docformat__ = 'restructuredtext en'
 
-from base import Barcode
-from errors import *
+from barcode.base import Barcode
+from barcode.errors import *
 
 
 # EAN13 Specs (all sizes in mm)
@@ -128,7 +128,7 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
             raise NumberOfDigitsError('EAN-8 must have 7 digits, not '
                                       '{0}.'.format(len(ean)))
         self.ean = ean
-        self.ean += unicode(self.calculate_checksum())
+        self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer
 
     def calculate_checksum(self):

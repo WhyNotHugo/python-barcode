@@ -9,8 +9,8 @@ __docformat__ = 'restructuredtext en'
 
 import string
 
-from base import Barcode
-from errors import *
+from barcode.base import Barcode
+from barcode.errors import *
 
 
 # Code stuff

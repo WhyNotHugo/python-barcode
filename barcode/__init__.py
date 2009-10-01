@@ -24,11 +24,8 @@ __version__ = '0.2.1'
 __license__ = 'BSD'
 
 
-from errors import BarcodeNotFoundError
-import codex
-import ean
-import isxn
-import upc
+from barcode.errors import BarcodeNotFoundError
+from barcode import codex, ean, isxn, upc
 
 
 BARCODE_MAP = {

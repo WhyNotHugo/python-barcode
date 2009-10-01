@@ -25,8 +25,8 @@ Example::
 """
 __docformat__ = 'restructuredtext en'
 
-from ean import EuropeanArticleNumber13
-from errors import *
+from barcode.ean import EuropeanArticleNumber13
+from barcode.errors import *
 
 
 class InternationalStandardBookNumber13(EuropeanArticleNumber13):

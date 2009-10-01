@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 """
 __docformat__ = 'restructuredtext en'
 
-from ean import EuropeanArticleNumber13
+from barcode.ean import EuropeanArticleNumber13
 
 
 class UniversalProductCodeA(EuropeanArticleNumber13):
