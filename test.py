@@ -15,7 +15,7 @@ import os
 import sys
 import webbrowser
 
-from barcode import BARCODE_MAP, get_barcode, __version__
+from barcode import get_barcode, __version__
 
 
 PATH = os.path.dirname(os.path.abspath(__file__))
@@ -40,6 +40,18 @@ OBJECTS = ('<p><h2>{name}</h2><br />\n'
            '<object data="{filename}" type="image/svg+xml">\n'
            '<param name="src" value="{filename}" /></object></p>')
 
+TESTCODES = (
+    ('ean8', '40267708'),
+    ('ean13', '5901234123457'),
+    ('upca', '36000291452'),
+    ('jan', '4901234567894'),
+    ('isbn10', '3-12-517154-7'),
+    ('isbn13', '978-3-16-148410-0'),
+    ('issn', '1144875X'),
+    ('code39', 'Example Code 39'),
+    ('pzn', '487780'),
+)
+
 
 def test():
     if not os.path.isdir(TESTPATH):
@@ -51,42 +63,10 @@ def test():
             sys.exit(1)
     objects = []
     append = lambda x, y: objects.append(OBJECTS.format(filename=x, name=y))
-    # Test EAN-8
-    ean8 = get_barcode('ean8', '40267708')
-    name = ean8.save(os.path.join(TESTPATH, 'ean8'))
-    append(name, ean8.name)
-    # Test EAN-13
-    ean13 = get_barcode('ean13', '5901234123457')
-    name = ean13.save(os.path.join(TESTPATH, 'ean13'))
-    append(name, ean13.name)
-    # Test UPC-A
-    upca = get_barcode('upca', '36000291452')
-    name = upca.save(os.path.join(TESTPATH, 'upca'))
-    append(name, upca.name)
-    # Test JAN
-    jan = get_barcode('jan', '4901234567894')
-    name = jan.save(os.path.join(TESTPATH, 'jan.svg'))
-    append(name, jan.name)
-    # Test ISBN-10
-    isbn10 = get_barcode('isbn10', '3-12-517154-7')
-    name = isbn10.save(os.path.join(TESTPATH, 'isbn10'))
-    append(name, isbn10.name)
-    # Test ISBN-13
-    isbn13 = get_barcode('isbn13', '978-3-16-148410-0')
-    name = isbn13.save(os.path.join(TESTPATH, 'isbn13'))
-    append(name, isbn13.name)
-    # Test ISSN
-    issn = get_barcode('issn', '1144875X')
-    name = issn.save(os.path.join(TESTPATH, 'issn'))
-    append(name, issn.name)
-    # Test Code 39
-    code39 = get_barcode('code39', 'Example Code 39')
-    name = code39.save(os.path.join(TESTPATH, 'code39'))
-    append(name, code39.name)
-    # Test PZN
-    pzn = get_barcode('pzn', '487780')
-    name = pzn.save(os.path.join(TESTPATH, 'pzn'))
-    append(name, pzn.name)
+    for codename, code in TESTCODES:
+        bcode = get_barcode(codename, code)
+        filename = bcode.save(os.path.join(TESTPATH, codename))
+        append(filename, bcode.name)
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, 'w', encoding='utf-8') as f:
         obj = '\n'.join(objects)
