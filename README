@@ -4,6 +4,8 @@ pyBarcode
 This library provides a simple way to create barcodes using only the
 Python standardlib. The barcodes where created as SVG images.
 
+Report bugs at http://trac-hg.assembla.com/pybarcode
+
 
 Requirements
 ------------
@@ -39,8 +41,8 @@ Interactive::
 
     >>> import barcode
     >>> barcode.PROVIDED_BARCODES
-    [u'ean13', u'isbn', u'ean', u'code39', u'pzn', u'gtin', u'gs1', u'jan',
-    u'isbn10', u'isbn13', u'issn', u'upc', u'upca', u'ean8']
+    [u'code39', u'ean', u'ean13', u'ean8', u'gs1', u'gtin', u'isbn', u'isbn10',
+     u'isbn13', u'issn', u'jan', u'pzn', u'upc', u'upca']
     >>> EAN = barcode.get_barcode('ean13')
     >>> EAN
     <class 'barcode.ean.EuropeanArticleNumber13'>
