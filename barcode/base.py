@@ -16,7 +16,7 @@ class Barcode(object):
 
     name = ''
 
-    default_writer = SVGWriter()
+    default_writer = SVGWriter
 
     # str() function is only a workaround for the unicode_literals
     # Error: TypeError: set_options() keywords must be strings

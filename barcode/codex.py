@@ -69,7 +69,7 @@ class Code39(Barcode):
         self.code = code
         if add_checksum:
             self.code += self.calculate_checksum()
-        self.writer = writer or Barcode.default_writer
+        self.writer = writer or Barcode.default_writer()
 
     def __unicode__(self):
         return self.code

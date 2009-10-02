@@ -50,7 +50,7 @@ class EuropeanArticleNumber13(Barcode):
                                       '{0}.'.format(len(ean)))
         self.ean = ean
         self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
-        self.writer = writer or Barcode.default_writer
+        self.writer = writer or Barcode.default_writer()
 
     def __unicode__(self):
         return self.ean
@@ -129,7 +129,7 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
                                       '{0}.'.format(len(ean)))
         self.ean = ean
         self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
-        self.writer = writer or Barcode.default_writer
+        self.writer = writer or Barcode.default_writer()
 
     def calculate_checksum(self):
         """Calculates the checksum for EAN13-Code.
