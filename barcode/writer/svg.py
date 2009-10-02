@@ -13,7 +13,7 @@ import os
 import xml.dom
 
 from barcode import __version__
-from barcode.writer.writerbase import BaseWriter
+from barcode.writer import BaseWriter
 
 
 SIZE = '{0:.3f}mm'
