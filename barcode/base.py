@@ -59,10 +59,8 @@ class Barcode(object):
         :returns: The full filename with extension.
         :rtype: String
         """
-        extension, output = self.render(**kw)
-        _filename = '{0}.{1}'.format(filename.split('.')[0], extension)
-        with codecs.open(_filename, 'wb', encoding='utf-8') as f:
-            f.write(output)
+        output = self.render(**kw)
+        _filename = self.writer.save(filename, output)
         return _filename
 
     def render(self, write_text=True, **writer_options):

@@ -58,6 +58,8 @@ and see the created barcode. That's it.
 Changelog
 ---------
 
+v0.3: Compression for SVG output now works.
+
 v0.3b1: Writer API has changed for simple adding new (own) writers.
         SVG output is now generated with xml.dom module instead of
         stringformatting (makes it more robust).

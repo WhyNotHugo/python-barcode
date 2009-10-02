@@ -60,6 +60,20 @@ class BaseWriter(object):
         self.foreground = 'black'
         self.text = ''
 
+    def save(self, filename, output):
+        """Saves the rendered output to `filename`.
+
+        :parameters:
+            filename : String
+                Filename without extension.
+            output : String
+                The rendered output.
+
+        :returns: The full filename with extension.
+        :rtype: String
+        """
+        raise NotImplementedError
+
     def register_callback(self, action, callback):
         """Register one of the two callbacks if not given at instance
         creation.

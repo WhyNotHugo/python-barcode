@@ -7,9 +7,10 @@ from __future__ import unicode_literals
 """
 __docformat__ = 'restructuredtext en'
 
+import codecs
+import gzip
 import os
 import xml.dom
-import zlib
 
 from barcode import __version__
 from barcode.writer.writerbase import BaseWriter
@@ -44,7 +45,6 @@ class SVGWriter(BaseWriter):
                             self._finish)
         self.compress = False
         self.set_options(**options)
-        #self._document = DOCUMENT
         self._document = create_svg_object()
         self._root = self._document.documentElement
         self._root.appendChild(self._document.createComment(COMMENT))
@@ -71,10 +71,19 @@ class SVGWriter(BaseWriter):
 
     def _finish(self):
         if self.compress:
-            svg = self._document.toxml(encoding='UTF-8')
-            svgz = zlib.compress(svg, 9)
-            return ('svgz', svgz)
+            return self._document.toxml(encoding='UTF-8')
         else:
-            svg = self._document.toprettyxml(indent=4*' ', newl=os.linesep,
-                                             encoding='UTF-8')
-            return ('svg', svg)
+            return self._document.toprettyxml(indent=4*' ', newl=os.linesep,
+                                              encoding='UTF-8')
+
+    def save(self, filename, output):
+        if self.compress:
+            _filename = '{0}.svgz'.format(filename)
+            f = gzip.open(_filename, 'wb')
+            f.write(output)
+            f.close()
+        else:
+            _filename = '{0}.svg'.format(filename)
+            with codecs.open(_filename, 'w', 'utf-8') as f:
+                f.write(output)
+        return _filename
