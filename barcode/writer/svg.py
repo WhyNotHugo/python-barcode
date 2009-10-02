@@ -65,8 +65,8 @@ class SVGWriter(BaseWriter):
                                 'middle;'.format(self.foreground,
                                                  self.font_size))
         _set_attributes(element, **attributes)
-        data = self._document.createTextNode(self.text)
-        element.appendChild(data)
+        text_element = self._document.createTextNode(self.text)
+        element.appendChild(text_element)
         self._root.appendChild(element)
 
     def _finish(self):
