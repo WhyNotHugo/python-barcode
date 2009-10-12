@@ -15,7 +15,7 @@ __docformat__ = 'restructuredtext en'
 
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
 __version__ = '0.3'
-__license__ = 'BSD'
+__license__ = 'MIT'
 
 
 from barcode.errors import BarcodeNotFoundError
