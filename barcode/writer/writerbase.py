@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 """barcode.writer.writerbase
 
-Callback specification
+Callback spezification
 ======================
 
 paint_module
@@ -75,7 +75,7 @@ class BaseWriter(object):
         raise NotImplementedError
 
     def register_callback(self, action, callback):
-        """Register one of the two callbacks if not given at instance
+        """Register one of the three callbacks if not given at instance
         creation.
 
         :parameters:
@@ -135,3 +135,4 @@ class BaseWriter(object):
             xpos = xpos / 2.0
             self.__paint_text(xpos, ypos)
         return self.__finish()
+
