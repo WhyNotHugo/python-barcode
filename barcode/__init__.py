@@ -14,7 +14,7 @@ created as SVG images.
 __docformat__ = 'restructuredtext en'
 
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = '0.3'
+__version__ = '0.3.1'
 __license__ = 'MIT'
 
 
@@ -56,3 +56,8 @@ def get_barcode(name, code=None, writer=None):
         return barcode(code, writer)
     else:
         return barcode
+
+
+def get_barcode_class(name):
+    return get_barcode(name)
+
