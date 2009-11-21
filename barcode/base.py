@@ -52,7 +52,8 @@ class Barcode(object):
 
         :parameters:
             filename : String
-                Filename to save the barcode in (without filename extension).
+                Filename to save the barcode in (without filename
+                extension).
             kw : Keyword Arguments
                 The same as in `self.render`.
 

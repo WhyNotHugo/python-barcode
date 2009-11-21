@@ -14,7 +14,7 @@ created as SVG images.
 __docformat__ = 'restructuredtext en'
 
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = '0.3.1'
+__version__ = '0.4b1'
 __license__ = 'MIT'
 
 
