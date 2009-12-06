@@ -92,13 +92,13 @@ class BaseWriter(object):
             self.__finish = callback
 
     def set_options(self, **options):
-        """Sets the given keyword arguments as instance attributes (only if
-        they are known).
+        """Sets the given keyword arguments as instance attributes (only
+        if they are known).
 
         :parameters:
             options : Keyword arguments
-                All known instance attributes and more if the childclass has
-                defined them before this call.
+                All known instance attributes and more if the childclass
+                has defined them before this call.
 
         :rtype: None
         """
@@ -114,7 +114,8 @@ class BaseWriter(object):
 
         :parameters:
             code : List
-                List of strings matching the writer spec (only contain 0 or 1).
+                List of strings matching the writer spec
+                (only contain 0 or 1).
         """
         ypos = 1.0
         for line in code:
@@ -128,7 +129,8 @@ class BaseWriter(object):
                 self.__paint_module(xpos, ypos, self.module_width, color)
                 xpos += self.module_width
             # Add right quiet zone to every line
-            self.__paint_module(xpos, ypos, self.quiet_zone, self.background)
+            self.__paint_module(xpos, ypos, self.quiet_zone,
+                                self.background)
             ypos += self.module_height
         if self.text:
             ypos += self.font_size / 3.54 + 1
