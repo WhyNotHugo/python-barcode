@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 """barcode.base
 
 """
-__docformat__ = 'restructuredtext en'
 
 import codecs
 

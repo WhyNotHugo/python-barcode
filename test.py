@@ -15,7 +15,8 @@ import os
 import sys
 import webbrowser
 
-from barcode import get_barcode, __version__
+from barcode import get_barcode, get_barcode_class, __version__
+from barcode.writer.image import ImageWriter
 
 
 PATH = os.path.dirname(os.path.abspath(__file__))
@@ -38,7 +39,10 @@ HTML = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 
 OBJECTS = ('<p><h2>{name}</h2><br />\n'
            '<object data="{filename}" type="image/svg+xml">\n'
-           '<param name="src" value="{filename}" /></object></p>')
+           '<param name="src" value="{filename}" /></object>')
+
+IMAGES = ('<h3>As PNG-Image</h3><br />\n'
+          '<img src="{filename}" alt="{name}" /></p>\n')
 
 TESTCODES = (
     ('ean8', '40267708'),
@@ -63,10 +67,15 @@ def test():
             sys.exit(1)
     objects = []
     append = lambda x, y: objects.append(OBJECTS.format(filename=x, name=y))
+    append_img = lambda x, y: objects.append(IMAGES.format(filename=x, name=y))
     for codename, code in TESTCODES:
         bcode = get_barcode(codename, code)
         filename = bcode.save(os.path.join(TESTPATH, codename))
         append(filename, bcode.name)
+        bcodec = get_barcode_class(codename)
+        bcode = bcodec(code, writer=ImageWriter())
+        filename = bcode.save(os.path.join(TESTPATH, codename))
+        append_img(filename, bcode.name)
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, 'w', encoding='utf-8') as f:
         obj = '\n'.join(objects)

@@ -3,6 +3,7 @@ syntax: glob
 *.bak
 *~
 *.e*
+*.rope*
 *.dir*
 *.pdf
 *.kpf

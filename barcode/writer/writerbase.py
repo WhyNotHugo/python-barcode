@@ -7,6 +7,13 @@ from __future__ import unicode_literals
 Callback spezification
 ======================
 
+initialize
+----------
+
+Is called::
+
+    callback_initialize(raw_code)
+
 paint_module
 ------------
 
@@ -29,18 +36,24 @@ Is called::
     return callback_finish() and should return the rendered output
 
 """
-__docformat__ = 'restructuredtext en'
+
+
+def mm2px(mm, dpi=300):
+    return (mm * dpi) / 25.4
 
 
 class BaseWriter(object):
     """Baseclass for all writers."""
 
-    def __init__(self, paint_module=None, paint_text=None, finish=None):
+    def __init__(self, initialize=None, paint_module=None, paint_text=None,
+                 finish=None):
         """Initializes the basic writer options. Childclasses can add more
         attributes and can set them directly or using
         `self.set_options(option=value)`.
 
         :parameters:
+            initialize : Function
+                Callback for initializing the inheriting writer.
             paint_module : Function
                 Callback for painting one barcode module.
             paint_text : Function
@@ -49,6 +62,7 @@ class BaseWriter(object):
                 Callback for doing something with the completely rendered
                 output.
         """
+        self.__initialize = initialize
         self.__paint_module = paint_module
         self.__paint_text = paint_text
         self.__finish = finish
@@ -59,6 +73,26 @@ class BaseWriter(object):
         self.background = 'white'
         self.foreground = 'black'
         self.text = ''
+
+    def calculate_size(self, modules_per_line, number_of_lines, dpi=300):
+        """Calculates the size of the barcode in pixel.
+
+        :parameters:
+            modules_per_line : Integer
+                Number of mudules in one line.
+            number_of_lines : Integer
+                Number of lines of the barcode.
+            dpi : Integer
+                DPI to calculate.
+
+        :returns: Width and height of the barcode in pixel.
+        :rtype: Tuple
+        """
+        width = 2 * self.quiet_zone + modules_per_line * self.module_width
+        height = 1.0 + self.module_height * number_of_lines
+        if self.text:
+            height += self.font_size + self.font_size / 3.54 + 1
+        return int(mm2px(width, dpi)), int(mm2px(height, dpi))
 
     def save(self, filename, output):
         """Saves the rendered output to `filename`.
@@ -84,7 +118,9 @@ class BaseWriter(object):
             callback : Function
                 The callback function for the given action.
         """
-        if action == 'module':
+        if action == 'initialize':
+            self.__initialize = callback
+        elif action == 'module':
             self.__paint_module = callback
         elif action == 'text':
             self.__paint_text = callback
@@ -109,14 +145,16 @@ class BaseWriter(object):
 
     def render(self, code):
         """Renders the barcode to whatever the inheriting writer provides.
-        Calls `self.__paint_module()`, `self.__paint_text` and
-        `self.__finish` callbacks.
+        Calls `self.__initialize`, `self.__paint_module`,
+        `self.__paint_text` and `self.__finish` callbacks.
 
         :parameters:
             code : List
                 List of strings matching the writer spec
                 (only contain 0 or 1).
         """
+        if self.__initialize is not None:
+            self.__initialize(code)
         ypos = 1.0
         for line in code:
             # Left quiet zone is x startposition
@@ -132,7 +170,7 @@ class BaseWriter(object):
             self.__paint_module(xpos, ypos, self.quiet_zone,
                                 self.background)
             ypos += self.module_height
-        if self.text:
+        if self.text and self.__paint_text is not None:
             ypos += self.font_size / 3.54 + 1
             xpos = xpos / 2.0
             self.__paint_text(xpos, ypos)

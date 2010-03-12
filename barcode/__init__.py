@@ -11,7 +11,6 @@ This package provides a simple way to create standard barcodes.
 It needs no external packages to be installed, because the barcodes where
 created as SVG images.
 """
-__docformat__ = 'restructuredtext en'
 
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
 __version__ = '0.4b1'

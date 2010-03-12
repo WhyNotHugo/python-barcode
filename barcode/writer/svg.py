@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 """barcode.writer.svg
 
 """
-__docformat__ = 'restructuredtext en'
 
 import codecs
 import gzip
@@ -13,7 +12,7 @@ import os
 import xml.dom
 
 from barcode import __version__
-from barcode.writer import BaseWriter
+from .writerbase import BaseWriter
 
 
 SIZE = '{0:.3f}mm'
@@ -41,10 +40,14 @@ def create_svg_object():
 class SVGWriter(BaseWriter):
 
     def __init__(self, **options):
-        BaseWriter.__init__(self, self._create_module, self._create_text,
-                            self._finish)
+        BaseWriter.__init__(self, self._init, self._create_module,
+                            self._create_text, self._finish)
         self.compress = False
         self.set_options(**options)
+        self._document = None
+        self._root = None
+
+    def _init(self, code):
         self._document = create_svg_object()
         self._root = self._document.documentElement
         self._root.appendChild(self._document.createComment(COMMENT))

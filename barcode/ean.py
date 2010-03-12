@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 """barcode.ean
 
 """
-__docformat__ = 'restructuredtext en'
 
 from barcode.base import Barcode
 from barcode.errors import *
