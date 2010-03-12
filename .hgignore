@@ -9,4 +9,5 @@ syntax: glob
 build/*
 dist/*
 tests/*
+docs/_build/*
 
