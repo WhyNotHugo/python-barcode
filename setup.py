@@ -10,7 +10,7 @@ setup(
     name='pyBarcode',
     version=barcode.__version__,
     packages=['barcode', 'barcode.writer'],
-    package_data={'barcode.writer': ['barcode/writer/*.ttf']},
+    package_data={'barcode': ['writer/*.ttf']},
     url='http://bitbucket.org/whitie/pybarcode/',
     #download_url='http://bitbucket.org/whitie/pybarcode/',
     license=barcode.__license__,
