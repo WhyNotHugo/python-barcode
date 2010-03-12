@@ -52,13 +52,21 @@ Interactive::
     >>> fullname = ean.save('ean13_barcode')
     >>> fullname
     u'ean13_barcode.svg'
+    # Example with PNG
+    >>> from barcode.writer.image import ImageWriter
+    >>> ean = EAN(u'5901234123457', writer=ImageWriter())
+    >>> fullname = ean.save('ean13_barcode')
+    u'ean13_barcode.png'
 
-Now open ean13_barcode.svg in a graphic app or simply in your browser
+Now open ean13_barcode.[svg|png] in a graphic app or simply in your browser
 and see the created barcode. That's it.
 
 
 Changelog
 ---------
+
+v0.4b1: Support for rendering barcodes as images is implemented.
+        PIL is required to use it.
 
 v0.3: Compression for SVG output now works.
 
