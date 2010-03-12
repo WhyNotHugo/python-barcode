@@ -1,0 +1,12 @@
+README
+setup.py
+barcode/__init__.py
+barcode/base.py
+barcode/codex.py
+barcode/ean.py
+barcode/errors.py
+barcode/isxn.py
+barcode/upc.py
+barcode/writer/__init__.py
+barcode/writer/svg.py
+barcode/writer/writerbase.py

@@ -5,9 +5,12 @@ syntax: glob
 *.e*
 *.dir*
 *.pdf
+*.kpf
 *.svg
 build/*
 dist/*
 tests/*
 docs/_build/*
+MANIFEST
+
 
