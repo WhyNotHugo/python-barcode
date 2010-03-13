@@ -31,6 +31,7 @@ class ImageWriter(BaseWriter):
                             self._paint_text, self._finish)
         self.format = 'PNG'
         self.dpi = 300
+        self.font_size = 14
         self.set_options(**options)
         self._image = None
 
@@ -46,9 +47,9 @@ class ImageWriter(BaseWriter):
         self._draw.rectangle(size, outline=color, fill=color)
 
     def _paint_text(self, xpos, ypos):
-        size = (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi))
+        pos = (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi))
         font = ImageFont.truetype(FONT, self.font_size)
-        self._draw.text(size, self.text, font=font, fill=self.foreground)
+        self._draw.text(pos, self.text, font=font, fill=self.foreground)
 
     def _finish(self):
         return self._image
