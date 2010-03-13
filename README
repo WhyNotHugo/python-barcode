@@ -65,6 +65,10 @@ and see the created barcode. That's it.
 Changelog
 ---------
 
+v0.4b2: Basic documentation included. The barcode object now has a new
+        attribute called `raw` to have the rendered output without saving
+        to disk.
+
 v0.4b1: Support for rendering barcodes as images is implemented.
         PIL is required to use it.
 
