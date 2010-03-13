@@ -15,6 +15,8 @@ class Barcode(object):
 
     name = ''
 
+    raw = None
+
     default_writer = SVGWriter
 
     # str() function is only a workaround for the unicode_literals
@@ -80,4 +82,5 @@ class Barcode(object):
         options.update(writer_options)
         self.writer.set_options(**options)
         code = self.build()
-        return self.writer.render(code)
+        raw = Barcode.raw = self.writer.render(code)
+        return raw

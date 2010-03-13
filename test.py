@@ -16,7 +16,10 @@ import sys
 import webbrowser
 
 from barcode import get_barcode, get_barcode_class, __version__
-from barcode.writer.image import ImageWriter
+try:
+    from barcode.writer.image import ImageWriter
+except ImportError:
+    ImageWriter = None
 
 
 PATH = os.path.dirname(os.path.abspath(__file__))
@@ -43,6 +46,8 @@ OBJECTS = ('<p><h2>{name}</h2><br />\n'
 
 IMAGES = ('<h3>As PNG-Image</h3><br />\n'
           '<img src="{filename}" alt="{name}" /></p>\n')
+
+NO_PIL = '<h3>PIL was not found. No PNG-Image created.</h3></p>\n'
 
 TESTCODES = (
     ('ean8', '40267708'),
@@ -72,10 +77,13 @@ def test():
         bcode = get_barcode(codename, code)
         filename = bcode.save(os.path.join(TESTPATH, codename))
         append(filename, bcode.name)
-        bcodec = get_barcode_class(codename)
-        bcode = bcodec(code, writer=ImageWriter())
-        filename = bcode.save(os.path.join(TESTPATH, codename))
-        append_img(filename, bcode.name)
+        if ImageWriter is not None:
+            bcodec = get_barcode_class(codename)
+            bcode = bcodec(code, writer=ImageWriter())
+            filename = bcode.save(os.path.join(TESTPATH, codename))
+            append_img(filename, bcode.name)
+        else:
+            objects.append(NO_PIL)
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, 'w', encoding='utf-8') as f:
         obj = '\n'.join(objects)
