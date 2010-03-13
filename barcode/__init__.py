@@ -8,12 +8,13 @@ pyBarcode
 =========
 
 This package provides a simple way to create standard barcodes.
-It needs no external packages to be installed, because the barcodes where
+It needs no external packages to be installed, the barcodes are
 created as SVG images.
 """
 
+__project__ = 'pyBarcode'
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = '0.4b1'
+__version__ = '0.4b2'
 __license__ = 'MIT'
 
 

@@ -7,7 +7,7 @@ from distutils.core import setup
 
 
 setup(
-    name='pyBarcode',
+    name=barcode.__project__,
     version=barcode.__version__,
     packages=['barcode', 'barcode.writer'],
     package_data={'barcode': ['writer/*.ttf']},
