@@ -65,6 +65,11 @@ and see the created barcode. That's it.
 Changelog
 ---------
 
+v0.4: Removed **options from writers __init__ method. These options never
+      had effect. They were always overwritten by default_options.
+      New config option available: text_distance (the distance between
+      barcode and text).
+
 v0.4b2: Basic documentation included. The barcode object now has a new
         attribute called `raw` to have the rendered output without saving
         to disk.
