@@ -26,14 +26,13 @@ FONT = os.path.join(PATH, 'DejaVuSansMono.ttf')
 
 class ImageWriter(BaseWriter):
 
-    def __init__(self, **options):
+    def __init__(self):
         BaseWriter.__init__(self, self._init, self._paint_module,
                             self._paint_text, self._finish)
         self.format = 'PNG'
         self.dpi = 300
-        self.font_size = 14
-        self.set_options(**options)
         self._image = None
+        self._draw = None
 
     def _init(self, code):
         size = self.calculate_size(len(code[0]), len(code), self.dpi)

@@ -25,7 +25,8 @@ class Barcode(object):
         str('module_width'): 0.2,
         str('module_height'): 15.0,
         str('quiet_zone'): 6.5,
-        str('font_size'): 8,
+        str('font_size'): 10,
+        str('text_distance'): 5,
         str('background'): 'white',
         str('foreground'): 'black',
         str('text'): '',
@@ -70,7 +71,7 @@ class Barcode(object):
 
         :parameters:
             write_text : Boolean
-                Write the EAN-Code number under the barcode.
+                Write the Code under the barcode.
             writer_options : Keyword arguments
                 Options for `self.writer`, see writer docs for details.
 

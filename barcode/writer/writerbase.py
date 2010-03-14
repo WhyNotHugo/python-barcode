@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 
 """
 
@@ -71,6 +71,7 @@ class BaseWriter(object):
         self.background = 'white'
         self.foreground = 'black'
         self.text = ''
+        self.text_distance = 5
 
     def calculate_size(self, modules_per_line, number_of_lines, dpi=300):
         """Calculates the size of the barcode in pixel.
@@ -89,7 +90,7 @@ class BaseWriter(object):
         width = 2 * self.quiet_zone + modules_per_line * self.module_width
         height = 1.0 + self.module_height * number_of_lines
         if self.text:
-            height += self.font_size + self.font_size / 3.54 + 1
+            height += self.font_size + self.text_distance
         return int(mm2px(width, dpi)), int(mm2px(height, dpi))
 
     def save(self, filename, output):
@@ -143,6 +144,7 @@ class BaseWriter(object):
                 List of strings matching the writer spec
                 (only contain 0 or 1).
         """
+        print(self.font_size)
         if self._callbacks['initialize'] is not None:
             self._callbacks['initialize'](code)
         ypos = 1.0
@@ -162,7 +164,7 @@ class BaseWriter(object):
                                             self.background)
             ypos += self.module_height
         if self.text and self._callbacks['paint_text'] is not None:
-            ypos += self.font_size / 3.54 + 1
+            ypos += self.text_distance
             xpos = xpos / 2.0
             self._callbacks['paint_text'](xpos, ypos)
         return self._callbacks['finish']()

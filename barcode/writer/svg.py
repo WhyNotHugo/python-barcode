@@ -39,11 +39,10 @@ def create_svg_object():
 
 class SVGWriter(BaseWriter):
 
-    def __init__(self, **options):
+    def __init__(self):
         BaseWriter.__init__(self, self._init, self._create_module,
                             self._create_text, self._finish)
         self.compress = False
-        self.set_options(**options)
         self._document = None
         self._root = None
 
