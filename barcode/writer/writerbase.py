@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals
 
 """
 
@@ -144,7 +144,6 @@ class BaseWriter(object):
                 List of strings matching the writer spec
                 (only contain 0 or 1).
         """
-        print(self.font_size)
         if self._callbacks['initialize'] is not None:
             self._callbacks['initialize'](code)
         ypos = 1.0

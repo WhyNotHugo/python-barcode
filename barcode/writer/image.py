@@ -2,10 +2,8 @@
 
 from __future__ import unicode_literals, print_function
 
-"""barcode.writer.image
-
+"""
 Needs PIL (Python Imaging Library) to be installed.
-
 """
 
 import os

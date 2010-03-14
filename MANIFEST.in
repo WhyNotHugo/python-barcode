@@ -1,4 +1,5 @@
 include barcode/writer/DejaVuSansMono.ttf
+include test.py
 recursive-include docs *.rst *.py make.bat Makefile
 include docs/_static/*
 include docs/_templates/*
