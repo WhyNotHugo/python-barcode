@@ -2,9 +2,9 @@
 
 from __future__ import unicode_literals
 
-"""barcode.writer.writerbase
+"""
 
-Callback spezification
+Callback specification
 ======================
 
 initialize
@@ -62,10 +62,8 @@ class BaseWriter(object):
                 Callback for doing something with the completely rendered
                 output.
         """
-        self.__initialize = initialize
-        self.__paint_module = paint_module
-        self.__paint_text = paint_text
-        self.__finish = finish
+        self._callbacks = dict(initialize=initialize, paint_module=paint_module,
+                               paint_text=paint_text, finish=finish)
         self.module_width = 10
         self.module_height = 10
         self.font_size = 10
@@ -114,18 +112,11 @@ class BaseWriter(object):
 
         :parameters:
             action : String
-                Can be 'module', 'text' or 'finish'.
+                One of 'initialize', 'paint_module', 'paint_text', 'finish'.
             callback : Function
                 The callback function for the given action.
         """
-        if action == 'initialize':
-            self.__initialize = callback
-        elif action == 'module':
-            self.__paint_module = callback
-        elif action == 'text':
-            self.__paint_text = callback
-        elif action == 'finish':
-            self.__finish = callback
+        self._callbacks[action] = callback
 
     def set_options(self, **options):
         """Sets the given keyword arguments as instance attributes (only
@@ -144,17 +135,16 @@ class BaseWriter(object):
                 setattr(self, key, val)
 
     def render(self, code):
-        """Renders the barcode to whatever the inheriting writer provides.
-        Calls `self.__initialize`, `self.__paint_module`,
-        `self.__paint_text` and `self.__finish` callbacks.
+        """Renders the barcode to whatever the inheriting writer provides,
+        using the registered callbacks.
 
         :parameters:
             code : List
                 List of strings matching the writer spec
                 (only contain 0 or 1).
         """
-        if self.__initialize is not None:
-            self.__initialize(code)
+        if self._callbacks['initialize'] is not None:
+            self._callbacks['initialize'](code)
         ypos = 1.0
         for line in code:
             # Left quiet zone is x startposition
@@ -164,15 +154,16 @@ class BaseWriter(object):
                     color = self.background
                 else:
                     color = self.foreground
-                self.__paint_module(xpos, ypos, self.module_width, color)
+                self._callbacks['paint_module'](xpos, ypos, self.module_width,
+                                                color)
                 xpos += self.module_width
             # Add right quiet zone to every line
-            self.__paint_module(xpos, ypos, self.quiet_zone,
-                                self.background)
+            self._callbacks['paint_module'](xpos, ypos, self.quiet_zone,
+                                            self.background)
             ypos += self.module_height
-        if self.text and self.__paint_text is not None:
+        if self.text and self._callbacks['paint_text'] is not None:
             ypos += self.font_size / 3.54 + 1
             xpos = xpos / 2.0
-            self.__paint_text(xpos, ypos)
-        return self.__finish()
+            self._callbacks['paint_text'](xpos, ypos)
+        return self._callbacks['finish']()
 

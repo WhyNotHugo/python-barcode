@@ -2,19 +2,22 @@
 
 from __future__ import unicode_literals
 
-"""barcode
+"""
 
 pyBarcode
 =========
 
 This package provides a simple way to create standard barcodes.
 It needs no external packages to be installed, the barcodes are
-created as SVG images.
+created as SVG objects. If PIL (Python Imaging Library) is
+installed, the barcodes can also be rendered as images (all
+formats which are supported by PIL).
 """
 
 __project__ = 'pyBarcode'
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = '0.4b2'
+__version__ = '0.4'
+__release__ = '0.4'
 __license__ = 'MIT'
 
 
