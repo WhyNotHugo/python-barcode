@@ -1,5 +1,57 @@
+.. index:: writer, writer_options
+
 pyBarcode Writer
 ================
+
+Common Writer Options
+---------------------
+
+All writer take the following options (specified as keyword arguments
+to `Barcode.save(filename, option=value)` or set via
+`Writer.set_options(option=value)`).
+
+.. note::
+   See the documentation of the specific writer for special options,
+   only available for this writer.
+
+Common Options:
+~~~~~~~~~~~~~~~
+
+:module_width:
+    The width of one barcode module in mm as *float*.
+    Defaults to **0.2**.
+
+:module_height:
+    The height of the barcode modules in mm as *float*.
+    Defaults to **15.0**.
+
+:quiet_zone:
+    Distance on the left and on the right from the border to the first
+    (last) barcode module in mm as *float*.
+    Defaults to **6.5**.
+
+:font_size:
+    Font size of the text under the barcode in pt as *integer*.
+    Defaults to **10**.
+
+:text_distance:
+    Distance between the barcode and the text under it in mm as *float*.
+    Defaults to **5.0**.
+
+:background:
+    The background color of the created barcode as *string*.
+    Defaults to **white**.
+
+:foreground:
+    The foreground and text color of the created barcode as *string*.
+    Defaults to **black**.
+
+.. note::
+   Some barcode classes change the above defaults to fit in some kind
+   of specification.
+
+Writers
+-------
 
 .. toctree::
 

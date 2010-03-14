@@ -26,7 +26,7 @@ class Barcode(object):
         str('module_height'): 15.0,
         str('quiet_zone'): 6.5,
         str('font_size'): 10,
-        str('text_distance'): 5,
+        str('text_distance'): 5.0,
         str('background'): 'white',
         str('foreground'): 'black',
         str('text'): '',

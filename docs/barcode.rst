@@ -1,7 +1,17 @@
 Introduction
 ============
 
-Text
+This package was created to have barcodes available without having
+PIL_ (Python Imaging Library) installed. As of version 0.4b1 PIL
+is also supported for creating barcodes.
+
+All you need to create a barcode is to know the system (EAN, UPC, ...)
+and the code (e.g. for EAN-13: 123456789102). As you see, you do not
+need the checksum, it will be calculated automatically. In some systems
+(Code 39) the checksum is optional, there you can give the `add_checksum`
+keyword argument (default is True).
+
+.. _PIL: http://www.pythonware.com/products/pil
 
 Creating barcodes as SVG
 ------------------------
