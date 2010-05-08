@@ -102,13 +102,15 @@ class PZN(Code39):
 
     name = 'Pharmazentralnummer'
 
+    digits = 6
+
     def __init__(self, pzn, writer=None):
-        pzn = pzn[:6]
+        pzn = pzn[:self.digits]
         if not pzn.isdigit():
             raise IllegalCharacterError('PZN can only contain numbers.')
-        if len(pzn) != 6:
-            raise NumberOfDigitsError('PZN must have 6 digits, not '
-                                      '{0}.'.format(len(pzn)))
+        if len(pzn) != self.digits:
+            raise NumberOfDigitsError('PZN must have {0} digits, not '
+                                      '{1}.'.format(self.digits, len(pzn)))
         self.pzn = pzn
         self.pzn = '{0}{1}'.format(pzn, self.calculate_checksum())
         Code39.__init__(self, 'PZN-{0}'.format(self.pzn), writer,

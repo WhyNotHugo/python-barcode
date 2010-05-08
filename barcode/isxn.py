@@ -45,12 +45,11 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
     name = 'ISBN-10'
 
+    digits = 9
+
     def __init__(self, isbn, writer=None):
         isbn = isbn.replace('-', '')
-        isbn = isbn[:9]
-        if len(isbn) != 9:
-            raise NumberOfDigitsError('ISBN-10 has 9 or 10 digits, not '
-                                      '{0}.'.format(len(isbn)))
+        isbn = isbn[:self.digits]
         self.isbn10 = isbn
         self.isbn10 = '{0}{1}'.format(isbn, self._calculate_checksum())
         InternationalStandardBookNumber13.__init__(self, '978'+isbn, writer)
@@ -71,12 +70,11 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
     name = 'ISSN'
 
+    digits = 7
+
     def __init__(self, issn, writer=None):
         issn = issn.replace('-', '')
-        issn = issn[:7]
-        if len(issn) != 7:
-            raise NumberOfDigitsError('ISSN has 7 digits, not {0}.'.format(
-                                                                len(issn)))
+        issn = issn[:self.digits]
         self.issn = issn
         self.issn = '{0}{1}'.format(issn, self._calculate_checksum())
         EuropeanArticleNumber13.__init__(self, self.make_ean(), writer)

@@ -32,6 +32,8 @@ class EuropeanArticleNumber13(Barcode):
 
     name = 'EAN-13'
 
+    digits = 12
+
     def __init__(self, ean, writer=None):
         """Initializes EAN13 object.
 
@@ -41,12 +43,12 @@ class EuropeanArticleNumber13(Barcode):
             writer : barcode.writer Instance
                 The writer to render the barcode (default: SVGWriter).
         """
-        ean = ean[:12]
+        ean = ean[:self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError('Code can only contain numbers.')
-        if len(ean) != 12:
-            raise NumberOfDigitsError('EAN-Code must have 12 digits, not '
-                                      '{0}.'.format(len(ean)))
+        if len(ean) != self.digits:
+            raise NumberOfDigitsError('EAN-Code must have {0} digits, not '
+                                      '{1}.'.format(self.digits, len(ean)))
         self.ean = ean
         self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
@@ -74,7 +76,7 @@ class EuropeanArticleNumber13(Barcode):
         :returns: The pattern as string
         :rtype: String
         """
-        code = EDGE
+        code = EDGE[:]
         pattern = LEFT_PATTERN[int(self.ean[0])]
         for i, number in enumerate(self.ean[:6]):
             code += CODES[pattern[i]][int(number)]
@@ -118,20 +120,23 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
 
     name = 'EAN-8'
 
+    digits = 7
+
     def __init__(self, ean, writer=None):
         """See EuropeanArticleNumber13.__init__ for details."""
-        ean = ean[:7]
-        if not ean.isdigit():
-            raise IllegalCharacterError('Code can only contain numbers.')
-        if len(ean) != 7:
-            raise NumberOfDigitsError('EAN-8 must have 7 digits, not '
-                                      '{0}.'.format(len(ean)))
-        self.ean = ean
-        self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
-        self.writer = writer or Barcode.default_writer()
+        EuropeanArticleNumber13.__init__(self, ean, writer)
+#        ean = ean[:7]
+#        if not ean.isdigit():
+#            raise IllegalCharacterError('Code can only contain numbers.')
+#        if len(ean) != 7:
+#            raise NumberOfDigitsError('EAN-8 must have 7 digits, not '
+#                                      '{0}.'.format(len(ean)))
+#        self.ean = ean
+#        self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
+#        self.writer = writer or Barcode.default_writer()
 
     def calculate_checksum(self):
-        """Calculates the checksum for EAN13-Code.
+        """Calculates the checksum for EAN8-Code.
 
         :returns: The checksum for `self.ean`.
         :rtype: Integer
@@ -147,11 +152,11 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         :returns: The pattern as string
         :rtype: String
         """
-        code = EDGE
-        for i, number in enumerate(self.ean[:4]):
+        code = EDGE[:]
+        for number in self.ean[:4]:
             code += CODES['A'][int(number)]
         code += MIDDLE
-        for number in self.ean[6:]:
+        for number in self.ean[4:]:
             code += CODES['C'][int(number)]
         code += EDGE
         return [code]

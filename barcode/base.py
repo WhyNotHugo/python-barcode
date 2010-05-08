@@ -17,6 +17,8 @@ class Barcode(object):
 
     raw = None
 
+    digits = 0
+
     default_writer = SVGWriter
 
     # str() function is only a workaround for the unicode_literals
