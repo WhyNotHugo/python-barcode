@@ -65,6 +65,9 @@ and see the created barcode. That's it.
 Changelog
 ---------
 
+v0.4.1: Bugfix release. Removed redundancy in input validation.
+        EAN8 was broken. It now works as expected.
+
 v0.4: Removed **options from writers __init__ method. These options never
       had effect. They were always overwritten by default_options.
       New config option available: text_distance (the distance between
