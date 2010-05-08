@@ -125,15 +125,6 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
     def __init__(self, ean, writer=None):
         """See EuropeanArticleNumber13.__init__ for details."""
         EuropeanArticleNumber13.__init__(self, ean, writer)
-#        ean = ean[:7]
-#        if not ean.isdigit():
-#            raise IllegalCharacterError('Code can only contain numbers.')
-#        if len(ean) != 7:
-#            raise NumberOfDigitsError('EAN-8 must have 7 digits, not '
-#                                      '{0}.'.format(len(ean)))
-#        self.ean = ean
-#        self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
-#        self.writer = writer or Barcode.default_writer()
 
     def calculate_checksum(self):
         """Calculates the checksum for EAN8-Code.
