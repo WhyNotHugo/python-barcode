@@ -6,7 +6,8 @@
 pyBarcode's Documentation
 =========================
 
-Contents:
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
@@ -18,6 +19,17 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
+
+Latest version
+==============
+
+Download :download:`v0.4.1 </downloads/pyBarcode-0.4.1.tar.gz>`.
+
+Related Links
+=============
+
+:Project page: http://bitbucket.org/whitie/pybarcode
+
+:Issues: http://bitbucket.org/whitie/pybarcode/issues
 
