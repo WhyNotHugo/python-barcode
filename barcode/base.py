@@ -68,6 +68,18 @@ class Barcode(object):
         _filename = self.writer.save(filename, output)
         return _filename
 
+    def write(self, fp, **kw):
+        """Renders the barcode and writes it to the file like object
+        `fp`.
+
+        :parameters:
+            fp : File like object
+                Object to write the raw data in.
+            kw : Keyword Arguments
+                The same as in `self.render`.
+        """
+        fp.write(self.render(**kw))
+
     def render(self, write_text=True, **writer_options):
         """Renders the barcode using `self.writer`.
 
