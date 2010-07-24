@@ -57,6 +57,13 @@ Interactive::
     >>> ean = EAN(u'5901234123457', writer=ImageWriter())
     >>> fullname = ean.save('ean13_barcode')
     u'ean13_barcode.png'
+    # New in v0.4.2
+    >>> from StringIO import StringIO
+    >>> fp = StringIO()
+    >>> ean.write(fp)
+    # or
+    >>> f = open('/my/new/file.png', 'wb')
+    >>> ean.write(f)
 
 Now open ean13_barcode.[svg|png] in a graphic app or simply in your browser
 and see the created barcode. That's it.
@@ -64,6 +71,8 @@ and see the created barcode. That's it.
 
 Changelog
 ---------
+
+v0.4.2: Added write method to support file like objects as target.
 
 v0.4.1: Bugfix release. Removed redundancy in input validation.
         EAN8 was broken. It now works as expected.
