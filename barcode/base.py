@@ -78,7 +78,11 @@ class Barcode(object):
             kw : Keyword Arguments
                 The same as in `self.render`.
         """
-        fp.write(self.render(**kw))
+        output = self.render(**kw)
+        if hasattr(output, 'tostring'):
+            fp.write(output.tostring())
+        else:
+            fp.write(output)
 
     def render(self, write_text=True, **writer_options):
         """Renders the barcode using `self.writer`.
