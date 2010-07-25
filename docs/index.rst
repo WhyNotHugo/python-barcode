@@ -18,13 +18,12 @@ Contents
 Indices and tables
 ==================
 
-* :ref:`genindex`
 * :ref:`search`
 
 Latest version
 ==============
 
-Download :download:`v0.4.1 </downloads/pyBarcode-0.4.1.tar.gz>`.
+Download :download:`v0.4.3 </downloads/pyBarcode-latest.tar.gz>`.
 
 Related Links
 =============

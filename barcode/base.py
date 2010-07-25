@@ -6,8 +6,6 @@ from __future__ import unicode_literals
 
 """
 
-import codecs
-
 from barcode.writer.svg import SVGWriter
 
 

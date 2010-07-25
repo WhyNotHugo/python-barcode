@@ -2,66 +2,38 @@
 
 from __future__ import unicode_literals
 
-"""
-
-Callback specification
-======================
-
-initialize
-----------
-
-Is called::
-
-    callback_initialize(raw_code)
-
-paint_module
-------------
-
-Is called::
-
-    callback_paint_module(xpos, ypos, width, color)
-
-paint_text
-----------
-
-Is called::
-
-    callback_paint_text(xpos, ypos) using self.text as text
-
-finish
-------
-
-Is called::
-
-    return callback_finish() and should return the rendered output
-
-"""
-
 
 def mm2px(mm, dpi=300):
     return (mm * dpi) / 25.4
 
 
 class BaseWriter(object):
-    """Baseclass for all writers."""
+    """Baseclass for all writers.
+
+    Initializes the basic writer options. Childclasses can add more
+    attributes and can set them directly or using
+    `self.set_options(option=value)`.
+
+    :parameters:
+        initialize : Function
+            Callback for initializing the inheriting writer.
+            Is called: `callback_initialize(raw_code)`
+        paint_module : Function
+            Callback for painting one barcode module.
+            Is called: `callback_paint_module(xpos, ypos, width, color)`
+        paint_text : Function
+            Callback for painting the text under the barcode.
+            Is called: `callback_paint_text(xpos, ypos)` using `self.text`
+            as text.
+        finish : Function
+            Callback for doing something with the completely rendered
+            output.
+            Is called: `return callback_finish()` and must return the
+            rendered output.
+    """
 
     def __init__(self, initialize=None, paint_module=None, paint_text=None,
                  finish=None):
-        """Initializes the basic writer options. Childclasses can add more
-        attributes and can set them directly or using
-        `self.set_options(option=value)`.
-
-        :parameters:
-            initialize : Function
-                Callback for initializing the inheriting writer.
-            paint_module : Function
-                Callback for painting one barcode module.
-            paint_text : Function
-                Callback for painting the text under the barcode.
-            finish : Function
-                Callback for doing something with the completely rendered
-                output.
-        """
         self._callbacks = dict(initialize=initialize, paint_module=paint_module,
                                paint_text=paint_text, finish=finish)
         self.module_width = 10

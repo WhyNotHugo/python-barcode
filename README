@@ -62,7 +62,7 @@ Interactive::
     >>> fp = StringIO()
     >>> ean.write(fp)
     # or
-    >>> f = open('/my/new/file.png', 'wb')
+    >>> f = open('/my/new/file', 'wb') # PIL produces RAW format here
     >>> ean.write(f)
 
 Now open ean13_barcode.[svg|png] in a graphic app or simply in your browser
@@ -71,6 +71,8 @@ and see the created barcode. That's it.
 
 Changelog
 ---------
+
+v0.4.3: Fixed bug in new write method (related to PIL) and updated docs.
 
 v0.4.2: Added write method to support file like objects as target.
 

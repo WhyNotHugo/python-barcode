@@ -8,7 +8,7 @@ from distutils.core import setup
 
 setup(
     name=barcode.__project__,
-    version=barcode.__version__,
+    version=barcode.__release__,
     packages=['barcode', 'barcode.writer'],
     package_data={'barcode': ['writer/*.ttf']},
     url='http://bitbucket.org/whitie/pybarcode/',
