@@ -16,8 +16,8 @@ formats which are supported by PIL).
 
 __project__ = 'pyBarcode'
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = '0.4'
-__release__ = '0.4.3'
+__version__ = '0.5'
+__release__ = '0.5.0'
 __license__ = 'MIT'
 
 
@@ -63,4 +63,14 @@ def get_barcode(name, code=None, writer=None):
 
 def get_barcode_class(name):
     return get_barcode(name)
+
+
+def generate(name, code, writer=None, output=None, writer_options=None):
+    options = writer_options or {}
+    barcode = get_barcode(name, code, writer)
+    if isinstance(output, basestring):
+        fullname = barcode.save(output, **options)
+        return fullname
+    else:
+        barcode.write(output, **options)
 
