@@ -53,7 +53,7 @@ Interactive::
     >>> fullname
     u'ean13_barcode.svg'
     # Example with PNG
-    >>> from barcode.writer.image import ImageWriter
+    >>> from barcode.writer import ImageWriter
     >>> ean = EAN(u'5901234123457', writer=ImageWriter())
     >>> fullname = ean.save('ean13_barcode')
     u'ean13_barcode.png'
@@ -82,6 +82,8 @@ Changelog
 ---------
 
 v0.5.0: Added new generate function to do all generation in one step.
+        Moved writer from a subpackage to a module (this breaks some
+        existing code).
 
 v0.4.3: Fixed bug in new write method (related to PIL) and updated docs.
 

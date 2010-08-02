@@ -1,7 +1,7 @@
 Create your own writer
 ======================
 
-To create your own writer, inherit from `barcode.writer.writerbase.BaseWriter`.
+To create your own writer, inherit from `barcode.writer.BaseWriter`.
 In your __init__ method call BaseWriter's __init__ and give your callbacks for
 `initialize(raw_code)`, `paint_module(xpos, ypos, width, color)`,
 `paint_text(xpos, ypos)` and `finish()`.

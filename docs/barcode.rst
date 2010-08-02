@@ -45,7 +45,7 @@ as PNG.
 Quick example::
 
     >>> import barcode
-    >>> from barcode.writer.image import ImageWriter
+    >>> from barcode.writer import ImageWriter
     >>> ean = barcode.get_barcode('ean', '123456789102', writer=ImageWriter())
     >>> filename = ean.save('ean13')
     >>> filename
