@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 """
 
-from barcode.writer.svg import SVGWriter
+from barcode.writer import SVGWriter
 
 
 class Barcode(object):

@@ -17,7 +17,7 @@ import webbrowser
 
 from barcode import get_barcode, get_barcode_class, __version__
 try:
-    from barcode.writer.image import ImageWriter
+    from barcode.writer import ImageWriter
 except ImportError:
     ImageWriter = None
 

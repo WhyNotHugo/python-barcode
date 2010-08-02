@@ -9,11 +9,9 @@ from distutils.core import setup
 setup(
     name=barcode.__project__,
     version=barcode.__release__,
-    packages=['barcode', 'barcode.writer'],
-    package_data={'barcode': ['writer/*.ttf']},
+    packages=['barcode'],
+    package_data={'barcode': ['*.ttf']},
     url='http://bitbucket.org/whitie/pybarcode/',
-    #download_url=('http://bitbucket.org/whitie/pybarcode/'
-    #              'downloads/pyBarcode-0.4b1.tar.gz'),
     license=barcode.__license__,
     author='Thorsten Weimann',
     author_email='thorsten.weimann@gmx.net',
