@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals
 
 import codecs
 import gzip
@@ -12,7 +12,8 @@ from barcode import __release__
 try:
     from PIL import Image, ImageDraw, ImageFont
 except ImportError:
-    print('PIL not found. Image output disabled.')
+    import sys
+    sys.stderr.write('PIL not found. Image output disabled.\n\n')
     Image = ImageDraw = ImageFont = None
 
 
