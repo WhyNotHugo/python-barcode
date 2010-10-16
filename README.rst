@@ -83,7 +83,8 @@ Changelog
 
 v0.5.0: Added new generate function to do all generation in one step.
         Moved writer from a subpackage to a module (this breaks some
-        existing code).
+        existing code). UPC is now rendered as real UPC, not as EAN13
+        with the leading "0".
 
 v0.4.3: Fixed bug in new write method (related to PIL) and updated docs.
 

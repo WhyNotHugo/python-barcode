@@ -14,9 +14,10 @@ class UniversalProductCodeA(EuropeanArticleNumber13):
 
     name = 'UPC A'
 
+    digits = 11
+
     def __init__(self, upc, writer=None):
         self.upc = upc
-        upc = '0' + upc
         EuropeanArticleNumber13.__init__(self, upc, writer)
 
     def __unicode__(self):

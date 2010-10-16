@@ -52,7 +52,7 @@ NO_PIL = '<h3>PIL was not found. No PNG-Image created.</h3></p>\n'
 TESTCODES = (
     ('ean8', '40267708'),
     ('ean13', '5901234123457'),
-    ('upca', '36000291452'),
+    ('upca', '36000291453'),
     ('jan', '4901234567894'),
     ('isbn10', '3-12-517154-7'),
     ('isbn13', '978-3-16-148410-0'),
@@ -76,6 +76,7 @@ def test():
     for codename, code in TESTCODES:
         bcode = get_barcode(codename, code)
         filename = bcode.save(os.path.join(TESTPATH, codename))
+        print('Code: ', bcode.name, ', digits: ', bcode.digits)
         append(filename, bcode.name)
         if ImageWriter is not None:
             bcodec = get_barcode_class(codename)
