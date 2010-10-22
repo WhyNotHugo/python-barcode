@@ -2,7 +2,7 @@ pyBarcode
 =========
 
 This library provides a simple way to create barcodes using only the
-Python standardlib. The barcodes where created as SVG images.
+Python standardlib. The barcodes where created as SVG objects.
 
 Report bugs at http://bitbucket.org/whitie/pybarcode/issues/
 
@@ -11,7 +11,8 @@ Requirements
 ------------
 
     - Python 2.6 or above, but not the 3.x series
-    - Program to open SVG images (your browser should do it)
+    - Program to open SVG objects (your browser should do it)
+    - Optional: PIL to render barcodes as images (PNG, JPG, ...)
 
 
 Installation
