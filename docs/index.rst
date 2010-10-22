@@ -23,7 +23,7 @@ Indices and tables
 Latest version
 ==============
 
-Download :download:`v0.4.3 </downloads/pyBarcode-latest.tar.gz>`.
+Download :download:`latest </downloads/pyBarcode-latest.tar.gz>` release.
 
 Related Links
 =============
