@@ -23,7 +23,8 @@ Indices and tables
 Latest version
 ==============
 
-Download :download:`latest </downloads/pyBarcode-latest.tar.gz>` release.
+You can always download the latest release
+`here <http://bitbucket.org/whitie/pybarcode/downloads>`_.
 
 Related Links
 =============
