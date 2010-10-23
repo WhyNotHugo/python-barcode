@@ -16,8 +16,8 @@ formats which are supported by PIL).
 
 __project__ = 'pyBarcode'
 __author__ = 'Thorsten Weimann <thorsten.weimann@gmx.net>'
-__version__ = '0.5'
-__release__ = '0.5.0'
+__version__ = '0.6'
+__release__ = '0.6.0a1'
 __license__ = 'MIT'
 
 
