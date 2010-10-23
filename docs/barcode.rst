@@ -39,7 +39,7 @@ Creating barcodes as Image
 --------------------------
 
 To generate barcodes as images, you must provide the ImageWriter to the
-`get_barcode` function. Without any options, the images were rendered
+`get_barcode` function. Without any options, the images are rendered
 as PNG.
 
 Quick example::

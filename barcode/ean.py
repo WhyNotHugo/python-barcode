@@ -28,21 +28,20 @@ LEFT_PATTERN = ('AAAAAA', 'AABABB', 'AABBAB', 'AABBBA', 'ABAABB',
 
 
 class EuropeanArticleNumber13(Barcode):
-    """Represents an EAN-13 barcode."""
+    """Initializes EAN13 object.
+
+    :parameters:
+        ean : String
+            The ean number as string.
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+    """
 
     name = 'EAN-13'
 
     digits = 12
 
     def __init__(self, ean, writer=None):
-        """Initializes EAN13 object.
-
-        :parameters:
-            ean : String
-                The ean number as string.
-            writer : barcode.writer Instance
-                The writer to render the barcode (default: SVGWriter).
-        """
         ean = ean[:self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError('Code can only contain numbers.')
@@ -100,7 +99,14 @@ class EuropeanArticleNumber13(Barcode):
 
 
 class JapanArticleNumber(EuropeanArticleNumber13):
-    """Represents an JAN barcode."""
+    """Initializes JAN barcode.
+
+    :parameters:
+        jan : String
+            The jan number as string.
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+    """
 
     name = 'JAN'
 
@@ -113,14 +119,20 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
 
 class EuropeanArticleNumber8(EuropeanArticleNumber13):
-    """Represents an EAN-8 barcode."""
+    """Represents an EAN-8 barcode. See EAN13's __init__ for details.
+
+    :parameters:
+        ean : String
+            The ean number as string.
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+    """
 
     name = 'EAN-8'
 
     digits = 7
 
     def __init__(self, ean, writer=None):
-        """See EuropeanArticleNumber13.__init__ for details."""
         EuropeanArticleNumber13.__init__(self, ean, writer)
 
     def calculate_checksum(self):

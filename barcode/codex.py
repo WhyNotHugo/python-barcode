@@ -46,21 +46,21 @@ MAP = dict(zip(REF, enumerate(CODES)))
 
 
 class Code39(Barcode):
+    """Initializes a new Code39 instance.
+
+    :parameters:
+        code : String
+            Code39 string without \* and checksum (added automatically if
+            `add_checksum` is True).
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+        add_checksum : Boolean
+            Add the checksum to code or not (default: True).
+    """
 
     name = 'Code 39'
 
     def __init__(self, code, writer=None, add_checksum=True):
-        """Initializes a new Code39 instance.
-
-        :parameters:
-            code : String
-                Code39 string without \* and checksum (added automatically if
-                `add_checksum` is True).
-            writer : barcode.writer Instance
-                The writer to render the barcode (default: SVGWriter).
-            add_checksum : Boolean
-                Add the checksum to code or not.
-        """
         code = code.upper()
         for char in code:
             if char not in REF:
@@ -98,7 +98,14 @@ class Code39(Barcode):
 
 
 class PZN(Code39):
-    """German number for pharmaceutical products."""
+    """Initializes new German number for pharmaceutical products.
+
+    :parameters:
+        pzn : String
+            Code to render.
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+    """
 
     name = 'Pharmazentralnummer'
 

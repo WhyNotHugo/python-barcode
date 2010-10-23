@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-
 """
 
 pyBarcode
@@ -22,6 +20,17 @@ __description__ = ('Create standard barcodes with Python. No external '
 __version__ = '0.6'
 __release__ = '0.6.0a1'
 __license__ = 'MIT'
+__url__ = 'http://bitbucket.org/whitie/pybarcode/'
+__classifiers__ = [
+    'Development Status :: 4 - Beta',
+    'Environment :: Console',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Topic :: Multimedia :: Graphics',
+]
 
 
 from barcode.errors import BarcodeNotFoundError

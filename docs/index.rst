@@ -13,6 +13,7 @@ Contents
    :maxdepth: 2
 
    barcode
+   codes
    writers/index
 
 Indices and tables

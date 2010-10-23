@@ -20,6 +20,9 @@ class IllegalCharacterError(BarcodeError):
 class BarcodeNotFoundError(BarcodeError):
     """Raised when an unknown barcode is requested."""
 
+class NumberOfDigitsError(BarcodeError):
+    """Raised when the number of digits do not match."""
+
 class WrongCountryCodeError(BarcodeError):
     """Raised when a JAN (Japan Article Number) don't starts with 450-459
     or 490-499.
