@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
 
-import barcode
+import barcode as pkg
 
 from inspect import getdoc
 from distutils.core import setup
 
 
 setup(
-    name=barcode.__project__,
-    version=barcode.__release__,
+    name=pkg.__project__,
+    version=pkg.__release__,
     packages=['barcode'],
     package_data={'barcode': ['*.ttf']},
     url='http://bitbucket.org/whitie/pybarcode/',
-    license=barcode.__license__,
-    author='Thorsten Weimann',
-    author_email='thorsten.weimann@gmx.net',
-    description=('Create standard barcodes with Python and save them as SVG. '
-                 'No external modules needed.'),
-    long_description=getdoc(barcode),
+    license=pkg.__license__,
+    author=pkg.__author__,
+    author_email=pkg.__author_email__,
+    description=pkg.__description__,
+    long_description=getdoc(pkg),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
