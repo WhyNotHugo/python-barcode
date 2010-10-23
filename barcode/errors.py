@@ -17,9 +17,6 @@ class BarcodeError(Exception):
 class IllegalCharacterError(BarcodeError):
     """Raised when a barcode-string contains illegal characters."""
 
-class NumberOfDigitsError(BarcodeError):
-    """Raised when the number of digits do not match."""
-
 class BarcodeNotFoundError(BarcodeError):
     """Raised when an unknown barcode is requested."""
 

@@ -48,7 +48,7 @@ class Barcode(object):
         """
         raise NotImplementedError
 
-    def save(self, filename, options):
+    def save(self, filename, options=None):
         """Renders the barcode and saves it in `filename`.
 
         :parameters:
@@ -65,7 +65,7 @@ class Barcode(object):
         _filename = self.writer.save(filename, output)
         return _filename
 
-    def write(self, fp, options):
+    def write(self, fp, options=None):
         """Renders the barcode and writes it to the file like object
         `fp`.
 

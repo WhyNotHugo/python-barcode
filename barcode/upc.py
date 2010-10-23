@@ -16,7 +16,10 @@ class UniversalProductCodeA(EuropeanArticleNumber13):
 
     digits = 11
 
-    def __init__(self, upc, writer=None):
+    def __init__(self, upc, writer=None, make_ean=False):
+        if make_ean:
+            UniversalProductCodeA.digits = 12
+            upc = '0' + upc
         self.upc = upc
         EuropeanArticleNumber13.__init__(self, upc, writer)
 

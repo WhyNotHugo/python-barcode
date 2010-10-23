@@ -82,6 +82,9 @@ and see the created barcode. That's it.
 Changelog
 ---------
 
+v0.6.0: Changed save and write methods to take the options as a dict
+        not as keyword arguments (fix this in your code).
+
 v0.5.0: Added new generate function to do all generation in one step.
         Moved writer from a subpackage to a module (this breaks some
         existing code). UPC is now rendered as real UPC, not as EAN13

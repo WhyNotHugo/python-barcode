@@ -93,10 +93,10 @@ class EuropeanArticleNumber13(Barcode):
             code[i] = line.replace('1', '|').replace('0', ' ')
         return '\n'.join(code)
 
-    def render(self, write_text=True, **writer_options):
+    def render(self, writer_options=None):
         options = dict(module_width=SIZES['SC2'])
-        options.update(writer_options)
-        return Barcode.render(self, write_text, **options)
+        options.update(writer_options or {})
+        return Barcode.render(self, options)
 
 
 class JapanArticleNumber(EuropeanArticleNumber13):

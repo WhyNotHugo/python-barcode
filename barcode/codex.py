@@ -16,7 +16,7 @@ from barcode.errors import *
 # Code stuff
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 2.54
-REF = (tuple([x for x in string.digits + string.ascii_uppercase]) +
+REF = (tuple(string.digits) + tuple(string.ascii_uppercase) +
        ('-', '.', ' ', '$', '/', '+', '%'))
 B = '1'
 E = '0'
@@ -91,10 +91,10 @@ class Code39(Barcode):
         c += EDGE
         return [c]
 
-    def render(self, write_text=True, **writer_options):
+    def render(self, writer_options):
         options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
-        options.update(writer_options)
-        return Barcode.render(self, write_text, **options)
+        options.update(writer_options or {})
+        return Barcode.render(self, options)
 
 
 class PZN(Code39):

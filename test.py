@@ -82,7 +82,7 @@ def test():
             bcodec = get_barcode_class(codename)
             bcode = bcodec(code, writer=ImageWriter())
             filename = bcode.save(os.path.join(TESTPATH, codename),
-                                  font_size=14, text_distance=1)
+                                  dict(font_size=14, text_distance=1))
             append_img(filename, bcode.name)
         else:
             objects.append(NO_PIL)
