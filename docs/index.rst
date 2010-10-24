@@ -15,6 +15,7 @@ Contents
    barcode
    codes
    writers/index
+   license
 
 Indices and tables
 ==================

@@ -28,7 +28,8 @@ Quick example::
     >>> filename = ean.save('ean13')
     >>> filename
     u'ean13.svg'
-    >>> filename = ean.save('ean13', compress=True)
+    >>> options = dict(compress=True)
+    >>> filename = ean.save('ean13', options)
     >>> filename
     u'ean13.svgz'
 

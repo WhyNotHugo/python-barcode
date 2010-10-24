@@ -9,7 +9,7 @@ This package provides a simple way to create standard barcodes.
 It needs no external packages to be installed, the barcodes are
 created as SVG objects. If PIL (Python Imaging Library) is
 installed, the barcodes can also be rendered as images (all
-formats which are supported by PIL).
+formats supported by PIL).
 """
 
 __project__ = 'pyBarcode'

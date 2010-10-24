@@ -73,6 +73,7 @@ def test():
     objects = []
     append = lambda x, y: objects.append(OBJECTS.format(filename=x, name=y))
     append_img = lambda x, y: objects.append(IMAGES.format(filename=x, name=y))
+    options = dict(module_width=0.495, module_height=25.0)
     for codename, code in TESTCODES:
         bcode = get_barcode(codename, code)
         filename = bcode.save(os.path.join(TESTPATH, codename))
