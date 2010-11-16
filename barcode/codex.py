@@ -84,12 +84,11 @@ class Code39(Barcode):
                 return k
 
     def build(self):
-        c = EDGE
+        chars = [EDGE]
         for char in self.code:
-            c += MAP[char][1]
-            c += MIDDLE
-        c += EDGE
-        return [c]
+            chars.append(MAP[char][1])
+        chars.append(EDGE)
+        return [MIDDLE.join(chars)]
 
     def render(self, writer_options):
         options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
