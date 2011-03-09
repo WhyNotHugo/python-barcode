@@ -77,7 +77,8 @@ def test():
     for codename, code in TESTCODES:
         bcode = get_barcode(codename, code)
         filename = bcode.save(os.path.join(TESTPATH, codename))
-        print('Code: ', bcode.name, ', digits: ', bcode.digits)
+        print('Code: {0}, Input: {1}, Output: {2}'.format(
+            bcode.name, code, bcode.get_fullcode()))
         append(filename, bcode.name)
         if ImageWriter is not None:
             bcodec = get_barcode_class(codename)
