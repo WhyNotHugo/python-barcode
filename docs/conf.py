@@ -42,7 +42,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = barcode.__project__
-copyright = u'2010, Thorsten Weimann'
+copyright = barcode.__copyright__
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
