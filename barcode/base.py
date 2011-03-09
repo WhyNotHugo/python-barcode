@@ -77,7 +77,7 @@ class Barcode(object):
         """
         output = self.render(options)
         if hasattr(output, 'tostring'):
-            fp.write(output.tostring())
+            output.save(fp, format=self.writer.format)
         else:
             fp.write(output)
 
