@@ -19,7 +19,7 @@ __author_email__ = 'thorsten.weimann@gmx.net'
 __description__ = ('Create standard barcodes with Python. No external '
                    'modules needed (optional PIL support included).')
 __version__ = '0.6'
-__release__ = '0.6b1'
+__release__ = '0.6b2'
 __license__ = 'MIT'
 __url__ = 'http://bitbucket.org/whitie/pybarcode/'
 __classifiers__ = [
