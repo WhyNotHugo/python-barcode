@@ -2,7 +2,7 @@
 
 """
 
-pybarcode
+pyBarcode
 =========
 
 This package provides a simple way to create standard barcodes.
@@ -12,16 +12,16 @@ installed, the barcodes can also be rendered as images (all
 formats supported by PIL).
 """
 
-__project__ = 'pybarcode'
+__project__ = 'pyBarcode'
 __author__ = 'Thorsten Weimann'
 __copyright__ = '2010-2011, ' + __author__
 __author_email__ = 'thorsten.weimann@gmx.net'
 __description__ = ('Create standard barcodes with Python. No external '
                    'modules needed (optional PIL support included).')
 __version__ = '0.6'
-__release__ = '0.6b2'
+__release__ = '0.6b1'
 __license__ = 'MIT'
-__url__ = 'https://code.google.com/p/pybarcode/'
+__url__ = 'http://bitbucket.org/whitie/pybarcode/'
 __classifiers__ = [
     'Development Status :: 4 - Beta',
     'Environment :: Console',
