@@ -74,10 +74,10 @@ class EuropeanArticleNumber13(Barcode):
         """
         code = EDGE[:]
         pattern = LEFT_PATTERN[int(self.ean[0])]
-        for i, number in enumerate(self.ean[:6]):
+        for i, number in enumerate(self.ean[1:7]):
             code += CODES[pattern[i]][int(number)]
         code += MIDDLE
-        for number in self.ean[6:]:
+        for number in self.ean[7:]:
             code += CODES['C'][int(number)]
         code += EDGE
         return [code]
