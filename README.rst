@@ -83,7 +83,9 @@ Changelog
 ---------
 
 v0.6.0: Changed save and write methods to take the options as a dict
-        not as keyword arguments (fix this in your code).
+        not as keyword arguments (fix this in your code). Added option
+        to left align the text under the barcode. Fixed bug with EAN13
+        generation.
 
 v0.5.0: Added new generate function to do all generation in one step.
         Moved writer from a subpackage to a module (this breaks some
