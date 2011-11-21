@@ -82,45 +82,47 @@ and see the created barcode. That's it.
 Changelog
 ---------
 
-v0.6.0: Changed save and write methods to take the options as a dict
-        not as keyword arguments (fix this in your code). Added option
-        to left align the text under the barcode. Fixed bug with EAN13
-        generation.
+.. note:: v0.6 has no final release yet
 
-v0.5.0: Added new generate function to do all generation in one step.
-        Moved writer from a subpackage to a module (this breaks some
-        existing code). UPC is now rendered as real UPC, not as EAN13
-        with the leading "0".
+:v0.6.0: Changed save and write methods to take the options as a dict
+         not as keyword arguments (fix this in your code). Added option
+         to left align the text under the barcode. Fixed bug with EAN13
+         generation.
 
-v0.4.3: Fixed bug in new write method (related to PIL) and updated docs.
+:v0.5.0: Added new generate function to do all generation in one step.
+         Moved writer from a subpackage to a module (this breaks some
+         existing code). UPC is now rendered as real UPC, not as EAN13
+         with the leading "0".
 
-v0.4.2: Added write method to support file like objects as target.
+:v0.4.3: Fixed bug in new write method (related to PIL) and updated docs.
 
-v0.4.1: Bugfix release. Removed redundancy in input validation.
-        EAN8 was broken. It now works as expected.
+:v0.4.2: Added write method to support file like objects as target.
 
-v0.4: Removed **options from writers __init__ method. These options never
-      had effect. They were always overwritten by default_options.
-      New config option available: text_distance (the distance between
-      barcode and text).
+:v0.4.1: Bugfix release. Removed redundancy in input validation.
+         EAN8 was broken. It now works as expected.
 
-v0.4b2: Basic documentation included. The barcode object now has a new
-        attribute called `raw` to have the rendered output without saving
-        to disk.
+:v0.4: Removed \*\*options from writers __init__ method. These options never
+       had effect. They were always overwritten by default_options.
+       New config option available: text_distance (the distance between
+       barcode and text).
 
-v0.4b1: Support for rendering barcodes as images is implemented.
-        PIL is required to use it.
+:v0.4b2: Basic documentation included. The barcode object now has a new
+         attribute called `raw` to have the rendered output without saving
+         to disk.
 
-v0.3: Compression for SVG output now works.
+:v0.4b1: Support for rendering barcodes as images is implemented.
+         PIL is required to use it.
 
-v0.3b1: Writer API has changed for simple adding new (own) writers.
-        SVG output is now generated with xml.dom module instead of
-        stringformatting (makes it more robust).
+:v0.3: Compression for SVG output now works.
 
-v0.2.1: API of render changed. Now render takes keyword arguments
-        instead of a dict.
+:v0.3b1: Writer API has changed for simple adding new (own) writers.
+         SVG output is now generated with xml.dom module instead of
+         stringformatting (makes it more robust).
 
-v0.2: More tests added.
+:v0.2.1: API of render changed. Now render takes keyword arguments
+         instead of a dict.
 
-v0.1: First release.
+:v0.2: More tests added.
+
+:v0.1: First release.
 
