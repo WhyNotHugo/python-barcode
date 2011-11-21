@@ -82,9 +82,7 @@ and see the created barcode. That's it.
 Changelog
 ---------
 
-.. note:: v0.6 has no final release yet
-
-:v0.6.0: Changed save and write methods to take the options as a dict
+:v0.6: Changed save and write methods to take the options as a dict
          not as keyword arguments (fix this in your code). Added option
          to left align the text under the barcode. Fixed bug with EAN13
          generation.
