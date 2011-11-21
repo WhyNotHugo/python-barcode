@@ -2,8 +2,11 @@
 
 import barcode as pkg
 
-from inspect import getdoc
 from distutils.core import setup
+
+
+with open('README.rst', 'r') as fp:
+    long_desc = fp.read()
 
 
 setup(
@@ -16,6 +19,6 @@ setup(
     author=pkg.__author__,
     author_email=pkg.__author_email__,
     description=pkg.__description__,
-    long_description=getdoc(pkg),
+    long_description=long_desc,
     classifiers=pkg.__classifiers__,
 )
