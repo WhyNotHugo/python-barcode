@@ -46,6 +46,12 @@ Common Options:
     The foreground and text color of the created barcode as *string*.
     Defaults to **black**.
 
+.. versionadded:: 0.6
+
+:center_text:
+    If true (the default) the text is centered under the barcode else
+    left aligned.
+
 .. note::
    Some barcode classes change the above defaults to fit in some kind
    of specification.
