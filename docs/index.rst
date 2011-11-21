@@ -26,12 +26,14 @@ Latest version
 ==============
 
 You can always download the latest release
-`here <http://bitbucket.org/whitie/pybarcode/downloads>`_.
+`here <https://code.google.com/p/python-barcode/downloads/>`_.
 
 Related Links
 =============
 
-:Project page: http://bitbucket.org/whitie/pybarcode
+:Project page: https://code.google.com/p/python-barcode/
 
-:Issues: http://bitbucket.org/whitie/pybarcode/issues
+:Issues: https://code.google.com/p/python-barcode/issues/
+
+:Wiki: https://code.google.com/p/python-barcode/w/
 
