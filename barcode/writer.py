@@ -82,6 +82,7 @@ class BaseWriter(object):
         self.foreground = 'black'
         self.text = ''
         self.text_distance = 5
+        self.center_text = True
 
     def calculate_size(self, modules_per_line, number_of_lines, dpi=300):
         """Calculates the size of the barcode in pixel.
@@ -174,7 +175,10 @@ class BaseWriter(object):
             ypos += self.module_height
         if self.text and self._callbacks['paint_text'] is not None:
             ypos += self.text_distance
-            xpos = xpos / 2.0
+            if self.center_text:
+                xpos = xpos / 2.0
+            else:
+                xpos = self.quiet_zone
             self._callbacks['paint_text'](xpos, ypos)
         return self._callbacks['finish']()
 
