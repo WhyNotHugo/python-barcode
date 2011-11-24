@@ -21,7 +21,7 @@ __description__ = ('Create standard barcodes with Python. No external '
 __version__ = '0.6'
 __release__ = '0.6'
 __license__ = 'MIT'
-__url__ = 'http://bitbucket.org/whitie/pybarcode/'
+__url__ = 'https://code.google.com/p/python-barcode/'
 __classifiers__ = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Console',
