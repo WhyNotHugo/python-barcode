@@ -58,7 +58,7 @@ __BARCODE_MAP = dict(
     pzn=PZN,
 )
 
-PROVIDED_BARCODES = __BARCODE_MAP.keys()
+PROVIDED_BARCODES = list(__BARCODE_MAP.keys())
 PROVIDED_BARCODES.sort()
 
 
