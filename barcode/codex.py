@@ -44,6 +44,24 @@ MIDDLE = '0'
 # MAP for assigning every symbol (REF) to (reference number, barcode)
 MAP = dict(zip(REF, enumerate(CODES)))
 
+# Code 128
+CODE128 = (
+    (dict(A=' ', B=' ', C='00'), '11011001100'),
+    (dict(A='!', B='!', C='01'), '11001101100'),
+    (dict(A='"', B='"', C='02'), '11001100110'),
+    (dict(A='#', B='#', C='03'), '10010011000'),
+    (dict(A='$', B='$', C='04'), '10010001100'),
+    (dict(A='%', B='%', C='05'), '10001001100'),
+    (dict(A='&', B='&', C='06'), '10011001000'),
+    (dict(A="'", B="'", C='07'), '10011000100'),
+    (dict(A='(', B='(', C='08'), '10001100100'),
+    (dict(A=')', B=')', C='09'), '11001001000'),
+)
+MAP128 = dict(A={}, B={}, C={})
+for c in ('A', 'B', 'C'):
+    for i, code in enumerate(CODE128):
+        MAP128[c][code[0][c]] = i
+
 
 class Code39(Barcode):
     """Initializes a new Code39 instance.
@@ -132,3 +150,8 @@ class PZN(Code39):
             raise BarcodeError('Checksum can not be 10 for PZN.')
         else:
             return checksum
+
+
+class Code128(Barcode):
+
+    name = 'Code 128'
