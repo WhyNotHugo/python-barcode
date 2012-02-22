@@ -66,7 +66,7 @@ def test():
     if not os.path.isdir(TESTPATH):
         try:
             os.mkdir(TESTPATH)
-        except OSError, e:
+        except OSError as e:
             print('Test not run.')
             print('Error:', e)
             sys.exit(1)

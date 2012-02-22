@@ -9,6 +9,12 @@ from __future__ import unicode_literals
 from barcode.base import Barcode
 from barcode.errors import *
 
+# Python 3
+try:
+    reduce
+except NameError:
+    from functools import reduce
+
 
 # EAN13 Specs (all sizes in mm)
 SIZES = dict(SC0=0.27, SC1=0.297, SC2=0.33, SC3=0.363, SC4=0.396, SC5=0.445,
@@ -110,7 +116,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
     name = 'JAN'
 
-    valid_country_codes = range(450, 460) + range(490, 500)
+    valid_country_codes = list(range(450, 460)) + list(range(490, 500))
 
     def __init__(self, jan, writer=None):
         if int(jan[:3]) not in JapanArticleNumber.valid_country_codes:
