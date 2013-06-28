@@ -97,7 +97,7 @@ class Code39(Barcode):
 
     def calculate_checksum(self):
         check = sum([MAP[x][0] for x in self.code]) % 43
-        for k, v in MAP.iteritems():
+        for k, v in MAP.items():
             if check == v[0]:
                 return k
 

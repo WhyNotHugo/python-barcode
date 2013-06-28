@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals
 
-import codecs
 import gzip
 import os
 import xml.dom
@@ -248,7 +247,7 @@ class SVGWriter(BaseWriter):
             f.close()
         else:
             _filename = '{0}.svg'.format(filename)
-            with codecs.open(_filename, 'w', 'utf-8') as f:
+            with open(_filename, 'wb') as f:
                 f.write(output)
         return _filename
 
