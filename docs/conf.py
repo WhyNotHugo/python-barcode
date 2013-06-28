@@ -19,7 +19,7 @@ import sys, os
 #sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('..'))
 import barcode
-LOGO = os.path.join('images', 'pybarcode.png')
+LOGO = os.path.join('images', 'pybarcode_small.png')
 
 # -- General configuration -----------------------------------------------------
 
@@ -197,4 +197,7 @@ latex_documents = [
 # If false, no module index is generated.
 latex_use_modindex = False
 
-graphviz_dot = '/usr/bin/dot'
+if sys.platform.startswith('win'):
+    graphviz_dot = r'P:\Portable\Graphviz\App\bin\dot.exe'
+else:
+    graphviz_dot = '/usr/bin/dot'
