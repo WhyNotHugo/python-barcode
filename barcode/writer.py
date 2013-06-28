@@ -24,6 +24,10 @@ def mm2px(mm, dpi=300):
     return (mm * dpi) / 25.4
 
 
+def pt2mm(pt):
+    return pt * 0.352777778
+
+
 def _set_attributes(element, **attributes):
     for key, value in attributes.items():
         element.setAttribute(key, value)
@@ -102,9 +106,9 @@ class BaseWriter(object):
         :rtype: Tuple
         """
         width = 2 * self.quiet_zone + modules_per_line * self.module_width
-        height = 1.0 + self.module_height * number_of_lines
-        if self.text:
-            height += self.font_size + self.text_distance
+        height = 2.0 + self.module_height * number_of_lines
+        if self.font_size and self.text:
+            height += pt2mm(self.font_size) / 2 + self.text_distance
         return int(mm2px(width, dpi)), int(mm2px(height, dpi))
 
     def save(self, filename, output):
@@ -192,13 +196,22 @@ class SVGWriter(BaseWriter):
         BaseWriter.__init__(self, self._init, self._create_module,
                             self._create_text, self._finish)
         self.compress = False
+        self.dpi = 25.4
         self._document = None
         self._root = None
 
     def _init(self, code):
+        width, height = self.calculate_size(len(code[0]), len(code), self.dpi)
         self._document = create_svg_object()
         self._root = self._document.documentElement
+        attributes = dict(width=SIZE.format(width), height=SIZE.format(height))
+        _set_attributes(self._root, **attributes)
         self._root.appendChild(self._document.createComment(COMMENT))
+        background = self._document.createElement('rect')
+        attributes = dict(width='100%', height='100%',
+                          style='fill:{0}'.format(self.background))
+        _set_attributes(background, **attributes)
+        self._root.appendChild(background)
 
     def _create_module(self, xpos, ypos, width, color):
         element = self._document.createElement('rect')
@@ -265,8 +278,10 @@ else:
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):
-            pos = (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi))
-            font = ImageFont.truetype(FONT, self.font_size)
+            font = ImageFont.truetype(FONT, self.font_size * 2)
+            width, height = font.getsize(self.text)
+            pos = (mm2px(xpos, self.dpi) - width // 2,
+                   mm2px(ypos, self.dpi) - height // 4)
             self._draw.text(pos, self.text, font=font, fill=self.foreground)
 
         def _finish(self):
