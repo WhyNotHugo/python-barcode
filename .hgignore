@@ -8,6 +8,7 @@ syntax: glob
 *.pdf
 *.kpf
 *.svg
+*.db
 build/*
 dist/*
 tests/*
