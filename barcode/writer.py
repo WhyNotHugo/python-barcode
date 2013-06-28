@@ -185,7 +185,7 @@ class BaseWriter(object):
             if self.center_text:
                 xpos = xpos / 2.0
             else:
-                xpos = self.quiet_zone
+                xpos = self.quiet_zone + 4.0
             self._callbacks['paint_text'](xpos, ypos)
         return self._callbacks['finish']()
 

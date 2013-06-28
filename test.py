@@ -76,7 +76,11 @@ def test():
     options = dict(module_width=0.495, module_height=25.0)
     for codename, code in TESTCODES:
         bcode = get_barcode(codename, code)
-        filename = bcode.save(os.path.join(TESTPATH, codename))
+        if codename.startswith('i'):
+            options['center_text'] = False
+        else:
+            options['center_text'] = True
+        filename = bcode.save(os.path.join(TESTPATH, codename), options)
         print('Code: {0}, Input: {1}, Output: {2}'.format(
             bcode.name, code, bcode.get_fullcode()))
         append(filename, bcode.name)
@@ -86,6 +90,8 @@ def test():
             opts = dict(font_size=14, text_distance=1)
             if codename.startswith('i'):
                 opts['center_text'] = False
+            else:
+                options['center_text'] = True
             filename = bcode.save(os.path.join(TESTPATH, codename), opts)
             append_img(filename, bcode.name)
         else:
