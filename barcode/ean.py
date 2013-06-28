@@ -120,7 +120,8 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
     def __init__(self, jan, writer=None):
         if int(jan[:3]) not in JapanArticleNumber.valid_country_codes:
-            raise WrongCountryCodeError
+            raise WrongCountryCodeError("Country code isn't between 450-460 or "
+                                        "490-500.")
         EuropeanArticleNumber13.__init__(self, jan, writer)
 
 
