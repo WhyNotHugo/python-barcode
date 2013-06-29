@@ -92,6 +92,8 @@ class Code39(Barcode):
     def __unicode__(self):
         return self.code
 
+    __str__ = __unicode__
+
     def get_fullcode(self):
         return self.code
 

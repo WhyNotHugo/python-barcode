@@ -58,6 +58,8 @@ class EuropeanArticleNumber13(Barcode):
     def __unicode__(self):
         return self.ean
 
+    __str__ = __unicode__
+
     def get_fullcode(self):
         return self.ean
 

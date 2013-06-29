@@ -37,5 +37,7 @@ class UniversalProductCodeA(EuropeanArticleNumber13):
     def __unicode__(self):
         return self.upc
 
+    __str__ = __unicode__
+
 
 UPCA = UniversalProductCodeA

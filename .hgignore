@@ -2,6 +2,7 @@ syntax: glob
 *.pyc
 *.bak
 *~
+*.nja
 *.e*
 *.rope*
 *.dir*
@@ -9,6 +10,7 @@ syntax: glob
 *.kpf
 *.svg
 *.db
+barcode/__pycache*
 build/*
 dist/*
 tests/*

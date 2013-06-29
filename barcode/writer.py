@@ -236,7 +236,7 @@ class SVGWriter(BaseWriter):
         if self.compress:
             return self._document.toxml(encoding='UTF-8')
         else:
-            return self._document.toprettyxml(indent=4*' ', newl=os.linesep,
+            return self._document.toprettyxml(indent=4 * ' ', newl=os.linesep,
                                               encoding='UTF-8')
 
     def save(self, filename, output):
@@ -272,8 +272,8 @@ else:
 
         def _paint_module(self, xpos, ypos, width, color):
             size = [(mm2px(xpos, self.dpi), mm2px(ypos, self.dpi)),
-                    (mm2px(xpos+width, self.dpi),
-                     mm2px(ypos+self.module_height, self.dpi))]
+                    (mm2px(xpos + width, self.dpi),
+                     mm2px(ypos + self.module_height, self.dpi))]
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):

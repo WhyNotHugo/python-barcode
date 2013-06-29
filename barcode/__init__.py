@@ -40,6 +40,11 @@ from barcode.ean import EAN8, EAN13, JAN
 from barcode.isxn import ISBN10, ISBN13, ISSN
 from barcode.upc import UPCA
 
+try:
+    _strbase = basestring
+except NameError:
+    _strbase = str
+
 
 __BARCODE_MAP = dict(
     ean8=EAN8,
@@ -81,9 +86,8 @@ def get_barcode_class(name):
 def generate(name, code, writer=None, output=None, writer_options=None):
     options = writer_options or {}
     barcode = get_barcode(name, code, writer)
-    if isinstance(output, basestring):
+    if isinstance(output, _strbase):
         fullname = barcode.save(output, options)
         return fullname
     else:
         barcode.write(output, options)
-
