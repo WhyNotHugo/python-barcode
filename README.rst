@@ -10,7 +10,7 @@ Report bugs at https://bitbucket.org/whitie/python-barcode/issues/
 Requirements
 ------------
 
-    - Python 2.6 or above, but not the 3.x series
+    - Python 2.6 or above (including Python 3.x)
     - Program to open SVG objects (your browser should do it)
     - Optional: PIL to render barcodes as images (PNG, JPG, ...)
 
@@ -34,6 +34,7 @@ Todo
 
     - Add documentation
     - Add more codes
+    - Improve Python 3 support
 
 Usage
 -----
@@ -83,6 +84,8 @@ Changelog
 ---------
 
 :v0.7: Fixed some issues with fontsize and fontalignment.
+       Added Python 3 support. It's not well tested yet, but the tests
+       run without errors with Python 3.3.
 
 :v0.6: Changed save and write methods to take the options as a dict
          not as keyword arguments (fix this in your code). Added option

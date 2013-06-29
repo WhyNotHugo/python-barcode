@@ -11,6 +11,8 @@ need the checksum, it will be calculated automatically. In some systems
 (Code 39) the checksum is optional, there you can give the `add_checksum`
 keyword argument (default is True).
 
+As of version 0.7beta3 Python 3 is supported, but not well tested.
+
 .. _PIL: http://www.pythonware.com/products/pil
 
 Creating barcodes as SVG
