@@ -15,7 +15,7 @@ formats supported by PIL).
 __project__ = 'pyBarcode'
 __author__ = 'Thorsten Weimann'
 __copyright__ = '2010-2013, ' + __author__
-__author_email__ = 'thorsten.weimann@gmx.net'
+__author_email__ = 'weimann@ymail.com'
 __description__ = ('Create standard barcodes with Python. No external '
                    'modules needed (optional PIL support included).')
 __version__ = '0.7'
@@ -41,7 +41,7 @@ from barcode.isxn import ISBN10, ISBN13, ISSN
 from barcode.upc import UPCA
 
 try:
-    _strbase = basestring
+    _strbase = basestring  # lint:ok
 except NameError:
     _strbase = str
 
@@ -67,7 +67,7 @@ PROVIDED_BARCODES = list(__BARCODE_MAP.keys())
 PROVIDED_BARCODES.sort()
 
 
-def get_barcode(name, code=None, writer=None):
+def get(name, code=None, writer=None):
     try:
         barcode = __BARCODE_MAP[name.lower()]
     except KeyError:
@@ -79,7 +79,7 @@ def get_barcode(name, code=None, writer=None):
         return barcode
 
 
-def get_barcode_class(name):
+def get_class(name):
     return get_barcode(name)
 
 
@@ -91,3 +91,7 @@ def generate(name, code, writer=None, output=None, writer_options=None):
         return fullname
     else:
         barcode.write(output, options)
+
+
+get_barcode = get
+get_barcode_class = get_class

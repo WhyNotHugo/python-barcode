@@ -290,4 +290,3 @@ else:
             filename = '{0}.{1}'.format(filename, self.format.lower())
             output.save(filename, self.format.upper())
             return filename
-
