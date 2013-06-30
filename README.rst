@@ -10,7 +10,9 @@ Report bugs at https://bitbucket.org/whitie/python-barcode/issues/
 Requirements
 ------------
 
+    - Setuptools/distribute for installation (new in version 0.7beta4)
     - Python 2.6 or above (including Python 3.x)
+    - On Python 2.6, 3.0, 3.1: argparse (for the commandline script)
     - Program to open SVG objects (your browser should do it)
     - Optional: PIL to render barcodes as images (PNG, JPG, ...)
 
@@ -18,9 +20,13 @@ Requirements
 Installation
 ------------
 
+Make sure you have setuptools/distribute installed.
+
 Unpack the downloaded file, cd into the pyBarcode directory and run
 `python setup.py install`. Or just copy the barcode dir somewhere in
 your PYTHONPATH.
+
+The best way is to use pip: `pip install pyBarcode`.
 
 
 Provided Barcodes
@@ -35,6 +41,7 @@ Todo
     - Add documentation
     - Add more codes
     - Improve Python 3 support
+    - Add simple GUI
 
 Usage
 -----
@@ -79,13 +86,20 @@ Interactive::
 Now open ean13_barcode.[svg|png] in a graphic app or simply in your browser
 and see the created barcode. That's it.
 
+Commandline usage
+-----------------
+
+    $ pybarcode create "My Text" outfile
+    New barcode saved as outfile.svg.
+
+    Try `pybarcode -h` for help.
 
 Changelog
 ---------
 
 :v0.7: Fixed some issues with fontsize and fontalignment.
        Added Python 3 support. It's not well tested yet, but the tests
-       run without errors with Python 3.3.
+       run without errors with Python 3.3. Commandline script added.
 
 :v0.6: Changed save and write methods to take the options as a dict
          not as keyword arguments (fix this in your code). Added option

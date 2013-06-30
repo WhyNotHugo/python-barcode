@@ -19,7 +19,7 @@ __author_email__ = 'weimann@ymail.com'
 __description__ = ('Create standard barcodes with Python. No external '
                    'modules needed (optional PIL support included).')
 __version__ = '0.7'
-__release__ = '0.7beta3'
+__release__ = '0.7beta4'
 __license__ = 'MIT'
 __url__ = 'https://code.google.com/p/python-barcode/'
 __classifiers__ = [
