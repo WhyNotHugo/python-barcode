@@ -86,11 +86,12 @@ Interactive::
 Now open ean13_barcode.[svg|png] in a graphic app or simply in your browser
 and see the created barcode. That's it.
 
-Commandline usage
------------------
+Commandline::
 
-    $ pybarcode create "My Text" outfile
+    $ pybarcode{2,3} create "My Text" outfile
     New barcode saved as outfile.svg.
+    $ pybarcode{2,3} create -t png "My Text" outfile
+    New barcode saved as outfile.png.
 
     Try `pybarcode -h` for help.
 
