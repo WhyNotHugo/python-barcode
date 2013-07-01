@@ -24,7 +24,8 @@ To generate barcodes as SVG objects, you can use the default writer
 Quick example::
 
     >>> import barcode
-    >>> ean = barcode.get_barcode('ean', '123456789102')
+    >>> ean = barcode.get('ean13', '123456789102')
+    # Now we look if the checksum was added
     >>> ean.get_fullcode()
     u'1234567891026'
     >>> filename = ean.save('ean13')
@@ -41,16 +42,17 @@ working directory. Open it and see the result.
 Creating barcodes as Image
 --------------------------
 
+.. versionadded:: 0.4b1
+
 To generate barcodes as images, you must provide the ImageWriter to the
-`get_barcode` function. Without any options, the images are rendered
+`get` function. Without any options, the images are rendered
 as PNG.
 
 Quick example::
 
     >>> import barcode
     >>> from barcode.writer import ImageWriter
-    >>> ean = barcode.get_barcode('ean', '123456789102', writer=ImageWriter())
+    >>> ean = barcode.get('ean13', '123456789102', writer=ImageWriter())
     >>> filename = ean.save('ean13')
     >>> filename
     u'ean13.png'
-

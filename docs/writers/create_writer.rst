@@ -9,5 +9,3 @@ In your __init__ method call BaseWriter's __init__ and give your callbacks for
 Now instatiate a new barcode and give an instance of your new writer as
 argument. If you now call `render` on the barcode instance your callbacks
 get called.
-
-

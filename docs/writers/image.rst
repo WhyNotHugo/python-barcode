@@ -1,6 +1,8 @@
 pyBarcode ImageWriter
 =====================
 
+.. versionadded:: 0.4b1
+
 Creates barcodes as image. All imagetypes supported by PIL are availble.
 
 Special Options
@@ -14,7 +16,7 @@ Special Options:
 
 :format:
     The image file format as *string*. All formats supported by PIL are
-    valid (e.g. PNG, JPG, BMP, ...).
+    valid (e.g. PNG, JPEG, BMP, ...).
     Defaults to **PNG**.
 
 :dpi:

@@ -10,6 +10,7 @@ Contents
    :maxdepth: 2
 
    barcode
+   commandline
    codes
    writers/index
    license

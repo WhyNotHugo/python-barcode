@@ -6,7 +6,7 @@ This package is distributed under the MIT license:
 The MIT License
 ---------------
 
-Copyright (c) 2010 Thorsten Weimann
+Copyright (c) 2010-2013 Thorsten Weimann
 
 ::
 
