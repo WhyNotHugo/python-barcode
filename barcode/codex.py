@@ -10,6 +10,7 @@ __docformat__ = 'restructuredtext en'
 import string
 
 from barcode.base import Barcode
+from barcode.charsets import code128
 from barcode.errors import *
 
 
@@ -44,23 +45,16 @@ MIDDLE = '0'
 # MAP for assigning every symbol (REF) to (reference number, barcode)
 MAP = dict(zip(REF, enumerate(CODES)))
 
-# Code 128
-CODE128 = (
-    (dict(A=' ', B=' ', C='00'), '11011001100'),
-    (dict(A='!', B='!', C='01'), '11001101100'),
-    (dict(A='"', B='"', C='02'), '11001100110'),
-    (dict(A='#', B='#', C='03'), '10010011000'),
-    (dict(A='$', B='$', C='04'), '10010001100'),
-    (dict(A='%', B='%', C='05'), '10001001100'),
-    (dict(A='&', B='&', C='06'), '10011001000'),
-    (dict(A="'", B="'", C='07'), '10011000100'),
-    (dict(A='(', B='(', C='08'), '10001100100'),
-    (dict(A=')', B=')', C='09'), '11001001000'),
-)
-MAP128 = dict(A={}, B={}, C={})
-for c in ('A', 'B', 'C'):
-    for i, code in enumerate(CODE128):
-        MAP128[c][code[0][c]] = i
+
+def check_code(code, name, allowed):
+    wrong = []
+    for char in code:
+        if char not in allowed:
+            wrong.append(char)
+    if wrong:
+        raise IllegalCharacterError('The following characters are not '
+            'valid for {name}: {wrong}'.format(name=name,
+                wrong=', '.join(wrong)))
 
 
 class Code39(Barcode):
@@ -79,15 +73,11 @@ class Code39(Barcode):
     name = 'Code 39'
 
     def __init__(self, code, writer=None, add_checksum=True):
-        code = code.upper()
-        for char in code:
-            if char not in REF:
-                raise IllegalCharacterError('Character {0!r} not valid for '
-                                            'Code 39.'.format(char))
-        self.code = code
+        self.code = code.upper()
         if add_checksum:
             self.code += self.calculate_checksum()
         self.writer = writer or Barcode.default_writer()
+        check_code(self.code, self.name, REF)
 
     def __unicode__(self):
         return self.code
@@ -157,3 +147,73 @@ class PZN(Code39):
 class Code128(Barcode):
 
     name = 'Code 128'
+
+    def __init__(self, code, writer=None, add_checksum=True):
+        self.code = code
+        self.add_checksum = add_checksum
+        self.writer = writer or Barcode.default_writer()
+        self._charset = 'B'
+        self._buffer = ''
+        check_code(self.code, self.name, code128.ALL)
+
+    def __unicode__(self):
+        return self.code
+
+    __str__ = __unicode__
+
+    def get_fullcode(self):
+        return self.code
+
+    def calculate_checksum(self):
+        return ''
+
+    def _new_charset(self, which):
+        if which == 'A':
+            code = self._convert('TO_A')
+        elif which == 'B':
+            code = self._convert('TO_B')
+        elif which == 'C':
+            code = self._convert('TO_C')
+        self._charset = which
+        return [code]
+
+    def _maybe_switch_charset(self, pos):
+        char = self.code[pos]
+        next_ = self.code[i:i + 10]
+
+        def look_next():
+            digits = 0
+            for c in next_:
+                if c.isdigit():
+                    digits += 1
+                else:
+                    break
+            return digits > 3
+
+        codes = []
+        if self._charset == 'C' and not char.isdigit():
+            if char in code128.B.keys():
+                codes = self._new_charset('B')
+            elif char in code128.A.keys():
+                codes = self._new_charset('A')
+            if len(self._buffer) == 1:
+                codes.append(self._convert(self._buffer[0]))
+                self._buffer = ''
+        elif self._charset == 'B':
+            if look_next():
+                codes = self._new_charset('C')
+            elif char not in code128.B.keys():
+                if char in code128.A.keys():
+                    codes = self._new_charset('A')
+        elif self._charset == 'A':
+            if look_next():
+                codes = self._new_charset('C')
+            elif char not in code128.A.keys():
+                if char in code128.B.keys():
+                    codes = self._new_charset('B')
+        return codes
+
+    def build(self):
+        encoded = [code128.START_CODES[self._charset]]
+        for i, char in enumerate(self.code):
+            encoded.extend(self._maybe_switch_charset(i))
