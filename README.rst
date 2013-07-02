@@ -32,7 +32,7 @@ The best way is to use pip: `pip install pyBarcode`.
 Provided Barcodes
 -----------------
 
-EAN-8, EAN-13, UPC-A, JAN, ISBN-10, ISBN-13, ISSN, Code 39, PZN
+EAN-8, EAN-13, UPC-A, JAN, ISBN-10, ISBN-13, ISSN, Code 39, Code 128, PZN
 
 
 Todo
@@ -97,6 +97,9 @@ Commandline::
 
 Changelog
 ---------
+
+:v0.8: Code 128 added. Data for charsets and bars moved to subpackage
+       barcode.charsets.
 
 :v0.7: Fixed some issues with fontsize and fontalignment.
        Added Python 3 support. It's not well tested yet, but the tests

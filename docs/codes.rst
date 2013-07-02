@@ -13,6 +13,20 @@ Class Hirarchy
 .. inheritance-diagram:: barcode.codex.Code39
    :parts: 1
 
+Code 128
+--------
+
+.. versionadded:: 0.8beta1
+
+.. autoclass:: barcode.codex.Code128
+   :members:
+
+Class Hirachy
+~~~~~~~~~~~~~
+
+.. inheritance-diagram:: barcode.codex.Code128
+   :parts: 1
+
 PZN
 ---
 

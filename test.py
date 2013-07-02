@@ -13,18 +13,17 @@ __docformat__ = 'restructuredtext en'
 import codecs
 import os
 import sys
-import webbrowser
 
 from barcode import get_barcode, get_barcode_class, __version__
 try:
     from barcode.writer import ImageWriter
 except ImportError:
-    ImageWriter = None
+    ImageWriter = None  # lint:ok
 
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 TESTPATH = os.path.join(PATH, 'tests')
-HTMLFILE = os.path.join(TESTPATH, 'tests.html')
+HTMLFILE = os.path.join(TESTPATH, 'index.html')
 
 HTML = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
@@ -59,6 +58,7 @@ TESTCODES = (
     ('issn', '1144875X'),
     ('code39', 'Example Code 39'),
     ('pzn', '487780'),
+    ('code128', 'Example Code 128 998866'),
 )
 
 
@@ -104,4 +104,4 @@ def test():
 
 if __name__ == '__main__':
     test()
-    webbrowser.open(HTMLFILE)
+    print('\nNow open {htmlfile} in your browser.'.format(htmlfile=HTMLFILE))
