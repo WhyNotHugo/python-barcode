@@ -18,8 +18,8 @@ __copyright__ = '2010-2013, ' + __author__
 __author_email__ = 'weimann@ymail.com'
 __description__ = ('Create standard barcodes with Python. No external '
                    'modules needed (optional PIL support included).')
-__version__ = '0.7'
-__release__ = '0.7'
+__version__ = '0.8'
+__release__ = '{version}beta1'.format(version=__version__)
 __license__ = 'MIT'
 __url__ = 'https://bitbucket.org/whitie/python-barcode/'
 __classifiers__ = [
@@ -35,7 +35,7 @@ __classifiers__ = [
 
 
 from barcode.errors import BarcodeNotFoundError
-from barcode.codex import Code39, PZN
+from barcode.codex import Code39, PZN, Code128
 from barcode.ean import EAN8, EAN13, JAN
 from barcode.isxn import ISBN10, ISBN13, ISSN
 from barcode.upc import UPCA
@@ -61,6 +61,7 @@ __BARCODE_MAP = dict(
     issn=ISSN,
     code39=Code39,
     pzn=PZN,
+    code128=Code128,
 )
 
 PROVIDED_BARCODES = list(__BARCODE_MAP.keys())

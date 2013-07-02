@@ -2,48 +2,20 @@
 
 from __future__ import unicode_literals
 
-"""barcode.codex
+"""Module: barcode.codex
 
+:Provided barcodes: Code 39, Code 128, PZN
 """
 __docformat__ = 'restructuredtext en'
 
-import string
-
 from barcode.base import Barcode
-from barcode.charsets import code128
+from barcode.charsets import code128, code39
 from barcode.errors import *
 
 
-# Code stuff
+# Sizes
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 2.54
-REF = (tuple(string.digits) + tuple(string.ascii_uppercase) +
-       ('-', '.', ' ', '$', '/', '+', '%'))
-B = '1'
-E = '0'
-CODES = (
-    '101000111011101', '111010001010111', '101110001010111',
-    '111011100010101', '101000111010111', '111010001110101',
-    '101110001110101', '101000101110111', '111010001011101',
-    '101110001011101', '111010100010111', '101110100010111',
-    '111011101000101', '101011100010111', '111010111000101',
-    '101110111000101', '101010001110111', '111010100011101',
-    '101110100011101', '101011100011101', '111010101000111',
-    '101110101000111', '111011101010001', '101011101000111',
-    '111010111010001', '101110111010001', '101010111000111',
-    '111010101110001', '101110101110001', '101011101110001',
-    '111000101010111', '100011101010111', '111000111010101',
-    '100010111010111', '111000101110101', '100011101110101',
-    '100010101110111', '111000101011101', '100011101011101',
-    '100010001000101', '100010001010001', '100010100010001',
-    '101000100010001',
-)
-
-EDGE = '100010111011101'
-MIDDLE = '0'
-
-# MAP for assigning every symbol (REF) to (reference number, barcode)
-MAP = dict(zip(REF, enumerate(CODES)))
 
 
 def check_code(code, name, allowed):
@@ -62,7 +34,7 @@ class Code39(Barcode):
 
     :parameters:
         code : String
-            Code39 string without \* and checksum (added automatically if
+            Code 39 string without \* and checksum (added automatically if
             `add_checksum` is True).
         writer : barcode.writer Instance
             The writer to render the barcode (default: SVGWriter).
@@ -77,7 +49,7 @@ class Code39(Barcode):
         if add_checksum:
             self.code += self.calculate_checksum()
         self.writer = writer or Barcode.default_writer()
-        check_code(self.code, self.name, REF)
+        check_code(self.code, self.name, code39.REF)
 
     def __unicode__(self):
         return self.code
@@ -88,17 +60,17 @@ class Code39(Barcode):
         return self.code
 
     def calculate_checksum(self):
-        check = sum([MAP[x][0] for x in self.code]) % 43
-        for k, v in MAP.items():
+        check = sum([code39.MAP[x][0] for x in self.code]) % 43
+        for k, v in code39.MAP.items():
             if check == v[0]:
                 return k
 
     def build(self):
-        chars = [EDGE]
+        chars = [code39.EDGE]
         for char in self.code:
-            chars.append(MAP[char][1])
-        chars.append(EDGE)
-        return [MIDDLE.join(chars)]
+            chars.append(code39.MAP[char][1])
+        chars.append(code39.EDGE)
+        return [code39.MIDDLE.join(chars)]
 
     def render(self, writer_options):
         options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
@@ -145,6 +117,15 @@ class PZN(Code39):
 
 
 class Code128(Barcode):
+    """Initializes a new Code128 instance. The checksum is added automatically
+    when building the bars.
+
+    :parameters:
+        code : String
+            Code 128 string without checksum (added automatically).
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+    """
 
     name = 'Code 128'
 
@@ -179,7 +160,7 @@ class Code128(Barcode):
 
     def _maybe_switch_charset(self, pos):
         char = self.code[pos]
-        next_ = self.code[i:i + 10]
+        next_ = self.code[pos:pos + 10]
 
         def look_next():
             digits = 0
