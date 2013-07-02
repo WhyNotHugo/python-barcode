@@ -173,9 +173,9 @@ class Code128(Barcode):
 
         codes = []
         if self._charset == 'C' and not char.isdigit():
-            if char in code128.B.keys():
+            if char in code128.B:
                 codes = self._new_charset('B')
-            elif char in code128.A.keys():
+            elif char in code128.A:
                 codes = self._new_charset('A')
             if len(self._buffer) == 1:
                 codes.append(self._convert(self._buffer[0]))
@@ -183,14 +183,14 @@ class Code128(Barcode):
         elif self._charset == 'B':
             if look_next():
                 codes = self._new_charset('C')
-            elif char not in code128.B.keys():
-                if char in code128.A.keys():
+            elif char not in code128.B:
+                if char in code128.A:
                     codes = self._new_charset('A')
         elif self._charset == 'A':
             if look_next():
                 codes = self._new_charset('C')
-            elif char not in code128.A.keys():
-                if char in code128.B.keys():
+            elif char not in code128.A:
+                if char in code128.B:
                     codes = self._new_charset('B')
         return codes
 
@@ -200,7 +200,7 @@ class Code128(Barcode):
         elif self._charset == 'B':
             return code128.B[char]
         elif self._charset == 'C':
-            if char in code128.C.keys():
+            if char in code128.C:
                 return code128.C[char]
             elif char.isdigit():
                 self._buffer += char
