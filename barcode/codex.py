@@ -148,9 +148,8 @@ class Code128(Barcode):
 
     name = 'Code 128'
 
-    def __init__(self, code, writer=None, add_checksum=True):
+    def __init__(self, code, writer=None):
         self.code = code
-        self.add_checksum = add_checksum
         self.writer = writer or Barcode.default_writer()
         self._charset = 'B'
         self._buffer = ''
@@ -161,11 +160,12 @@ class Code128(Barcode):
 
     __str__ = __unicode__
 
+    @property
+    def encoded(self):
+        return self._build()
+
     def get_fullcode(self):
         return self.code
-
-    def calculate_checksum(self):
-        return ''
 
     def _new_charset(self, which):
         if which == 'A':
@@ -213,7 +213,53 @@ class Code128(Barcode):
                     codes = self._new_charset('B')
         return codes
 
-    def build(self):
+    def _convert(self, char):
+        if self._charset == 'A':
+            return code128.A[char]
+        elif self._charset == 'B':
+            return code128.B[char]
+        elif self._charset == 'C':
+            if char in code128.C.keys():
+                return code128.C[char]
+            elif char.isdigit():
+                self._buffer += char
+                if len(self._buffer) == 2:
+                    value = int(self._buffer)
+                    self._buffer = ''
+                    return value
+
+    def _try_to_optimize(self, encoded):
+        if encoded[1] in code128.TO:
+            encoded[:2] = [code128.TO[encoded[1]]]
+        return encoded
+
+    def _calculate_checksum(self, encoded):
+        cs = [encoded.pop(0)]
+        for i, code_num in enumerate(encoded, start=1):
+            cs.append(i * code_num)
+        return sum(cs) % 103
+
+    def _build(self):
         encoded = [code128.START_CODES[self._charset]]
         for i, char in enumerate(self.code):
             encoded.extend(self._maybe_switch_charset(i))
+            code_num = self._convert(char)
+            if code_num is not None:
+                encoded.append(code_num)
+        # Finally look in the buffer
+        if len(self._buffer) == 1:
+            encoded.extend(self._new_charset('B'))
+            encoded.append(self._convert(self._buffer[0]))
+            self._buffer = ''
+        encoded = self._try_to_optimize(encoded)
+        return encoded
+
+    def build(self):
+        encoded = self._build()
+        encoded.append(self._calculate_checksum(encoded))
+        code = ''
+        for code_num in encoded:
+            code += code128.CODES[code_num]
+        code += code128.STOP
+        code += '11'
+        return [code]
