@@ -2,7 +2,9 @@
 
 from __future__ import unicode_literals
 
-"""barcode.isxn
+"""Module: barcode.isxn
+
+:Provided barcodes: ISBN-13, ISBN-10, ISSN
 
 This module provides some special codes, which are no standalone barcodes.
 All codes where transformed to EAN-13 barcodes. In every case, the checksum

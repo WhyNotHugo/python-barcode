@@ -50,8 +50,8 @@ Interactive::
 
     >>> import barcode
     >>> barcode.PROVIDED_BARCODES
-    [u'code39', u'ean', u'ean13', u'ean8', u'gs1', u'gtin', u'isbn', u'isbn10',
-     u'isbn13', u'issn', u'jan', u'pzn', u'upc', u'upca']
+    [u'code39', u'code128', u'ean', u'ean13', u'ean8', u'gs1', u'gtin',
+     u'isbn', u'isbn10', u'isbn13', u'issn', u'jan', u'pzn', u'upc', u'upca']
     >>> EAN = barcode.get_barcode_class('ean13')
     >>> EAN
     <class 'barcode.ean.EuropeanArticleNumber13'>

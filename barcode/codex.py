@@ -244,3 +244,8 @@ class Code128(Barcode):
         code += code128.STOP
         code += '11'
         return [code]
+
+    def render(self, writer_options):
+        options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
+        options.update(writer_options or {})
+        return Barcode.render(self, options)

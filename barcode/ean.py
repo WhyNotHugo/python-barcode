@@ -2,11 +2,13 @@
 
 from __future__ import unicode_literals
 
-"""barcode.ean
+"""Module: barcode.ean
 
+:Provided barcodes: EAN-13, EAN-8, JAN
 """
 
 from barcode.base import Barcode
+from barcode.charsets import ean as _ean
 from barcode.errors import *
 
 # Python 3
@@ -19,18 +21,6 @@ except NameError:
 # EAN13 Specs (all sizes in mm)
 SIZES = dict(SC0=0.27, SC1=0.297, SC2=0.33, SC3=0.363, SC4=0.396, SC5=0.445,
              SC6=0.495, SC7=0.544, SC8=0.61, SC9=0.66)
-EDGE = '101'
-MIDDLE = '01010'
-CODES = {
-    'A': ('0001101', '0011001', '0010011', '0111101', '0100011',
-          '0110001', '0101111', '0111011', '0110111', '0001011'),
-    'B': ('0100111', '0110011', '0011011', '0100001', '0011101',
-          '0111001', '0000101', '0010001', '0001001', '0010111'),
-    'C': ('1110010', '1100110', '1101100', '1000010', '1011100',
-          '1001110', '1010000', '1000100', '1001000', '1110100'),
-}
-LEFT_PATTERN = ('AAAAAA', 'AABABB', 'AABBAB', 'AABBBA', 'ABAABB',
-                'ABBAAB', 'ABBBAA', 'ABABAB', 'ABABBA', 'ABBABA')
 
 
 class EuropeanArticleNumber13(Barcode):
@@ -50,7 +40,7 @@ class EuropeanArticleNumber13(Barcode):
     def __init__(self, ean, writer=None):
         ean = ean[:self.digits]
         if not ean.isdigit():
-            raise IllegalCharacterError('Code can only contain numbers.')
+            raise IllegalCharacterError('EAN code can only contain numbers.')
         self.ean = ean
         self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
@@ -80,14 +70,14 @@ class EuropeanArticleNumber13(Barcode):
         :returns: The pattern as string
         :rtype: String
         """
-        code = EDGE[:]
-        pattern = LEFT_PATTERN[int(self.ean[0])]
+        code = _ean.EDGE[:]
+        pattern = _ean.LEFT_PATTERN[int(self.ean[0])]
         for i, number in enumerate(self.ean[1:7]):
-            code += CODES[pattern[i]][int(number)]
-        code += MIDDLE
+            code += _ean.CODES[pattern[i]][int(number)]
+        code += _ean.MIDDLE
         for number in self.ean[7:]:
-            code += CODES['C'][int(number)]
-        code += EDGE
+            code += _ean.CODES['C'][int(number)]
+        code += _ean.EDGE
         return [code]
 
     def to_ascii(self):
@@ -122,8 +112,8 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
     def __init__(self, jan, writer=None):
         if int(jan[:3]) not in JapanArticleNumber.valid_country_codes:
-            raise WrongCountryCodeError("Country code isn't between 450-460 or "
-                                        "490-500.")
+            raise WrongCountryCodeError("Country code isn't between 450-460 "
+                                        "or 490-500.")
         EuropeanArticleNumber13.__init__(self, jan, writer)
 
 
@@ -161,13 +151,13 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         :returns: The pattern as string
         :rtype: String
         """
-        code = EDGE[:]
+        code = _ean.EDGE[:]
         for number in self.ean[:4]:
-            code += CODES['A'][int(number)]
-        code += MIDDLE
+            code += _ean.CODES['A'][int(number)]
+        code += _ean.MIDDLE
         for number in self.ean[4:]:
-            code += CODES['C'][int(number)]
-        code += EDGE
+            code += _ean.CODES['C'][int(number)]
+        code += _ean.EDGE
         return [code]
 
 

@@ -2,8 +2,9 @@
 
 from __future__ import unicode_literals
 
-"""barcode.upc
+"""Module: barcode.upc
 
+:Provided barcodes: UPC-A
 """
 __docformat__ = 'restructuredtext en'
 
