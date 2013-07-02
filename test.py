@@ -114,6 +114,7 @@ class TestBarcodeBuilds(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
     test()
     print('\nNow open {htmlfile} in your browser.'.format(htmlfile=HTMLFILE))
+    unittest.main()
+
