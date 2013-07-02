@@ -13,6 +13,7 @@ __docformat__ = 'restructuredtext en'
 import codecs
 import os
 import sys
+import unittest
 
 from barcode import get_barcode, get_barcode_class, __version__
 try:
@@ -102,6 +103,17 @@ def test():
         f.write(HTML.format(version=__version__, body=obj))
 
 
+class TestBarcodeBuilds(unittest.TestCase):
+
+    def test_ean8(self):
+        ref = ('1010100011000110100100110101111010101000100'
+               '100010011100101001000101')
+        ean = get_barcode('ean8', '40267708')
+        bc = ean.build()
+        self.assertEqual(ref, bc[0])
+
+
 if __name__ == '__main__':
+    unittest.main()
     test()
     print('\nNow open {htmlfile} in your browser.'.format(htmlfile=HTMLFILE))
