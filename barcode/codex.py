@@ -215,8 +215,8 @@ class Code128(Barcode):
         return encoded
 
     def _calculate_checksum(self, encoded):
-        cs = [encoded.pop(0)]
-        for i, code_num in enumerate(encoded, start=1):
+        cs = [encoded[0]]
+        for i, code_num in enumerate(encoded[1:], start=1):
             cs.append(i * code_num)
         return sum(cs) % 103
 
