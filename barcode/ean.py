@@ -143,7 +143,7 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         sum_ = lambda x, y: int(x) + int(y)
         evensum = reduce(sum_, self.ean[::2])
         oddsum = reduce(sum_, self.ean[1::2])
-        return 10 - ((evensum * 3 + oddsum) % 10)
+        return (10 - ((evensum * 3 + oddsum) % 10)) % 10
 
     def build(self):
         """Builds the barcode pattern from `self.ean`.
