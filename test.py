@@ -60,6 +60,7 @@ TESTCODES = (
     ('code39', 'Example Code 39'),
     ('pzn', '487780'),
     ('code128', 'Example Code 128 998866'),
+    ('itf', '12341234'),
 )
 
 
