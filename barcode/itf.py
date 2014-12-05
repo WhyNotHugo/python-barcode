@@ -60,7 +60,6 @@ class ITF(Barcode):
                 data += itf.CODES[bars_digit][j].upper()
                 data += itf.CODES[spaces_digit][j].lower()
         data += itf.STOP
-        print data
         raw = ''
         for e in data:
             if e == 'W':
