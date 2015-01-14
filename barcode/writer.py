@@ -95,7 +95,7 @@ class BaseWriter(object):
 
         :parameters:
             modules_per_line : Integer
-                Number of mudules in one line.
+                Number of modules in one line.
             number_of_lines : Integer
                 Number of lines of the barcode.
             dpi : Integer
@@ -164,27 +164,44 @@ class BaseWriter(object):
         if self._callbacks['initialize'] is not None:
             self._callbacks['initialize'](code)
         ypos = 1.0
-        for line in code:
+        for cc, line in enumerate(code):
+            """
+            Pack line to list give better gfx result, otherwise in can result in aliasing gaps
+            '11010111' -> [2, -1, 1, -1, 3]
+            """			
+            line += ' ' 
+            c = 1
+            mlist = []
+            for i in range(0, len(line) - 1):
+                if line[i] == line[i+1]:
+                    c += 1
+                else:
+                    if line[i] == "1":
+                        mlist.append(c)
+                    else:
+                        mlist.append(-c)
+                    c = 1
             # Left quiet zone is x startposition
             xpos = self.quiet_zone
-            for mod in line:
-                if mod == '0':
+            bxs = xpos # x start of barcode			
+            for mod in mlist:
+                if mod < 1:
                     color = self.background
                 else:
                     color = self.foreground
-                self._callbacks['paint_module'](xpos, ypos, self.module_width,
-                                                color)
-                xpos += self.module_width
-            # Add right quiet zone to every line
-            self._callbacks['paint_module'](xpos, ypos, self.quiet_zone,
-                                            self.background)
+                self._callbacks['paint_module'](xpos, ypos, self.module_width * abs(mod), color) # remove painting for background colored tiles?
+                xpos += self.module_width * abs(mod)
+            bxe = xpos - self.module_width * abs(mod) # x end of barcode
+            # Add right quiet zone to every line, except last line, quiet zone already provided with background, should it be removed complety?
+            if (cc + 1) != len(code):
+                self._callbacks['paint_module'](xpos, ypos, self.quiet_zone, self.background)
             ypos += self.module_height
         if self.text and self._callbacks['paint_text'] is not None:
             ypos += self.text_distance
             if self.center_text:
-                xpos = xpos / 2.0
+                xpos = bxs + ((bxe - bxs) / 2.0) # better center position for text
             else:
-                xpos = self.quiet_zone + 4.0
+                xpos = bxs
             self._callbacks['paint_text'](xpos, ypos)
         return self._callbacks['finish']()
 
@@ -198,6 +215,7 @@ class SVGWriter(BaseWriter):
         self.dpi = 25.4
         self._document = None
         self._root = None
+        self._group = None
 
     def _init(self, code):
         width, height = self.calculate_size(len(code[0]), len(code), self.dpi)
@@ -206,11 +224,16 @@ class SVGWriter(BaseWriter):
         attributes = dict(width=SIZE.format(width), height=SIZE.format(height))
         _set_attributes(self._root, **attributes)
         self._root.appendChild(self._document.createComment(COMMENT))
+        # create group for easier handling in 3th party software like corel draw, inkscape, ...
+        group = self._document.createElement('g')
+        attributes = dict(id='barcode_group')
+        _set_attributes(group, **attributes)
+        self._group = self._root.appendChild(group)		
         background = self._document.createElement('rect')
         attributes = dict(width='100%', height='100%',
                           style='fill:{0}'.format(self.background))
         _set_attributes(background, **attributes)
-        self._root.appendChild(background)
+        self._group.appendChild(background)
 
     def _create_module(self, xpos, ypos, width, color):
         element = self._document.createElement('rect')
@@ -219,7 +242,7 @@ class SVGWriter(BaseWriter):
                           height=SIZE.format(self.module_height),
                           style='fill:{0};'.format(color))
         _set_attributes(element, **attributes)
-        self._root.appendChild(element)
+        self._group.appendChild(element)
 
     def _create_text(self, xpos, ypos):
         element = self._document.createElement('text')
@@ -230,7 +253,7 @@ class SVGWriter(BaseWriter):
         _set_attributes(element, **attributes)
         text_element = self._document.createTextNode(self.text)
         element.appendChild(text_element)
-        self._root.appendChild(element)
+        self._group.appendChild(element)
 
     def _finish(self):
         if self.compress:
