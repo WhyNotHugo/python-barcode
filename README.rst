@@ -1,3 +1,5 @@
+![example_ean13.png](https://bitbucket.org/repo/rXdyBE/images/1631728592-example_ean13.png)
+
 pyBarcode
 =========
 
@@ -146,4 +148,3 @@ Changelog
 :v0.2: More tests added.
 
 :v0.1: First release.
-
