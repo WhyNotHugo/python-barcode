@@ -87,6 +87,7 @@ class BaseWriter(object):
         self.background = 'white'
         self.foreground = 'black'
         self.text = ''
+        self.human = '' # human readable text
         self.text_distance = 5
         self.center_text = True
 
@@ -251,7 +252,12 @@ class SVGWriter(BaseWriter):
                                 'middle;'.format(self.foreground,
                                                  self.font_size))
         _set_attributes(element, **attributes)
-        text_element = self._document.createTextNode(self.text)
+        # check option to override self.text with self.human (barcode as human readable data, can be used to print own formats)
+        if self.human != '':
+            barcodetext = self.human
+        else:
+            barcodetext = self.text
+        text_element = self._document.createTextNode(barcodetext)
         element.appendChild(text_element)
         self._group.appendChild(element)
 
