@@ -192,7 +192,7 @@ class BaseWriter(object):
                     color = self.foreground
                 self._callbacks['paint_module'](xpos, ypos, self.module_width * abs(mod), color) # remove painting for background colored tiles?
                 xpos += self.module_width * abs(mod)
-            bxe = xpos - self.module_width * abs(mod) # x end of barcode
+            bxe = xpos
             # Add right quiet zone to every line, except last line, quiet zone already provided with background, should it be removed complety?
             if (cc + 1) != len(code):
                 self._callbacks['paint_module'](xpos, ypos, self.quiet_zone, self.background)
