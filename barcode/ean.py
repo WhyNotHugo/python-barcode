@@ -41,6 +41,9 @@ class EuropeanArticleNumber13(Barcode):
         ean = ean[:self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError('EAN code can only contain numbers.')
+        if len(ean) != self.digits:
+            raise NumberOfDigitsError('EAN must have {0} digits, not '
+                                      '{1}.'.format(self.digits, len(ean)))
         self.ean = ean
         self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
