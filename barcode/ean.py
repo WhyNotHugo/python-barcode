@@ -59,7 +59,7 @@ class EuropeanArticleNumber13(Barcode):
         :returns: The checksum for `self.ean`.
         :rtype: Integer
         """
-        sum_ = lambda x, y: int(x) + int(y)
+        def sum_(x, y): return lambda x, y: int(x) + int(y)
         evensum = reduce(sum_, self.ean[::2])
         oddsum = reduce(sum_, self.ean[1::2])
         return (10 - ((evensum + oddsum * 3) % 10)) % 10
@@ -140,7 +140,7 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         :returns: The checksum for `self.ean`.
         :rtype: Integer
         """
-        sum_ = lambda x, y: int(x) + int(y)
+        def sum_(x, y): return lambda x, y: int(x) + int(y)
         evensum = reduce(sum_, self.ean[::2])
         oddsum = reduce(sum_, self.ean[1::2])
         return (10 - ((evensum * 3 + oddsum) % 10)) % 10
