@@ -7,8 +7,9 @@ Common Writer Options
 ---------------------
 
 All writer take the following options (specified as keyword arguments
-to `Barcode.save(filename, option=value)` or set via
-`Writer.set_options(option=value)`).
+to `Barcode.save(filename, options)` or set via
+`Writer.set_options(options)`, where `options` is a dictionary where keys are option names and values are option
+values to be set).
 
 .. note::
    See the documentation of the specific writer for special options,
