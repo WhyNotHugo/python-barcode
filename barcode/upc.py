@@ -76,7 +76,7 @@ class UniversalProductCodeA(Barcode):
         :return: The pattern as string
         :rtype: String
         """
-        code = _upc.EDGE
+        code = _upc.EDGE[:]
 
         for i, number in enumerate(self.upc[0:6]):
             code += _upc.CODES['L'][int(number)]
