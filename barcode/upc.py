@@ -20,13 +20,15 @@ class UniversalProductCodeA(Barcode):
             The upc number as string.
         writer : barcode.writer Instance
             The writer to render the barcode (default: SVGWriter).
+        make_ean: boolean
     """
 
     name = 'UPC-A'
 
     digits = 11
 
-    def __init__(self, upc, writer=None):
+    def __init__(self, upc, writer=None, make_ean=False):
+        self.ean = make_ean
         upc = upc[:self.digits]
         if not upc.isdigit():
             raise IllegalCharacterError('UPC code can only contain numbers.')
@@ -38,7 +40,10 @@ class UniversalProductCodeA(Barcode):
         self.writer = writer or Barcode.default_writer()
 
     def __unicode__(self):
-        return self.upc
+        if self.ean:
+            return '0' + self.upc
+        else:
+            return self.upc
 
     __str__ = __unicode__
 
@@ -68,7 +73,6 @@ class UniversalProductCodeA(Barcode):
         :return: The pattern as string
         :rtype: String
         """
-        print self.upc
         code = _upc.EDGE
 
         for i, number in enumerate(self.upc[0:6]):
