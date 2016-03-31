@@ -48,7 +48,10 @@ class UniversalProductCodeA(Barcode):
     __str__ = __unicode__
 
     def get_fullcode(self):
-        return self.upc
+        if self.ean:
+            return '0' + self.upc
+        else:
+            return  self.upc
 
     def calculate_checksum(self):
         """Calculates the checksum for UPCA/UPC codes
