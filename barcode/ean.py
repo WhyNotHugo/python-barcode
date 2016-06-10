@@ -37,7 +37,10 @@ class EuropeanArticleNumber13(Barcode):
 
     digits = 12
 
-    def __init__(self, ean, writer=None):
+    def __init__(self, ean, writer=None, **kwargs):
+        no_checksum = False
+        if "no_checksum" in kwargs.keys():
+            no_checksum = kwargs["no_checksum"]
         ean = ean[:self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError('EAN code can only contain numbers.')
@@ -45,7 +48,12 @@ class EuropeanArticleNumber13(Barcode):
             raise NumberOfDigitsError('EAN must have {0} digits, not '
                                       '{1}.'.format(self.digits, len(ean)))
         self.ean = ean
-        self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
+        # If no checksum 
+        if no_checksum:
+            # Add a thirteen char if given in parameter, otherwise pad with zero
+            self.ean = '{0}{1}'.format(ean, ean[self.digits] if len(ean) > self.digits else 0)
+        else:
+            self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
 
     def __unicode__(self):
