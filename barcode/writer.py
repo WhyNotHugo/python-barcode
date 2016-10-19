@@ -14,8 +14,9 @@ except ImportError:
     try:
         from PIL import Image, ImageDraw, ImageFont  # lint:ok
     except ImportError:
-        import sys
-        sys.stderr.write('PIL not found. Image output disabled.\n\n')
+        import logging
+        log = logging.getLogger('pyBarcode')
+        log.info('PIL not found. Image output disabled')
         Image = ImageDraw = ImageFont = None  # lint:ok
 
 
