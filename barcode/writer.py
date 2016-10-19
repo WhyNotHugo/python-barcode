@@ -9,7 +9,9 @@ import xml.dom
 from barcode import __release__
 
 try:
-    import Image, ImageDraw, ImageFont
+    import Image
+    import ImageDraw
+    import ImageFont
 except ImportError:
     try:
         from PIL import Image, ImageDraw, ImageFont  # lint:ok
@@ -79,8 +81,10 @@ class BaseWriter(object):
 
     def __init__(self, initialize=None, paint_module=None, paint_text=None,
                  finish=None):
-        self._callbacks = dict(initialize=initialize, paint_module=paint_module,
-                               paint_text=paint_text, finish=finish)
+        self._callbacks = dict(
+            initialize=initialize, paint_module=paint_module,
+            paint_text=paint_text, finish=finish
+        )
         self.module_width = 10
         self.module_height = 10
         self.font_size = 10
@@ -88,7 +92,7 @@ class BaseWriter(object):
         self.background = 'white'
         self.foreground = 'black'
         self.text = ''
-        self.human = '' # human readable text
+        self.human = ''  # human readable text
         self.text_distance = 5
         self.center_text = True
 
@@ -168,10 +172,11 @@ class BaseWriter(object):
         ypos = 1.0
         for cc, line in enumerate(code):
             """
-            Pack line to list give better gfx result, otherwise in can result in aliasing gaps
+            Pack line to list give better gfx result, otherwise in can
+            result in aliasing gaps
             '11010111' -> [2, -1, 1, -1, 3]
-            """			
-            line += ' ' 
+            """
+            line += ' '
             c = 1
             mlist = []
             for i in range(0, len(line) - 1):
@@ -185,23 +190,31 @@ class BaseWriter(object):
                     c = 1
             # Left quiet zone is x startposition
             xpos = self.quiet_zone
-            bxs = xpos # x start of barcode			
+            bxs = xpos  # x start of barcode
             for mod in mlist:
                 if mod < 1:
                     color = self.background
                 else:
                     color = self.foreground
-                self._callbacks['paint_module'](xpos, ypos, self.module_width * abs(mod), color) # remove painting for background colored tiles?
+                # remove painting for background colored tiles?
+                self._callbacks['paint_module'](
+                    xpos, ypos, self.module_width * abs(mod), color
+                )
                 xpos += self.module_width * abs(mod)
             bxe = xpos
-            # Add right quiet zone to every line, except last line, quiet zone already provided with background, should it be removed complety?
+            # Add right quiet zone to every line, except last line,
+            # quiet zone already provided with background,
+            # should it be removed complety?
             if (cc + 1) != len(code):
-                self._callbacks['paint_module'](xpos, ypos, self.quiet_zone, self.background)
+                self._callbacks['paint_module'](
+                    xpos, ypos, self.quiet_zone, self.background
+                )
             ypos += self.module_height
         if self.text and self._callbacks['paint_text'] is not None:
             ypos += self.text_distance
             if self.center_text:
-                xpos = bxs + ((bxe - bxs) / 2.0) # better center position for text
+                # better center position for text
+                xpos = bxs + ((bxe - bxs) / 2.0)
             else:
                 xpos = bxs
             self._callbacks['paint_text'](xpos, ypos)
@@ -226,11 +239,12 @@ class SVGWriter(BaseWriter):
         attributes = dict(width=SIZE.format(width), height=SIZE.format(height))
         _set_attributes(self._root, **attributes)
         self._root.appendChild(self._document.createComment(COMMENT))
-        # create group for easier handling in 3th party software like corel draw, inkscape, ...
+        # create group for easier handling in 3rd party software
+        # like corel draw, inkscape, ...
         group = self._document.createElement('g')
         attributes = dict(id='barcode_group')
         _set_attributes(group, **attributes)
-        self._group = self._root.appendChild(group)		
+        self._group = self._root.appendChild(group)
         background = self._document.createElement('rect')
         attributes = dict(width='100%', height='100%',
                           style='fill:{0}'.format(self.background))
@@ -253,7 +267,8 @@ class SVGWriter(BaseWriter):
                                 'middle;'.format(self.foreground,
                                                  self.font_size))
         _set_attributes(element, **attributes)
-        # check option to override self.text with self.human (barcode as human readable data, can be used to print own formats)
+        # check option to override self.text with self.human (barcode as
+        # human readable data, can be used to print own formats)
         if self.human != '':
             barcodetext = self.human
         else:

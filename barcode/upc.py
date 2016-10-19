@@ -2,15 +2,16 @@
 
 from __future__ import unicode_literals
 
+from barcode.base import Barcode
+from barcode.charsets import upc as _upc
+from barcode.errors import *
+
 """Module: barcode.upc
 
 :Provided barcodes: UPC-A
 """
 __docformat__ = 'restructuredtext en'
 
-from barcode.base import Barcode
-from barcode.charsets import upc as _upc
-from barcode.errors import *
 
 class UniversalProductCodeA(Barcode):
     """Initializes new UPC-A barcode.
@@ -51,7 +52,7 @@ class UniversalProductCodeA(Barcode):
         if self.ean:
             return '0' + self.upc
         else:
-            return  self.upc
+            return self.upc
 
     def calculate_checksum(self):
         """Calculates the checksum for UPCA/UPC codes
@@ -68,7 +69,6 @@ class UniversalProductCodeA(Barcode):
             return 0
         else:
             return 10 - check
-
 
     def build(self):
         """Builds the barcode pattern from 'self.upc'

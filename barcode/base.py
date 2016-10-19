@@ -52,7 +52,7 @@ class Barcode(object):
         """
         raise NotImplementedError
 
-    def save(self, filename, options=None):
+    def save(self, filename, options=None, text=None):
         """Renders the barcode and saves it in `filename`.
 
         :parameters:
@@ -61,15 +61,17 @@ class Barcode(object):
                 extension).
             options : Dict
                 The same as in `self.render`.
+            text : str (unicode on Python 2)
+                Text to render under the barcode.
 
         :returns: The full filename with extension.
         :rtype: String
         """
-        output = self.render(options)
+        output = self.render(options, text)
         _filename = self.writer.save(filename, output)
         return _filename
 
-    def write(self, fp, options=None):
+    def write(self, fp, options=None, text=None):
         """Renders the barcode and writes it to the file like object
         `fp`.
 
@@ -78,26 +80,33 @@ class Barcode(object):
                 Object to write the raw data in.
             options : Dict
                 The same as in `self.render`.
+            text : str (unicode on Python 2)
+                Text to render under the barcode.
         """
-        output = self.render(options)
+        output = self.render(options, text)
         if hasattr(output, 'tostring'):
             output.save(fp, format=self.writer.format)
         else:
             fp.write(output)
 
-    def render(self, writer_options=None):
+    def render(self, writer_options=None, text=None):
         """Renders the barcode using `self.writer`.
 
         :parameters:
             writer_options : Dict
                 Options for `self.writer`, see writer docs for details.
+            text : str (unicode on Python 2)
+                Text to render under the barcode.
 
         :returns: Output of the writers render method.
         """
         options = Barcode.default_writer_options.copy()
         options.update(writer_options or {})
-        if options['write_text']:
-            options['text'] = self.get_fullcode()
+        if options['write_text'] or text is not None:
+            if text is not None:
+                options['text'] = text
+            else:
+                options['text'] = self.get_fullcode()
         self.writer.set_options(options)
         code = self.build()
         raw = Barcode.raw = self.writer.render(code)

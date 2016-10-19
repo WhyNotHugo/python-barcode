@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from barcode.errors import BarcodeNotFoundError
+from barcode.codex import Code39, PZN, Code128
+from barcode.ean import EAN8, EAN13, JAN
+from barcode.isxn import ISBN10, ISBN13, ISSN
+from barcode.upc import UPCA
+from barcode.itf import ITF
+
 """
 
 pyBarcode
@@ -11,11 +18,12 @@ created as SVG objects. If PIL (Python Imaging Library) is
 installed, the barcodes can also be rendered as images (all
 formats supported by PIL).
 """
+__docformat__ = 'restructuredtext en'
 
 __project__ = 'pyBarcode'
 __author__ = 'Thorsten Weimann'
-__copyright__ = '2010-2013, ' + __author__
-__author_email__ = 'weimann@ymail.com'
+__copyright__ = '2010-2016, ' + __author__
+__author_email__ = 'weimann.th@yahoo.com'
 __description__ = ('Create standard barcodes with Python. No external '
                    'modules needed (optional PIL support included).')
 __version__ = '0.8'
@@ -33,13 +41,6 @@ __classifiers__ = [
     'Topic :: Multimedia :: Graphics',
 ]
 
-
-from barcode.errors import BarcodeNotFoundError
-from barcode.codex import Code39, PZN, Code128
-from barcode.ean import EAN8, EAN13, JAN
-from barcode.isxn import ISBN10, ISBN13, ISSN
-from barcode.upc import UPCA
-from barcode.itf import ITF
 
 try:
     _strbase = basestring  # lint:ok
@@ -86,14 +87,15 @@ def get_class(name):
     return get_barcode(name)
 
 
-def generate(name, code, writer=None, output=None, writer_options=None):
+def generate(name, code, writer=None, output=None, writer_options=None,
+             text=None):
     options = writer_options or {}
     barcode = get_barcode(name, code, writer)
     if isinstance(output, _strbase):
-        fullname = barcode.save(output, options)
+        fullname = barcode.save(output, options, text)
         return fullname
     else:
-        barcode.write(output, options)
+        barcode.write(output, options, text)
 
 
 get_barcode = get

@@ -2,14 +2,15 @@
 
 from __future__ import unicode_literals
 
+from barcode.base import Barcode
+from barcode.charsets import ean as _ean
+from barcode.errors import *
+
 """Module: barcode.ean
 
 :Provided barcodes: EAN-13, EAN-8, JAN
 """
-
-from barcode.base import Barcode
-from barcode.charsets import ean as _ean
-from barcode.errors import *
+__docformat__ = 'restructuredtext en'
 
 # Python 3
 try:
@@ -48,10 +49,13 @@ class EuropeanArticleNumber13(Barcode):
             raise NumberOfDigitsError('EAN must have {0} digits, not '
                                       '{1}.'.format(self.digits, len(ean)))
         self.ean = ean
-        # If no checksum 
+        # If no checksum
         if no_checksum:
-            # Add a thirteen char if given in parameter, otherwise pad with zero
-            self.ean = '{0}{1}'.format(ean, ean[self.digits] if len(ean) > self.digits else 0)
+            # Add a thirteen char if given in parameter,
+            # otherwise pad with zero
+            self.ean = '{0}{1}'.format(
+                ean, ean[self.digits] if len(ean) > self.digits else 0
+            )
         else:
             self.ean = '{0}{1}'.format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()

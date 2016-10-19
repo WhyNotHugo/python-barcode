@@ -2,18 +2,20 @@
 
 from __future__ import unicode_literals
 
+from barcode.base import Barcode
+from barcode.charsets import itf
+from barcode.errors import *
+
 """Module: barcode.itf
 
 :Provided barcodes: Interleaved 2 of 5
 """
 __docformat__ = 'restructuredtext en'
 
-from barcode.base import Barcode
-from barcode.charsets import itf
-from barcode.errors import *
 
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 6.4
+
 
 class ITF(Barcode):
     """Initializes a new ITF instance.
@@ -35,7 +37,7 @@ class ITF(Barcode):
     def __init__(self, code, writer=None, narrow=2, wide=5):
         if not code.isdigit():
             raise IllegalCharacterError('ITF code can only contain numbers.')
-        #Length must be even, prepend 0 if necessary
+        # Length must be even, prepend 0 if necessary
         if len(code) % 2 != 0:
             code = '0' + code
         self.code = code
@@ -73,6 +75,7 @@ class ITF(Barcode):
         return [raw]
 
     def render(self, writer_options):
-        options = dict(module_width=MIN_SIZE/self.narrow, quiet_zone=MIN_QUIET_ZONE)
+        options = dict(module_width=MIN_SIZE/self.narrow,
+                       quiet_zone=MIN_QUIET_ZONE)
         options.update(writer_options or {})
         return Barcode.render(self, options)
