@@ -26,12 +26,11 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 TESTPATH = os.path.join(PATH, 'tests')
 HTMLFILE = os.path.join(TESTPATH, 'index.html')
 
-HTML = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+HTML = """<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>pyBarcode {version} Test</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body>
         <h1>pyBarcode {version} Tests</h1>
@@ -40,12 +39,11 @@ HTML = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 </html>
 """
 
-OBJECTS = ('<p><h2>{name}</h2><br />\n'
-           '<object data="{filename}" type="image/svg+xml">\n'
-           '<param name="src" value="{filename}" /></object>')
+OBJECTS = ('<p><h2>{name}</h2><br>\n'
+           '<img src="{filename}" alt="SVG {name}">\n')
 
-IMAGES = ('<h3>As PNG-Image</h3><br />\n'
-          '<img src="{filename}" alt="{name}" /></p>\n')
+IMAGES = ('<h3>As PNG-Image</h3><br>\n'
+          '<img src="{filename}" alt="PNG {name}"></p>\n')
 
 NO_PIL = '<h3>PIL was not found. No PNG-Image created.</h3></p>\n'
 
@@ -82,10 +80,11 @@ def test():
             options['center_text'] = False
         else:
             options['center_text'] = True
-        filename = bcode.save(os.path.join(TESTPATH, codename), options)
+        filename = bcode.save(os.path.join(TESTPATH, codename),
+                              options=options)
         print('Code: {0}, Input: {1}, Output: {2}'.format(
             bcode.name, code, bcode.get_fullcode()))
-        append(filename, bcode.name)
+        append(os.path.basename(filename), bcode.name)
         if ImageWriter is not None:
             bcodec = get_barcode_class(codename)
             bcode = bcodec(code, writer=ImageWriter())
@@ -93,9 +92,10 @@ def test():
             if codename.startswith('i'):
                 opts['center_text'] = False
             else:
-                options['center_text'] = True
-            filename = bcode.save(os.path.join(TESTPATH, codename), opts)
-            append_img(filename, bcode.name)
+                opts['center_text'] = True
+            filename = bcode.save(os.path.join(TESTPATH, codename),
+                                  options=opts)
+            append_img(os.path.basename(filename), bcode.name)
         else:
             objects.append(NO_PIL)
     # Save htmlfile with all objects

@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from barcode.errors import BarcodeNotFoundError
-from barcode.codex import Code39, PZN, Code128
-from barcode.ean import EAN8, EAN13, JAN
-from barcode.isxn import ISBN10, ISBN13, ISSN
-from barcode.upc import UPCA
-from barcode.itf import ITF
-
 """
 
 pyBarcode
@@ -41,6 +34,12 @@ __classifiers__ = [
     'Topic :: Multimedia :: Graphics',
 ]
 
+from barcode.errors import BarcodeNotFoundError
+from barcode.codex import Code39, PZN, Code128
+from barcode.ean import EAN8, EAN13, JAN
+from barcode.isxn import ISBN10, ISBN13, ISSN
+from barcode.upc import UPCA
+from barcode.itf import ITF
 
 try:
     _strbase = basestring  # lint:ok

@@ -73,10 +73,10 @@ class Code39(Barcode):
         chars.append(code39.EDGE)
         return [code39.MIDDLE.join(chars)]
 
-    def render(self, writer_options):
+    def render(self, writer_options, text=None):
         options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
         options.update(writer_options or {})
-        return Barcode.render(self, options)
+        return Barcode.render(self, options, text)
 
 
 class PZN(Code39):
@@ -246,7 +246,7 @@ class Code128(Barcode):
         code += '11'
         return [code]
 
-    def render(self, writer_options):
+    def render(self, writer_options, text=None):
         options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
         options.update(writer_options or {})
-        return Barcode.render(self, options)
+        return Barcode.render(self, options, text)
