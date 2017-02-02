@@ -34,7 +34,7 @@ The best way is to use pip: `pip install pyBarcode`.
 Provided Barcodes
 -----------------
 
-EAN-8, EAN-13, UPC-A, JAN, ISBN-10, ISBN-13, ISSN, Code 39, Code 128, PZN
+EAN-8, EAN-13, EAN-14, UPC-A, JAN, ISBN-10, ISBN-13, ISSN, Code 39, Code 128, PZN
 
 
 Todo
