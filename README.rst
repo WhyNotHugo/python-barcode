@@ -101,7 +101,7 @@ Changelog
 ---------
 
 :v0.8: Code 128 added. Data for charsets and bars moved to subpackage
-       barcode.charsets.
+       barcode.charsets. Merged in some improvements.
 
 :v0.7: Fixed some issues with fontsize and fontalignment.
        Added Python 3 support. It's not well tested yet, but the tests
