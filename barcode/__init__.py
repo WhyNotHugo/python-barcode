@@ -20,7 +20,7 @@ __author_email__ = 'weimann.th@yahoo.com'
 __description__ = ('Create standard barcodes with Python. No external '
                    'modules needed (optional PIL support included).')
 __version__ = '0.8'
-__release__ = '{version}beta1'.format(version=__version__)
+__release__ = '{version}'.format(version=__version__)
 __license__ = 'MIT'
 __url__ = 'https://bitbucket.org/whitie/python-barcode/'
 __classifiers__ = [
@@ -88,9 +88,11 @@ def get_class(name):
 
 
 def generate(name, code, writer=None, output=None, writer_options=None,
-             text=None):
+             text=None, pil=False):
     options = writer_options or {}
-    barcode = get_barcode(name, code, writer)
+    barcode = get(name, code, writer)
+    if pil:
+        return barcode.render(writer_options, text)
     if isinstance(output, _strbase):
         fullname = barcode.save(output, options, text)
         return fullname

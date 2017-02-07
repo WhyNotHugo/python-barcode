@@ -115,8 +115,45 @@ class TestBarcodeBuilds(unittest.TestCase):
         self.assertEqual(ref, bc[0])
 
 
+class TestChecksums(unittest.TestCase):
+
+    def test_code39(self):
+        code39 = get_barcode('code39', 'Code39')
+        self.assertEqual('CODE39W', code39.get_fullcode())
+
+    def test_pzn(self):
+        pzn = get_barcode('pzn', '103940')
+        self.assertEqual('PZN-1039406', pzn.get_fullcode())
+
+    def test_ean13(self):
+        ean = get_barcode('ean13', '400614457735')
+        self.assertEqual('4006144577350', ean.get_fullcode())
+
+    def test_ean8(self):
+        ean = get_barcode('ean8', '6032299')
+        self.assertEqual('60322999', ean.get_fullcode())
+
+    def test_jan(self):
+        jan = get_barcode('jan', '491400614457')
+        self.assertEqual('4914006144575', jan.get_fullcode())
+
+    def test_ean14(self):
+        ean = get_barcode('ean14', '1234567891258')
+        self.assertEqual('12345678912589', ean.get_fullcode())
+
+    def test_isbn10(self):
+        isbn = get_barcode('isbn10', '376926085')
+        self.assertEqual('3769260856', isbn.isbn10)
+
+    def test_isbn13(self):
+        isbn = get_barcode('isbn13', '978376926085')
+        self.assertEqual('9783769260854', isbn.get_fullcode())
+
+
 if __name__ == '__main__':
     test()
     print('\nNow open {htmlfile} in your browser.'.format(htmlfile=HTMLFILE))
+    if '-v' not in sys.argv:
+        sys.argv.append('-v')
     unittest.main()
 

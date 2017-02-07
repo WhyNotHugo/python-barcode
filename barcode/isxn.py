@@ -48,6 +48,9 @@ class InternationalStandardBookNumber13(EuropeanArticleNumber13):
         self.isbn13 = isbn
         if isbn[:3] not in ('978', '979'):
             raise WrongCountryCodeError('ISBN must start with 978 or 979.')
+        if isbn[:3] == '979':
+            if isbn[3:5] not in ('10', '11'):
+                raise BarcodeError('ISBN must start with 97910 or 97911.')
         EuropeanArticleNumber13.__init__(self, isbn, writer)
 
 

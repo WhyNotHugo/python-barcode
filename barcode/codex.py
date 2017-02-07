@@ -79,7 +79,7 @@ class Code39(Barcode):
         return Barcode.render(self, options, text)
 
 
-class PZN(Code39):
+class PZN7(Code39):
     """Initializes new German number for pharmaceutical products.
 
     :parameters:
@@ -115,6 +115,12 @@ class PZN(Code39):
             raise BarcodeError('Checksum can not be 10 for PZN.')
         else:
             return checksum
+
+
+class PZN8(PZN7):
+    """Will be fully added in v0.9."""
+
+    digits = 7
 
 
 class Code128(Barcode):
@@ -250,3 +256,7 @@ class Code128(Barcode):
         options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
+
+
+# For pre 0.8 compatibility
+PZN = PZN7

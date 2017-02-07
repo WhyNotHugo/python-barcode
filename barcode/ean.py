@@ -75,8 +75,8 @@ class EuropeanArticleNumber13(Barcode):
         :rtype: Integer
         """
         def sum_(x, y): return int(x) + int(y)
-        evensum = reduce(sum_, self.ean[::2])
-        oddsum = reduce(sum_, self.ean[1::2])
+        evensum = reduce(sum_, self.ean[-2::-2])
+        oddsum = reduce(sum_, self.ean[-1::-2])
         return (10 - ((evensum + oddsum * 3) % 10)) % 10
 
     def build(self):
