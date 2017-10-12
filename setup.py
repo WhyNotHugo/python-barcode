@@ -39,5 +39,8 @@ setup(
         'write_to': 'barcode/version.py',
     },
     setup_requires=['setuptools_scm'],
+    extras_require={
+        'images': ['pillow']
+    },
     include_package_data=True,
 )
