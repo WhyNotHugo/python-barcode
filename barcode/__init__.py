@@ -11,28 +11,6 @@ created as SVG objects. If PIL (Python Imaging Library) is
 installed, the barcodes can also be rendered as images (all
 formats supported by PIL).
 """
-__docformat__ = 'restructuredtext en'
-
-__project__ = 'python-barcode'
-__author__ = 'Thorsten Weimann'
-__copyright__ = '2010-2016, ' + __author__
-__author_email__ = 'weimann.th@yahoo.com'
-__description__ = ('Create standard barcodes with Python. No external '
-                   'modules needed (optional PIL support included).')
-__version__ = '0.8'
-__release__ = '{version}'.format(version=__version__)
-__license__ = 'MIT'
-__url__ = 'https://bitbucket.org/whitie/python-barcode/'
-__classifiers__ = [
-    'Development Status :: 5 - Production/Stable',
-    'Environment :: Console',
-    'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
-    'Operating System :: OS Independent',
-    'Programming Language :: Python',
-    'Topic :: Software Development :: Libraries :: Python Modules',
-    'Topic :: Multimedia :: Graphics',
-]
 
 from barcode.errors import BarcodeNotFoundError
 from barcode.codex import Code39, PZN, Code128
@@ -40,6 +18,7 @@ from barcode.ean import EAN8, EAN13, EAN14, JAN
 from barcode.isxn import ISBN10, ISBN13, ISSN
 from barcode.upc import UPCA
 from barcode.itf import ITF
+from barcode.version import version  # noqa: F401
 
 try:
     _strbase = basestring  # lint:ok

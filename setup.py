@@ -1,40 +1,43 @@
 # -*- coding: utf-8 -*-
 
-import sys
-from os.path import join, dirname
-
-import barcode as pkg
-
-from setuptools import setup, find_packages
-
-
-# Avoid name clashes if the user has Python 2 and 3 installed
-console_script = 'pybarcode{0}'.format(sys.version_info[0])
-try:
-    import argparse  # lint:ok
-    required = []
-except ImportError:
-    required = ['argparse']
-
-with open(join(dirname(__file__), 'README.rst')) as fp:
-    long_desc = fp.read()
+from pathlib import Path
+from setuptools import find_packages, setup
 
 
 setup(
-    name=pkg.__project__,
-    version=pkg.__release__,
+    name='python-barcode',
     packages=find_packages(),
-    url=pkg.__url__,
-    license=pkg.__license__,
-    author=pkg.__author__,
-    author_email=pkg.__author_email__,
-    description=pkg.__description__,
-    long_description=long_desc,
-    classifiers=pkg.__classifiers__,
+    url="https://github.com/WhyNotHugo/python-barcode",
+    license='MIT',
+    author='Thorsten Weimann et al',
+    author_email='weimann.th@yahoo.com',
+    description=(
+        'Create standard barcodes with Python. No external modules needed '
+        '(optional PIL support included).'
+    ),
+    long_description=Path('README.rst').read_text(),
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Topic :: Multimedia :: Graphics',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],
     entry_points={
-        'console_scripts':
-            ['{0} = barcode.pybarcode:main'.format(console_script)],
-        },
-    install_requires=required,
+        'console_scripts': [
+            'python-barcode = barcode.pybarcode:main',
+        ],
+    },
+    use_scm_version={
+        'version_scheme': 'post-release',
+        'write_to': 'barcode/version.py',
+    },
+    setup_requires=['setuptools_scm'],
     include_package_data=True,
 )

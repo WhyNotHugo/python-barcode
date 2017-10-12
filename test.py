@@ -15,7 +15,7 @@ import os
 import sys
 import unittest
 
-from barcode import get_barcode, get_barcode_class, __version__
+from barcode import get_barcode, get_barcode_class, version
 try:
     from barcode.writer import ImageWriter
 except ImportError:
@@ -102,7 +102,7 @@ def test():
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, 'w', encoding='utf-8') as f:
         obj = '\n'.join(objects)
-        f.write(HTML.format(version=__version__, body=obj))
+        f.write(HTML.format(version=version, body=obj))
 
 
 class TestBarcodeBuilds(unittest.TestCase):

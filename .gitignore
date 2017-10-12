@@ -15,5 +15,4 @@ dist/*
 tests/*
 docs/_build/*
 MANIFEST
-
-
+barcode/version.py
