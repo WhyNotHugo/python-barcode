@@ -13,7 +13,7 @@ formats supported by PIL).
 """
 __docformat__ = 'restructuredtext en'
 
-__project__ = 'pyBarcode'
+__project__ = 'python-barcode'
 __author__ = 'Thorsten Weimann'
 __copyright__ = '2010-2016, ' + __author__
 __author_email__ = 'weimann.th@yahoo.com'
