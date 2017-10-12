@@ -1,20 +1,21 @@
-![example_ean13.png](https://bitbucket.org/repo/rXdyBE/images/1631728592-example_ean13.png)
+.. image:: example_ean13.png
+  :target: https://github.com/WhyNotHugo/python-barcode
+  :alt: python-barcode
 
 pyBarcode
 =========
 
 This library provides a simple way to create barcodes using only the
-Python standardlib. The barcodes where created as SVG objects.
+Python standard lib. The barcodes are created as SVG objects.
 
-Report bugs at https://bitbucket.org/whitie/python-barcode/issues/
+Please report any bugs at https://github.com/WhyNotHugo/python-barcode/issues
 
 
 Requirements
 ------------
 
     - Setuptools/distribute for installation (new in version 0.7beta4)
-    - Python 2.6 or above (including Python 3.x)
-    - On Python 2.6, 3.0, 3.1: argparse (for the commandline script)
+    - Python 3.5 or above
     - Program to open SVG objects (your browser should do it)
     - Optional: PIL to render barcodes as images (PNG, JPG, ...)
 
@@ -25,10 +26,10 @@ Installation
 Make sure you have setuptools/distribute installed.
 
 Unpack the downloaded file, cd into the pyBarcode directory and run
-`python setup.py install`. Or just copy the barcode dir somewhere in
+``python setup.py install``. Or just copy the barcode dir somewhere in
 your PYTHONPATH.
 
-The best way is to use pip: `pip install pyBarcode`.
+The best way is to use pip: ``pip install python-barcode``.
 
 
 Provided Barcodes
@@ -90,15 +91,24 @@ and see the created barcode. That's it.
 
 Commandline::
 
-    $ pybarcode{2,3} create "My Text" outfile
+    $ pybarcode create "My Text" outfile
     New barcode saved as outfile.svg.
-    $ pybarcode{2,3} create -t png "My Text" outfile
+    $ pybarcode create -t png "My Text" outfile
     New barcode saved as outfile.png.
 
     Try `pybarcode -h` for help.
 
 Changelog
 ---------
+
+:v0.8.0: First release under the name ``python-barcode``.
+
+Previous Changelog
+------------------
+
+This project is a fork of pyBarcode, which, apparently, is no longer
+maintained. v0.8.0 is our first release, and is the latest ``master`` from that
+parent project.
 
 :v0.8: Code 128 added. Data for charsets and bars moved to subpackage
        barcode.charsets. Merged in some improvements.
