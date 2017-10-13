@@ -1,9 +1,9 @@
-.. image:: example_ean13.png
+python-barcode
+==============
+
+.. image:: example-ean13.png
   :target: https://github.com/WhyNotHugo/python-barcode
   :alt: python-barcode
-
-pyBarcode
-=========
 
 This library provides a simple way to create barcodes using only the
 Python standard lib. The barcodes are created as SVG objects.
