@@ -1,0 +1,31 @@
+language: python
+cache: pip
+
+python:
+  - 3.5
+  - 3.6
+  - 3.7-dev
+
+
+stages:
+  - test
+  - name: deploy
+    if: tag IS present
+
+script:
+  - python setup.py build
+  - python test.py
+
+jobs:
+  include:
+    - stage: deploy
+      script:
+        - pip install wheel twine
+        - python setup.py sdist bdist_wheel
+        - twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD dist/*
+    - stage: deploy
+      script:
+        - pip install wheel
+        - python setup.py sdist bdist_wheel
+        - gem install dpl
+        - dpl --api-key=$RELEASES_TOKEN --provider=releases --file=dist/* --file_glob=true
