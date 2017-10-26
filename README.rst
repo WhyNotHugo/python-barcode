@@ -14,37 +14,42 @@ Please report any bugs at https://github.com/WhyNotHugo/python-barcode/issues
 Requirements
 ------------
 
-    - Setuptools/distribute for installation (new in version 0.7beta4)
-    - Python 3.5 or above
-    - Program to open SVG objects (your browser should do it)
-    - Optional: PIL to render barcodes as images (PNG, JPG, ...)
+- Setuptools/distribute for installation.
+- Python 3.5 or above
+- Program to open SVG objects (your browser should do it)
+- Optional: PIL to render barcodes as images (PNG, JPG, ...)
 
 
 Installation
 ------------
 
-Make sure you have setuptools/distribute installed.
-
-Unpack the downloaded file, cd into the pyBarcode directory and run
-``python setup.py install``. Or just copy the barcode dir somewhere in
-your PYTHONPATH.
-
 The best way is to use pip: ``pip install python-barcode``.
+
+You can also install manually by downloading the tarball, extracting it, and
+running ``python setup.py install``.
 
 
 Provided Barcodes
 -----------------
 
-EAN-8, EAN-13, EAN-14, UPC-A, JAN, ISBN-10, ISBN-13, ISSN, Code 39, Code 128, PZN
+* EAN-8
+* EAN-13
+* EAN-14
+* UPC-A
+* JAN
+* ISBN-10
+* ISBN-13
+* ISSN
+* Code 39
+* Code 128
+* PZN
 
 
 Todo
 ----
 
-    - Add documentation
-    - Add more codes
-    - Improve Python 3 support
-    - Add simple GUI
+- Add documentation
+- Add more codes
 
 Usage
 -----
