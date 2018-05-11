@@ -111,7 +111,10 @@ def main():
     create_parser.set_defaults(type='svg', compress=False, func=create_barcode,
                                barcode='code39', text=None)
     args = parser.parse_args()
-    args.func(args, parser)
+    try:
+        args.func(args, parser)
+    except AttributeError:
+        print("Use --help to see help")
 
 
 if __name__ == '__main__':
