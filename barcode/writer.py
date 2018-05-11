@@ -6,7 +6,7 @@ import gzip
 import os
 import xml.dom
 
-from barcode import version
+from barcode.version import version
 
 try:
     import Image
