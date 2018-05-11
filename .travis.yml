@@ -28,4 +28,4 @@ jobs:
         - pip install wheel
         - python setup.py sdist bdist_wheel
         - gem install dpl
-        - dpl --api-key=$RELEASES_TOKEN --provider=releases --file=dist/* --file_glob=true
+        - dpl --api-key=$RELEASES_TOKEN --provider=releases --file=dist/* --file_glob=true --skip_cleanup=true
