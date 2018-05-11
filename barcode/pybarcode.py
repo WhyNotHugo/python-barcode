@@ -9,6 +9,7 @@ import barcode
 from argparse import ArgumentParser
 
 from barcode.writer import ImageWriter, SVGWriter
+from barcode.version import version
 
 # Optional PyQt4 GUI
 try:
@@ -79,10 +80,10 @@ def main():
     else:
         msg.append('PyQt found. Use gui action to get a simple GUI.')
     parser = ArgumentParser(
-        description=barcode.__description__, epilog=' '.join(msg)
+        description='Create standard barcodes via cli.', epilog=' '.join(msg)
     )
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s ' + barcode.__release__)
+                        version='%(prog)s ' + version)
     subparsers = parser.add_subparsers(title='Actions')
     create_parser = subparsers.add_parser('create', help='Create a barcode '
                                           'with the given options.')
