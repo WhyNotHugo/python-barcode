@@ -106,6 +106,17 @@ Commandline::
 Changelog
 ---------
 
+v0.8.3
+~~~~~~
+
+* Fix pushing of releases to GitHub.
+
+v0.8.2
+~~~~~~
+
+* Fix crashes when attempting to use the CLI app.
+* Properly include version numbers in SVG comments.
+
 v0.8.1
 ~~~~~~
 * Improve README rendering, and point to this fork's location (the outdated
