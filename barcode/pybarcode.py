@@ -112,9 +112,11 @@ def main():
                                barcode='code39', text=None)
     args = parser.parse_args()
     try:
-        args.func(args, parser)
+        func = args.func
     except AttributeError:
-        print("Use --help to see help")
+        parser.error("You need to tell me what to do.")
+    else:
+        func(args, parser)
 
 
 if __name__ == '__main__':
