@@ -13,8 +13,6 @@ class Barcode(object):
 
     name = ''
 
-    raw = None
-
     digits = 0
 
     default_writer = SVGWriter
@@ -113,5 +111,5 @@ class Barcode(object):
                 options['text'] = self.get_fullcode()
         self.writer.set_options(options)
         code = self.build()
-        raw = Barcode.raw = self.writer.render(code)
+        raw = self.writer.render(code)
         return raw
