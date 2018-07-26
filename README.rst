@@ -118,6 +118,18 @@ Commandline::
 Changelog
 ---------
 
+v0.9.1
+~~~~~~
+
+* Officially support Python 3.7
+
+v0.9.0
+~~~~~~
+
+* Removed buggy ``Barcode.raw`` attribute.
+* Various CLI errors ironed out.
+* Make the default value for ``writer_options``` consistent across writers.
+
 v0.8.3
 ~~~~~~
 
