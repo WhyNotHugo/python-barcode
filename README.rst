@@ -13,13 +13,12 @@ python-barcode
   :target: https://github.com/WhyNotHugo/python-barcode/blob/master/LICENCE
   :alt: licence
 
+This library provides a simple way to create barcodes using only the
+Python standard lib. The barcodes are created as SVG objects.
 
 .. image:: example-ean13.png
   :target: https://github.com/WhyNotHugo/python-barcode
   :alt: python-barcode
-
-This library provides a simple way to create barcodes using only the
-Python standard lib. The barcodes are created as SVG objects.
 
 Please report any bugs at https://github.com/WhyNotHugo/python-barcode/issues
 
