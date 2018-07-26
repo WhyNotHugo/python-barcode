@@ -1,6 +1,19 @@
 python-barcode
 ==============
 
+.. image:: https://travis-ci.org/WhyNotHugo/python-barcode.svg?branch=master
+  :target: https://travis-ci.org/WhyNotHugo/python-barcode
+  :alt: build status
+
+.. image:: https://img.shields.io/pypi/v/python-barcode.svg
+  :target: https://pypi.python.org/pypi/python-barcode
+  :alt: version on pypi
+
+.. image:: https://img.shields.io/pypi/l/python-barcode.svg
+  :target: https://github.com/WhyNotHugo/python-barcode/blob/master/LICENCE
+  :alt: licence
+
+
 .. image:: example-ean13.png
   :target: https://github.com/WhyNotHugo/python-barcode
   :alt: python-barcode
