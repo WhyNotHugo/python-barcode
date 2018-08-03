@@ -25,6 +25,8 @@ except ImportError:
 def mm2px(mm, dpi=300):
     return (mm * dpi) / 25.4
 
+def px2mm(px, dpi=300):
+    return (px*25.4)/dpi
 
 def pt2mm(pt):
     return pt * 0.352777778
@@ -216,7 +218,9 @@ class BaseWriter(object):
                 # better center position for text
                 xpos = bxs + ((bxe - bxs) / 2.0)
             else:
-                xpos = bxs
+                font = ImageFont.truetype(FONT, self.font_size * 2)
+                width, height = font.getsize(self.text)
+                xpos = bxs + px2mm(width // 2)
             self._callbacks['paint_text'](xpos, ypos)
         return self._callbacks['finish']()
 
