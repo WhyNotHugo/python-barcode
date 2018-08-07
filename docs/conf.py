@@ -176,8 +176,8 @@ htmlhelp_basename = 'pyBarcodedoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'pyBarcode.tex', u'pyBarcode Documentation',
-   u'Thorsten Weimann', 'manual'),
+  ('index', 'pyBarcode.tex', 'pyBarcode Documentation',
+   'Thorsten Weimann', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

@@ -19,13 +19,13 @@ Example::
     >>> ISBN = get_barcode('isbn10')
     >>> isbn = ISBN('0132354187')
     >>> unicode(isbn)
-    u'0132354187'
+    '0132354187'
     >>> isbn.get_fullcode()
-    u'9780132354189'
+    '9780132354189'
     >>> # Test with wrong checksum
     >>> isbn = ISBN('0132354180')
     >>> unicode(isbn)
-    u'0132354187'
+    '0132354187'
 
 """
 __docformat__ = 'restructuredtext en'

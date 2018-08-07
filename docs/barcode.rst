@@ -27,14 +27,14 @@ Quick example::
     >>> ean = barcode.get('ean13', '123456789102')
     # Now we look if the checksum was added
     >>> ean.get_fullcode()
-    u'1234567891026'
+    '1234567891026'
     >>> filename = ean.save('ean13')
     >>> filename
-    u'ean13.svg'
+    'ean13.svg'
     >>> options = dict(compress=True)
     >>> filename = ean.save('ean13', options)
     >>> filename
-    u'ean13.svgz'
+    'ean13.svgz'
 
 Now you have ean13.svg and the compressed ean13.svgz in your current
 working directory. Open it and see the result.
@@ -55,4 +55,4 @@ Quick example::
     >>> ean = barcode.get('ean13', '123456789102', writer=ImageWriter())
     >>> filename = ean.save('ean13')
     >>> filename
-    u'ean13.png'
+    'ean13.png'
