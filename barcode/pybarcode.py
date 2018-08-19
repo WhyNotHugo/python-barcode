@@ -33,9 +33,9 @@ def list_types(args, parser=None):
     print('Available image formats')
     print('Standard: svg')
     if ImageWriter is not None:
-        print('PIL:', ', '.join(IMG_FORMATS))
+        print('Pillow:', ', '.join(IMG_FORMATS))
     else:
-        print('PIL: disabled')
+        print('Pillow: disabled')
     print('\n')
 
 
@@ -68,7 +68,7 @@ def main():
     msg = []
     if ImageWriter is None:
         msg.append(
-            'Image output disabled (PIL not found), --type option disabled.'
+            'Image output disabled (Pillow not found), --type option disabled.'
         )
     else:
         msg.append(

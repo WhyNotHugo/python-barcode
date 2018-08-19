@@ -45,7 +45,7 @@ OBJECTS = ('<p><h2>{name}</h2><br>\n'
 IMAGES = ('<h3>As PNG-Image</h3><br>\n'
           '<img src="{filename}" alt="PNG {name}"></p>\n')
 
-NO_PIL = '<h3>PIL was not found. No PNG-Image created.</h3></p>\n'
+NO_PIL = '<h3>Pillow was not found. No PNG-Image created.</h3></p>\n'
 
 TESTCODES = (
     ('ean8', '40267708'),

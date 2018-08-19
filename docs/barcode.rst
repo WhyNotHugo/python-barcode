@@ -1,9 +1,9 @@
 Introduction
 ============
 
-This package was created to have barcodes available without having
-PIL_ (Python Imaging Library) installed. As of version 0.4b1 PIL
-is also supported for creating barcodes.
+This package was created to have barcodes available with pure-python.
+Pillow_ is required for exporting for exporting images (png, jpg), although not
+for SVGs.
 
 All you need to create a barcode is to know the system (EAN, UPC, ...)
 and the code (e.g. for EAN-13: 123456789102). As you see, you do not
@@ -13,7 +13,7 @@ keyword argument (default is True).
 
 As of version 0.7beta3 Python 3 is supported, but not well tested.
 
-.. _PIL: http://www.pythonware.com/products/pil
+.. _Pillow: https://python-pillow.org/
 
 Creating barcodes as SVG
 ------------------------

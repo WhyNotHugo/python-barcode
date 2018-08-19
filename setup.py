@@ -12,8 +12,8 @@ setup(
     author='Thorsten Weimann et al',
     author_email='weimann.th@yahoo.com',
     description=(
-        'Create standard barcodes with Python. No external modules needed '
-        '(optional PIL support included).'
+        'Create standard barcodes with Python. No external modules needed. '
+        '(optional Pillow support included).'
     ),
     long_description=Path('README.rst').read_text(),
     classifiers=[

@@ -29,7 +29,7 @@ Requirements
 - Setuptools/distribute for installation.
 - Python 3.5 or above
 - Program to open SVG objects (your browser should do it)
-- Optional: PIL to render barcodes as images (PNG, JPG, ...)
+- Optional: Pillow to render barcodes as images (PNG, JPG, ...)
 
 
 Installation
@@ -92,7 +92,7 @@ Interactive::
     >>> ean.write(fp)
     # or
     >>> f = open('/my/new/file', 'wb')
-    >>> ean.write(f) # PIL (ImageWriter) produces RAW format here
+    >>> ean.write(f) # Pillow (ImageWriter) produces RAW format here
     # New in v0.5.0
     >>> from barcode import generate
     >>> name = generate('EAN13', '5901234123457', output='barcode_svg')
@@ -122,6 +122,7 @@ v0.9.1
 ~~~~~~
 
 * Officially support Python 3.7
+* Refer to Pillow in the docs, rather than PIL.
 
 v0.9.0
 ~~~~~~

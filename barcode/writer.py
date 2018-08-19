@@ -18,7 +18,7 @@ except ImportError:
     except ImportError:
         import logging
         log = logging.getLogger('pyBarcode')
-        log.info('PIL not found. Image output disabled')
+        log.info('Pillow not found. Image output disabled')
         Image = ImageDraw = ImageFont = None  # lint:ok
 
 
