@@ -45,7 +45,7 @@ __BARCODE_MAP = dict(
     itf=ITF,
 )
 
-PROVIDED_BARCODES = list(__BARCODE_MAP.keys())
+PROVIDED_BARCODES = list(__BARCODE_MAP)
 PROVIDED_BARCODES.sort()
 
 
