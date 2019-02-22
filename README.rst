@@ -108,12 +108,12 @@ and see the created barcode. That's it.
 
 Commandline::
 
-    $ pybarcode create "My Text" outfile
+    $ python-barcode create "My Text" outfile
     New barcode saved as outfile.svg.
-    $ pybarcode create -t png "My Text" outfile
+    $ python-barcode create -t png "My Text" outfile
     New barcode saved as outfile.png.
 
-    Try `pybarcode -h` for help.
+    Try `python-barcode -h` for help.
 
 Changelog
 ---------
