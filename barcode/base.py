@@ -35,6 +35,9 @@ class Barcode(object):
             code[i] = line.replace('1', 'X').replace('0', ' ')
         return '\n'.join(code)
 
+    def to_list(self):
+        return [[int(l) for l in line] for line in self.build()]
+
     def __repr__(self):
         return '<{0}({1!r})>'.format(self.__class__.__name__,
                                      self.get_fullcode())
