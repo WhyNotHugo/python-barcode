@@ -49,14 +49,15 @@ PROVIDED_BARCODES = list(__BARCODE_MAP)
 PROVIDED_BARCODES.sort()
 
 
-def get(name, code=None, writer=None):
+def get(name, code=None, writer=None, options=None):
+    options = options or {}
     try:
         barcode = __BARCODE_MAP[name.lower()]
     except KeyError:
         raise BarcodeNotFoundError('The barcode {0!r} you requested is not '
                                    'known.'.format(name))
     if code is not None:
-        return barcode(code, writer)
+        return barcode(code, writer, **options)
     else:
         return barcode
 
@@ -68,7 +69,7 @@ def get_class(name):
 def generate(name, code, writer=None, output=None, writer_options=None,
              text=None, pil=False):
     options = writer_options or {}
-    barcode = get(name, code, writer)
+    barcode = get(name, code, writer, options)
     if pil:
         return barcode.render(writer_options, text)
     if isinstance(output, _strbase):
