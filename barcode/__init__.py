@@ -49,7 +49,8 @@ PROVIDED_BARCODES = list(__BARCODE_MAP)
 PROVIDED_BARCODES.sort()
 
 
-def get(name, code=None, writer=None, options={}):
+def get(name, code=None, writer=None, options=None):
+    options = options or {}
     try:
         barcode = __BARCODE_MAP[name.lower()]
     except KeyError:
