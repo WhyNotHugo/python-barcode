@@ -264,8 +264,9 @@ class SVGWriter(BaseWriter):
         element = self._document.createElement('text')
         attributes = dict(x=SIZE.format(xpos), y=SIZE.format(ypos),
                           style='fill:{0};font-size:{1}pt;text-anchor:'
-                                'middle;'.format(self.foreground,
-                                                 self.font_size))
+                                '{2};'.format(self.foreground,
+                                              self.font_size,
+                                              'middle' if self.center_text else 'start'))
         _set_attributes(element, **attributes)
         # check option to override self.text with self.human (barcode as
         # human readable data, can be used to print own formats)
