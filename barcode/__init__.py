@@ -12,7 +12,7 @@ rendered as images (all formats supported by Pillow).
 """
 
 from barcode.errors import BarcodeNotFoundError
-from barcode.codex import Code39, PZN, Code128
+from barcode.codex import Code39, PZN, Code128, Gs1_128
 from barcode.ean import EAN8, EAN13, EAN14, JAN
 from barcode.isxn import ISBN10, ISBN13, ISSN
 from barcode.upc import UPCA
@@ -43,6 +43,7 @@ __BARCODE_MAP = dict(
     pzn=PZN,
     code128=Code128,
     itf=ITF,
+    gs1_128=Gs1_128,
 )
 
 PROVIDED_BARCODES = list(__BARCODE_MAP)

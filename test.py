@@ -149,6 +149,10 @@ class TestChecksums(unittest.TestCase):
         isbn = get_barcode('isbn13', '978376926085')
         self.assertEqual('9783769260854', isbn.get_fullcode())
 
+    def test_gs1_128(self):
+        gs1_128 = get_barcode('gs1_128', '00376401856400470087')
+        self.assertEqual('00376401856400470087', gs1_128.get_fullcode())
+
 
 if __name__ == '__main__':
     test()
