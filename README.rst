@@ -37,8 +37,8 @@ Installation
 
 The best way is to use pip: ``pip install python-barcode``.
 
-You can also install manually by downloading the tarball, extracting it, and
-running ``python setup.py install``.
+If you'll be exporting to images (eg: not just SVG), you'll need additional
+optional dependencies, so run: ``pip install python-barcode[images]``.
 
 
 Provided Barcodes
