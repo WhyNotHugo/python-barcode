@@ -98,7 +98,7 @@ Interactive::
     >>> name
     'barcode_svg.svg'
     # with file like object
-    >>> fp = StringIO()
+    >>> fp = BytesIO()
     >>> generate('EAN13', '5901234123457', writer=ImageWriter(), output=fp)
     >>>
 
