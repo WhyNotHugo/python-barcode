@@ -87,13 +87,12 @@ Interactive::
     >>> fullname = ean.save('ean13_barcode')
     'ean13_barcode.png'
     # New in v0.4.2
-    >>> from StringIO import StringIO
-    >>> fp = StringIO()
+    >>> from io import BytesIO
+    >>> fp = BytesIO()
     >>> ean.write(fp)
     # or
     >>> f = open('/my/new/file', 'wb')
     >>> ean.write(f) # Pillow (ImageWriter) produces RAW format here
-    # New in v0.5.0
     >>> from barcode import generate
     >>> name = generate('EAN13', '5901234123457', output='barcode_svg')
     >>> name
