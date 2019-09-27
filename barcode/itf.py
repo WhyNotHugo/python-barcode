@@ -4,7 +4,9 @@ from __future__ import unicode_literals
 
 from barcode.base import Barcode
 from barcode.charsets import itf
-from barcode.errors import *
+from barcode.errors import (
+    IllegalCharacterError,
+)
 
 """Module: barcode.itf
 

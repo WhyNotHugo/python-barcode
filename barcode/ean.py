@@ -4,7 +4,11 @@ from __future__ import unicode_literals
 
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
-from barcode.errors import *
+from barcode.errors import (
+    IllegalCharacterError,
+    NumberOfDigitsError,
+    WrongCountryCodeError,
+)
 
 """Module: barcode.ean
 
