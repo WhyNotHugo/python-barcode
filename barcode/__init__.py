@@ -9,18 +9,13 @@ created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
 
+from barcode.codex import Code128, Code39, Gs1_128, PZN
+from barcode.ean import EAN13, EAN14, EAN8, JAN
 from barcode.errors import BarcodeNotFoundError
-from barcode.codex import Code39, PZN, Code128, Gs1_128
-from barcode.ean import EAN8, EAN13, EAN14, JAN
 from barcode.isxn import ISBN10, ISBN13, ISSN
-from barcode.upc import UPCA
 from barcode.itf import ITF
+from barcode.upc import UPCA
 from barcode.version import version  # noqa: F401
-
-try:
-    _strbase = basestring  # lint:ok
-except NameError:
-    _strbase = str
 
 
 __BARCODE_MAP = dict(
@@ -71,7 +66,7 @@ def generate(name, code, writer=None, output=None, writer_options=None,
     barcode = get(name, code, writer, options)
     if pil:
         return barcode.render(writer_options, text)
-    if isinstance(output, _strbase):
+    if isinstance(output, str):
         fullname = barcode.save(output, options, text)
         return fullname
     else:

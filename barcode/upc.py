@@ -1,20 +1,17 @@
+"""Module: barcode.upc
+
+:Provided barcodes: UPC-A
+"""
+__docformat__ = 'restructuredtext en'
+
+from functools import reduce
+
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
 from barcode.errors import (
     IllegalCharacterError,
     NumberOfDigitsError,
 )
-
-try:
-    reduce
-except NameError:
-    from functools import reduce
-
-"""Module: barcode.upc
-
-:Provided barcodes: UPC-A
-"""
-__docformat__ = 'restructuredtext en'
 
 
 class UniversalProductCodeA(Barcode):
@@ -109,5 +106,6 @@ class UniversalProductCodeA(Barcode):
         options = dict(module_width=0.33)
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
+
 
 UPCA = UniversalProductCodeA

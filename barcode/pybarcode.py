@@ -1,11 +1,9 @@
 import os
-
-import barcode
-
 from argparse import ArgumentParser
 
-from barcode.writer import ImageWriter, SVGWriter
+import barcode
 from barcode.version import version
+from barcode.writer import ImageWriter, SVGWriter
 
 # Optional PyQt4 GUI
 try:
