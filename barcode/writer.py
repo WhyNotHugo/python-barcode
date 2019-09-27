@@ -113,7 +113,7 @@ class BaseWriter(object):
         """
         width = 2 * self.quiet_zone + modules_per_line * self.module_width
         height = 2.0 + self.module_height * number_of_lines
-        number_of_text_lines = self.text.count('\n') + 1
+        number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
             height += pt2mm(self.font_size) / 2 * number_of_text_lines + self.text_distance
             height += self.text_line_distance * (number_of_text_lines - 1)
