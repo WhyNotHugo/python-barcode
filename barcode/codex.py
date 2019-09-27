@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
 from barcode.base import Barcode
 from barcode.charsets import code128, code39
 from barcode.errors import (

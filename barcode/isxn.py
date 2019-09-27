@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
 from barcode.ean import EuropeanArticleNumber13
 from barcode.errors import *
 

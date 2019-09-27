@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals, print_function
-
 """
 
 Performs some tests with pyBarcode. All created barcodes where saved in the
