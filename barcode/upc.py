@@ -1,6 +1,9 @@
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
-from barcode.errors import *
+from barcode.errors import (
+    IllegalCharacterError,
+    NumberOfDigitsError,
+)
 
 try:
     reduce

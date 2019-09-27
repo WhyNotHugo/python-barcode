@@ -1,14 +1,14 @@
-from barcode.base import Barcode
-from barcode.charsets import itf
-from barcode.errors import (
-    IllegalCharacterError,
-)
-
 """Module: barcode.itf
 
 :Provided barcodes: Interleaved 2 of 5
 """
 __docformat__ = 'restructuredtext en'
+
+from barcode.base import Barcode
+from barcode.charsets import itf
+from barcode.errors import (
+    IllegalCharacterError,
+)
 
 
 MIN_SIZE = 0.2

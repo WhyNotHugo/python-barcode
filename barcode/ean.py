@@ -1,3 +1,10 @@
+
+"""Module: barcode.ean
+
+:Provided barcodes: EAN-14, EAN-13, EAN-8, JAN
+"""
+__docformat__ = 'restructuredtext en'
+
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
 from barcode.errors import (
@@ -5,12 +12,6 @@ from barcode.errors import (
     NumberOfDigitsError,
     WrongCountryCodeError,
 )
-
-"""Module: barcode.ean
-
-:Provided barcodes: EAN-14, EAN-13, EAN-8, JAN
-"""
-__docformat__ = 'restructuredtext en'
 
 # Python 3
 try:

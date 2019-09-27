@@ -1,3 +1,8 @@
+"""Module: barcode.codex
+
+:Provided barcodes: Code 39, Code 128, PZN
+"""
+
 from barcode.base import Barcode
 from barcode.charsets import code128, code39
 from barcode.errors import (
@@ -6,10 +11,6 @@ from barcode.errors import (
     NumberOfDigitsError,
 )
 
-"""Module: barcode.codex
-
-:Provided barcodes: Code 39, Code 128, PZN
-"""
 __docformat__ = 'restructuredtext en'
 
 

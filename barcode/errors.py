@@ -1,5 +1,4 @@
-"""barcode.errors
-"""
+"""barcode.errors"""
 __docformat__ = 'restructuredtext en'
 
 

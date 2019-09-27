@@ -1,6 +1,3 @@
-from barcode.ean import EuropeanArticleNumber13
-from barcode.errors import *
-
 """Module: barcode.isxn
 
 :Provided barcodes: ISBN-13, ISBN-10, ISSN
@@ -24,6 +21,12 @@ Example::
     '0132354187'
 
 """
+from barcode.ean import EuropeanArticleNumber13
+from barcode.errors import (
+    BarcodeError,
+    WrongCountryCodeError,
+)
+
 __docformat__ = 'restructuredtext en'
 
 
