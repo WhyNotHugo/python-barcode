@@ -269,18 +269,22 @@ class SVGWriter(BaseWriter):
         if self.human != '':
             barcodetext = self.human
         else:
-            barcodetext = self.text		
+            barcodetext = self.text
         for subtext in barcodetext.split('\n'):
-	        element = self._document.createElement('text')
-	        attributes = dict(x=SIZE.format(xpos), y=SIZE.format(ypos),
-	                          style='fill:{0};font-size:{1}pt;text-anchor:'
-	                                'middle;'.format(self.foreground,
-	                                                 self.font_size))
-	        _set_attributes(element, **attributes)
-	        text_element = self._document.createTextNode(subtext)
-	        element.appendChild(text_element)
-	        self._group.appendChild(element)
-	        ypos += pt2mm(self.font_size) + self.text_line_distance
+            element = self._document.createElement('text')
+            attributes = dict(
+	            x=SIZE.format(xpos),
+                y=SIZE.format(ypos),
+                style='fill:{0};font-size:{1}pt;text-anchor:middle;'.format(
+                    self.foreground,
+                    self.font_size,
+                )
+            )            
+            _set_attributes(element, **attributes)
+            text_element = self._document.createTextNode(subtext)
+            element.appendChild(text_element)
+            self._group.appendChild(element)
+            ypos += pt2mm(self.font_size) + self.text_line_distance
 
     def _finish(self):
         if self.compress:
@@ -328,13 +332,13 @@ else:
 
         def _paint_text(self, xpos, ypos):
             for subtext in self.text.split('\n'):
-	            font = ImageFont.truetype(FONT, self.font_size * 2)		
-	            width, height = font.getsize(subtext)
-	            # determine the maximum width of each line
-	            pos = (mm2px(xpos, self.dpi) - width // 2,
-	                   mm2px(ypos, self.dpi) - height // 4)
-	            self._draw.text(pos, subtext, font=font, fill=self.foreground)
-	            ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
+                font = ImageFont.truetype(FONT, self.font_size * 2)        
+                width, height = font.getsize(subtext)
+                # determine the maximum width of each line
+                pos = (mm2px(xpos, self.dpi) - width // 2,
+                       mm2px(ypos, self.dpi) - height // 4)
+                self._draw.text(pos, subtext, font=font, fill=self.foreground)
+                ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
         def _finish(self):
             return self._image
