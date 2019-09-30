@@ -18,6 +18,11 @@ script:
 jobs:
   include:
     - stage: test
+      before_script:
+        - pip install flake8 flake8-bugbear flake8-comprehensions flake8-import-order
+      script:
+        - flake8
+    - stage: test
       python: 3.7
       dist: xenial
       sudo: true
