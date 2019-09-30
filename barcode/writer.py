@@ -90,6 +90,7 @@ class BaseWriter(object):
         self.text = ''
         self.human = ''  # human readable text
         self.text_distance = 5
+        self.text_line_distance = 1
         self.center_text = True
 
     def calculate_size(self, modules_per_line, number_of_lines, dpi=300):
@@ -108,8 +109,10 @@ class BaseWriter(object):
         """
         width = 2 * self.quiet_zone + modules_per_line * self.module_width
         height = 2.0 + self.module_height * number_of_lines
+        number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
-            height += pt2mm(self.font_size) / 2 + self.text_distance
+            height += pt2mm(self.font_size) / 2 * number_of_text_lines + self.text_distance
+            height += self.text_line_distance * (number_of_text_lines - 1)
         return int(mm2px(width, dpi)), int(mm2px(height, dpi))
 
     def save(self, filename, output):
@@ -257,21 +260,27 @@ class SVGWriter(BaseWriter):
         self._group.appendChild(element)
 
     def _create_text(self, xpos, ypos):
-        element = self._document.createElement('text')
-        attributes = dict(x=SIZE.format(xpos), y=SIZE.format(ypos),
-                          style='fill:{0};font-size:{1}pt;text-anchor:'
-                                'middle;'.format(self.foreground,
-                                                 self.font_size))
-        _set_attributes(element, **attributes)
         # check option to override self.text with self.human (barcode as
         # human readable data, can be used to print own formats)
         if self.human != '':
             barcodetext = self.human
         else:
             barcodetext = self.text
-        text_element = self._document.createTextNode(barcodetext)
-        element.appendChild(text_element)
-        self._group.appendChild(element)
+        for subtext in barcodetext.split('\n'):
+            element = self._document.createElement('text')
+            attributes = dict(
+	            x=SIZE.format(xpos),
+                y=SIZE.format(ypos),
+                style='fill:{0};font-size:{1}pt;text-anchor:middle;'.format(
+                    self.foreground,
+                    self.font_size,
+                )
+            )            
+            _set_attributes(element, **attributes)
+            text_element = self._document.createTextNode(subtext)
+            element.appendChild(text_element)
+            self._group.appendChild(element)
+            ypos += pt2mm(self.font_size) + self.text_line_distance
 
     def _finish(self):
         if self.compress:
@@ -318,11 +327,14 @@ else:
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):
-            font = ImageFont.truetype(FONT, self.font_size * 2)
-            width, height = font.getsize(self.text)
-            pos = (mm2px(xpos, self.dpi) - width // 2,
-                   mm2px(ypos, self.dpi) - height // 4)
-            self._draw.text(pos, self.text, font=font, fill=self.foreground)
+            for subtext in self.text.split('\n'):
+                font = ImageFont.truetype(FONT, self.font_size * 2)        
+                width, height = font.getsize(subtext)
+                # determine the maximum width of each line
+                pos = (mm2px(xpos, self.dpi) - width // 2,
+                       mm2px(ypos, self.dpi) - height // 4)
+                self._draw.text(pos, subtext, font=font, fill=self.foreground)
+                ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
         def _finish(self):
             return self._image
