@@ -73,7 +73,9 @@ class ITF(Barcode):
         return [raw]
 
     def render(self, writer_options, text=None):
-        options = dict(module_width=MIN_SIZE/self.narrow,
-                       quiet_zone=MIN_QUIET_ZONE)
+        options = {
+            'module_width': MIN_SIZE/self.narrow,
+            'quiet_zone': MIN_QUIET_ZONE,
+        }
         options.update(writer_options or {})
         return Barcode.render(self, options, text)

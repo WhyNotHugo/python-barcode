@@ -32,7 +32,7 @@ def check_code(code, name, allowed):
 
 
 class Code39(Barcode):
-    """Initializes a new Code39 instance.
+    r"""Initializes a new Code39 instance.
 
     :parameters:
         code : String
@@ -62,7 +62,7 @@ class Code39(Barcode):
         return self.code
 
     def calculate_checksum(self):
-        check = sum([code39.MAP[x][0] for x in self.code]) % 43
+        check = sum(code39.MAP[x][0] for x in self.code) % 43
         for k, v in code39.MAP.items():
             if check == v[0]:
                 return k
@@ -75,7 +75,7 @@ class Code39(Barcode):
         return [code39.MIDDLE.join(chars)]
 
     def render(self, writer_options=None, text=None):
-        options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
+        options = {'module_width': MIN_SIZE, 'quiet_zone': MIN_QUIET_ZONE}
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
 
@@ -110,7 +110,7 @@ class PZN7(Code39):
         return 'PZN-{0}'.format(self.pzn)
 
     def calculate_checksum(self):
-        sum_ = sum([int(x) * int(y) for x, y in enumerate(self.pzn, start=2)])
+        sum_ = sum(int(x) * int(y) for x, y in enumerate(self.pzn, start=2))
         checksum = sum_ % 11
         if checksum == 10:
             raise BarcodeError('Checksum can not be 10 for PZN.')
@@ -254,7 +254,7 @@ class Code128(Barcode):
         return [code]
 
     def render(self, writer_options=None, text=None):
-        options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
+        options = {'module_width': MIN_SIZE, 'quiet_zone': MIN_QUIET_ZONE}
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
 

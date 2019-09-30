@@ -25,8 +25,8 @@ _charset_b = _common + ('`',) + tuple(string.ascii_lowercase) + (
 )
 
 ALL = set(_common + _charset_a + _charset_b)
-A = dict(((c, i) for i, c in enumerate(_charset_a)))
-B = dict(((c, i) for i, c in enumerate(_charset_b)))
+A = {c: i for i, c in enumerate(_charset_a)}
+B = {c: i for i, c in enumerate(_charset_b)}
 C = {'TO_B': 100, 'TO_A': 101, '\xf1': 102}
 
 CODES = (

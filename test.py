@@ -70,7 +70,7 @@ def test():
     objects = []
     append = lambda x, y: objects.append(OBJECTS.format(filename=x, name=y))
     append_img = lambda x, y: objects.append(IMAGES.format(filename=x, name=y))
-    options = dict(module_width=0.495, module_height=25.0)
+    options = {'module_width': 0.495, 'module_height': 25.0}
     for codename, code in TESTCODES:
         bcode = get_barcode(codename, code)
         if codename.startswith('i'):
@@ -85,7 +85,7 @@ def test():
         if ImageWriter is not None:
             bcodec = get_barcode_class(codename)
             bcode = bcodec(code, writer=ImageWriter())
-            opts = dict(font_size=14, text_distance=1)
+            opts = {'font_size': 14, 'text_distance': 1}
             if codename.startswith('i'):
                 opts['center_text'] = False
             else:
@@ -156,4 +156,3 @@ if __name__ == '__main__':
     if '-v' not in sys.argv:
         sys.argv.append('-v')
     unittest.main()
-

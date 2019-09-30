@@ -47,10 +47,10 @@ def create_barcode(args, parser):
             'barcodes.'.format(bc=args.barcode)
         )
     if args.type != 'SVG':
-        opts = dict(format=args.type)
+        opts = {'format': args.type}
         writer = ImageWriter()
     else:
-        opts = dict(compress=args.compress)
+        opts = {'compress': args.compress}
         writer = SVGWriter()
     out = os.path.normpath(os.path.abspath(args.output))
     name = barcode.generate(args.barcode, args.code, writer, out, opts,

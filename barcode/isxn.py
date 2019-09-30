@@ -76,8 +76,9 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         InternationalStandardBookNumber13.__init__(self, '978' + isbn, writer)
 
     def _calculate_checksum(self):
-        tmp = sum([x * int(y) for x, y in enumerate(self.isbn10[:9],
-                                                    start=1)]) % 11
+        tmp = sum(
+            x * int(y) for x, y in enumerate(self.isbn10[:9], start=1)
+        ) % 11
         if tmp == 10:
             return 'X'
         else:
@@ -112,8 +113,9 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
         EuropeanArticleNumber13.__init__(self, self.make_ean(), writer)
 
     def _calculate_checksum(self):
-        tmp = 11 - sum([x * int(y) for x, y in
-                        enumerate(reversed(self.issn[:7]), start=2)]) % 11
+        tmp = 11 - sum(
+            x * int(y) for x, y in enumerate(reversed(self.issn[:7]), start=2)
+        ) % 11
         if tmp == 10:
             return 'X'
         else:

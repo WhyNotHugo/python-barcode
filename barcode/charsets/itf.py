@@ -5,4 +5,15 @@
 
 START = 'NnNn'
 STOP = 'WnN'
-CODES = ('NNWWN', 'WNNNW', 'NWNNW', 'WWNNN', 'NNWNW', 'WNWNN', 'NWWNN', 'NNNWW', 'WNNWN', 'NWNWN')
+CODES = (
+    'NNWWN',
+    'WNNNW',
+    'NWNNW',
+    'WWNNN',
+    'NNWNW',
+    'WNWNN',
+    'NWWNN',
+    'NNNWW',
+    'WNNWN',
+    'NWNWN',
+)

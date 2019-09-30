@@ -77,10 +77,12 @@ class BaseWriter(object):
 
     def __init__(self, initialize=None, paint_module=None, paint_text=None,
                  finish=None):
-        self._callbacks = dict(
-            initialize=initialize, paint_module=paint_module,
-            paint_text=paint_text, finish=finish
-        )
+        self._callbacks = {
+            'initialize': initialize,
+            'paint_module': paint_module,
+            'paint_text': paint_text,
+            'finish': finish,
+        }
         self.module_width = 10
         self.module_height = 10
         self.font_size = 10
@@ -111,7 +113,10 @@ class BaseWriter(object):
         height = 2.0 + self.module_height * number_of_lines
         number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
-            height += pt2mm(self.font_size) / 2 * number_of_text_lines + self.text_distance
+            height += (
+                pt2mm(self.font_size) / 2
+                * number_of_text_lines + self.text_distance
+            )
             height += self.text_line_distance * (number_of_text_lines - 1)
         return int(mm2px(width, dpi)), int(mm2px(height, dpi))
 
@@ -235,27 +240,36 @@ class SVGWriter(BaseWriter):
         width, height = self.calculate_size(len(code[0]), len(code), self.dpi)
         self._document = create_svg_object()
         self._root = self._document.documentElement
-        attributes = dict(width=SIZE.format(width), height=SIZE.format(height))
+        attributes = {
+            'width': SIZE.format(width),
+            'height': SIZE.format(height),
+        }
         _set_attributes(self._root, **attributes)
         self._root.appendChild(self._document.createComment(COMMENT))
         # create group for easier handling in 3rd party software
         # like corel draw, inkscape, ...
         group = self._document.createElement('g')
-        attributes = dict(id='barcode_group')
+        attributes = {'id': 'barcode_group'}
         _set_attributes(group, **attributes)
         self._group = self._root.appendChild(group)
         background = self._document.createElement('rect')
-        attributes = dict(width='100%', height='100%',
-                          style='fill:{0}'.format(self.background))
+        attributes = {
+            'width': '100%',
+            'height': '100%',
+            'style': 'fill:{0}'.format(self.background)
+        }
         _set_attributes(background, **attributes)
         self._group.appendChild(background)
 
     def _create_module(self, xpos, ypos, width, color):
         element = self._document.createElement('rect')
-        attributes = dict(x=SIZE.format(xpos), y=SIZE.format(ypos),
-                          width=SIZE.format(width),
-                          height=SIZE.format(self.module_height),
-                          style='fill:{0};'.format(color))
+        attributes = {
+            'x': SIZE.format(xpos),
+            'y': SIZE.format(ypos),
+            'width': SIZE.format(width),
+            'height': SIZE.format(self.module_height),
+            'style': 'fill:{0};'.format(color)
+        }
         _set_attributes(element, **attributes)
         self._group.appendChild(element)
 
@@ -268,14 +282,14 @@ class SVGWriter(BaseWriter):
             barcodetext = self.text
         for subtext in barcodetext.split('\n'):
             element = self._document.createElement('text')
-            attributes = dict(
-	            x=SIZE.format(xpos),
-                y=SIZE.format(ypos),
-                style='fill:{0};font-size:{1}pt;text-anchor:middle;'.format(
+            attributes = {
+                'x': SIZE.format(xpos),
+                'y': SIZE.format(ypos),
+                'style': 'fill:{0};font-size:{1}pt;text-anchor:middle;'.format(
                     self.foreground,
                     self.font_size,
                 )
-            )            
+            }
             _set_attributes(element, **attributes)
             text_element = self._document.createTextNode(subtext)
             element.appendChild(text_element)
@@ -328,7 +342,7 @@ else:
 
         def _paint_text(self, xpos, ypos):
             for subtext in self.text.split('\n'):
-                font = ImageFont.truetype(FONT, self.font_size * 2)        
+                font = ImageFont.truetype(FONT, self.font_size * 2)
                 width, height = font.getsize(subtext)
                 # determine the maximum width of each line
                 pos = (mm2px(xpos, self.dpi) - width // 2,

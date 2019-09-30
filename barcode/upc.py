@@ -79,7 +79,7 @@ class UniversalProductCodeA(Barcode):
         """
         code = _upc.EDGE[:]
 
-        for i, number in enumerate(self.upc[0:6]):
+        for _i, number in enumerate(self.upc[0:6]):
             code += _upc.CODES['L'][int(number)]
 
         code += _upc.MIDDLE
@@ -103,7 +103,7 @@ class UniversalProductCodeA(Barcode):
         return '\n'.join(code)
 
     def render(self, writer_options=None, text=None):
-        options = dict(module_width=0.33)
+        options = {'module_width': 0.33}
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
 

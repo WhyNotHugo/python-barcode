@@ -21,8 +21,18 @@ except NameError:
 
 
 # EAN13 Specs (all sizes in mm)
-SIZES = dict(SC0=0.27, SC1=0.297, SC2=0.33, SC3=0.363, SC4=0.396, SC5=0.445,
-             SC6=0.495, SC7=0.544, SC8=0.61, SC9=0.66)
+SIZES = {
+    'SC0': 0.27,
+    'SC1': 0.297,
+    'SC2': 0.33,
+    'SC3': 0.363,
+    'SC4': 0.396,
+    'SC5': 0.445,
+    'SC6': 0.495,
+    'SC7': 0.544,
+    'SC8': 0.61,
+    'SC9': 0.66
+}
 
 
 class EuropeanArticleNumber13(Barcode):
@@ -107,7 +117,7 @@ class EuropeanArticleNumber13(Barcode):
         return '\n'.join(code)
 
     def render(self, writer_options=None, text=None):
-        options = dict(module_width=SIZES['SC2'])
+        options = {'module_width': SIZES['SC2']}
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
 
