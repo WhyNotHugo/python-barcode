@@ -53,8 +53,9 @@ def create_barcode(args, parser):
         opts = {'compress': args.compress}
         writer = SVGWriter()
     out = os.path.normpath(os.path.abspath(args.output))
-    name = barcode.generate(args.barcode, args.code, writer, out, opts,
-                            args.text)
+    name = barcode.generate(
+        args.barcode, args.code, writer, out, opts, args.text
+    )
     print('New barcode saved as {0}.'.format(name))
 
 
@@ -76,34 +77,57 @@ def main():
     parser = ArgumentParser(
         description='Create standard barcodes via cli.', epilog=' '.join(msg)
     )
-    parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s ' + version)
+    parser.add_argument(
+        '-v', '--version', action='version', version='%(prog)s ' + version
+    )
     subparsers = parser.add_subparsers(title='Actions')
-    create_parser = subparsers.add_parser('create', help='Create a barcode '
-                                          'with the given options.')
+    create_parser = subparsers.add_parser(
+        'create', help='Create a barcode '
+        'with the given options.'
+    )
     create_parser.add_argument('code', help='Code to render as barcode.')
-    create_parser.add_argument('output', help='Filename for output '
-                               'without extension, e. g. mybarcode.')
     create_parser.add_argument(
-        '-c', '--compress', action='store_true',
+        'output',
+        help='Filename for output '
+        'without extension, e. g. mybarcode.'
+    )
+    create_parser.add_argument(
+        '-c',
+        '--compress',
+        action='store_true',
         help='Compress output, only recognized if type is svg.'
     )
-    create_parser.add_argument('-b', '--barcode', help='Barcode to use '
-                               '[default: %(default)s].')
-    create_parser.add_argument('--text', help='Text to show under the '
-                               'barcode.')
+    create_parser.add_argument(
+        '-b', '--barcode', help='Barcode to use '
+        '[default: %(default)s].'
+    )
+    create_parser.add_argument(
+        '--text', help='Text to show under the '
+        'barcode.'
+    )
     if ImageWriter is not None:
-        create_parser.add_argument('-t', '--type', help='Type of output '
-                                   '[default: %(default)s].')
-    list_parser = subparsers.add_parser('list', help='List available '
-                                        'image and code types.')
+        create_parser.add_argument(
+            '-t', '--type', help='Type of output '
+            '[default: %(default)s].'
+        )
+    list_parser = subparsers.add_parser(
+        'list', help='List available '
+        'image and code types.'
+    )
     list_parser.set_defaults(func=list_types)
     if QtCore is not None:
-        gui_parser = subparsers.add_parser('gui', help='Opens a simple '
-                                           'PyQt GUI to create barcodes.')
+        gui_parser = subparsers.add_parser(
+            'gui', help='Opens a simple '
+            'PyQt GUI to create barcodes.'
+        )
         gui_parser.set_defaults(func=open_gui)
-    create_parser.set_defaults(type='svg', compress=False, func=create_barcode,
-                               barcode='code39', text=None)
+    create_parser.set_defaults(
+        type='svg',
+        compress=False,
+        func=create_barcode,
+        barcode='code39',
+        text=None
+    )
     args = parser.parse_args()
     try:
         func = args.func

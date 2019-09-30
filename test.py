@@ -17,7 +17,6 @@ try:
 except ImportError:
     ImageWriter = None  # lint:ok
 
-
 PATH = os.path.dirname(os.path.abspath(__file__))
 TESTPATH = os.path.join(PATH, 'tests')
 HTMLFILE = os.path.join(TESTPATH, 'index.html')
@@ -35,11 +34,15 @@ HTML = """<!DOCTYPE html>
 </html>
 """
 
-OBJECTS = ('<p><h2>{name}</h2><br>\n'
-           '<img src="{filename}" alt="SVG {name}">\n')
+OBJECTS = (
+    '<p><h2>{name}</h2><br>\n'
+    '<img src="{filename}" alt="SVG {name}">\n'
+)
 
-IMAGES = ('<h3>As PNG-Image</h3><br>\n'
-          '<img src="{filename}" alt="PNG {name}"></p>\n')
+IMAGES = (
+    '<h3>As PNG-Image</h3><br>\n'
+    '<img src="{filename}" alt="PNG {name}"></p>\n'
+)
 
 NO_PIL = '<h3>Pillow was not found. No PNG-Image created.</h3></p>\n'
 
@@ -77,10 +80,14 @@ def test():
             options['center_text'] = False
         else:
             options['center_text'] = True
-        filename = bcode.save(os.path.join(TESTPATH, codename),
-                              options=options)
-        print('Code: {0}, Input: {1}, Output: {2}'.format(
-            bcode.name, code, bcode.get_fullcode()))
+        filename = bcode.save(
+            os.path.join(TESTPATH, codename), options=options
+        )
+        print(
+            'Code: {0}, Input: {1}, Output: {2}'.format(
+                bcode.name, code, bcode.get_fullcode()
+            )
+        )
         append(os.path.basename(filename), bcode.name)
         if ImageWriter is not None:
             bcodec = get_barcode_class(codename)
@@ -90,8 +97,9 @@ def test():
                 opts['center_text'] = False
             else:
                 opts['center_text'] = True
-            filename = bcode.save(os.path.join(TESTPATH, codename),
-                                  options=opts)
+            filename = bcode.save(
+                os.path.join(TESTPATH, codename), options=opts
+            )
             append_img(os.path.basename(filename), bcode.name)
         else:
             objects.append(NO_PIL)
@@ -102,17 +110,17 @@ def test():
 
 
 class TestBarcodeBuilds(unittest.TestCase):
-
     def test_ean8(self):
-        ref = ('1010100011000110100100110101111010101000100'
-               '100010011100101001000101')
+        ref = (
+            '1010100011000110100100110101111010101000100'
+            '100010011100101001000101'
+        )
         ean = get_barcode('ean8', '40267708')
         bc = ean.build()
         self.assertEqual(ref, bc[0])
 
 
 class TestChecksums(unittest.TestCase):
-
     def test_code39(self):
         code39 = get_barcode('code39', 'Code39')
         self.assertEqual('CODE39W', code39.get_fullcode())

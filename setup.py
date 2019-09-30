@@ -2,7 +2,6 @@ from pathlib import Path
 
 from setuptools import find_packages, setup
 
-
 setup(
     name='python-barcode',
     packages=find_packages(),
@@ -39,8 +38,6 @@ setup(
         'write_to': 'barcode/version.py',
     },
     setup_requires=['setuptools_scm'],
-    extras_require={
-        'images': ['pillow']
-    },
+    extras_require={'images': ['pillow']},
     include_package_data=True,
 )

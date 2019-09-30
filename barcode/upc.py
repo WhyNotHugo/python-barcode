@@ -35,8 +35,10 @@ class UniversalProductCodeA(Barcode):
         if not upc.isdigit():
             raise IllegalCharacterError('UPC code can only contain numbers.')
         if len(upc) != self.digits:
-            raise NumberOfDigitsError('UPC must have {0} digits, not '
-                                      '{1}.'.format(self.digits, len(upc)))
+            raise NumberOfDigitsError(
+                'UPC must have {0} digits, not '
+                '{1}.'.format(self.digits, len(upc))
+            )
         self.upc = upc
         self.upc = '{}{}'.format(upc, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
@@ -61,7 +63,9 @@ class UniversalProductCodeA(Barcode):
         :return: The checksum for 'self.upc'
         :rtype: Integer
         """
-        def sum_(x, y): return int(x) + int(y)
+        def sum_(x, y):
+            return int(x) + int(y)
+
         upc = self.upc[0:self.digits]
         oddsum = reduce(sum_, upc[::2])
         evensum = reduce(sum_, upc[1::2])

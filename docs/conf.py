@@ -25,8 +25,10 @@ LOGO = os.path.join('images', 'pybarcode_small.png')
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.graphviz',
-              'sphinx.ext.inheritance_diagram']
+extensions = [
+    'sphinx.ext.autodoc', 'sphinx.ext.graphviz',
+    'sphinx.ext.inheritance_diagram'
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -89,7 +91,6 @@ pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
-
 
 # -- Options for HTML output ---------------------------------------------------
 
@@ -164,7 +165,6 @@ html_use_modindex = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyBarcodedoc'
 
-
 # -- Options for LaTeX output --------------------------------------------------
 
 # The paper size ('letter' or 'a4').
@@ -176,8 +176,10 @@ htmlhelp_basename = 'pyBarcodedoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'pyBarcode.tex', 'pyBarcode Documentation',
-   'Thorsten Weimann', 'manual'),
+    (
+        'index', 'pyBarcode.tex', 'pyBarcode Documentation',
+        'Thorsten Weimann', 'manual'
+    ),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

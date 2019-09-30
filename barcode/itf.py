@@ -10,7 +10,6 @@ from barcode.errors import (
     IllegalCharacterError,
 )
 
-
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 6.4
 
@@ -55,7 +54,7 @@ class ITF(Barcode):
         data = itf.START
         for i in range(0, len(self.code), 2):
             bars_digit = int(self.code[i])
-            spaces_digit = int(self.code[i+1])
+            spaces_digit = int(self.code[i + 1])
             for j in range(5):
                 data += itf.CODES[bars_digit][j].upper()
                 data += itf.CODES[spaces_digit][j].lower()
@@ -74,7 +73,7 @@ class ITF(Barcode):
 
     def render(self, writer_options, text=None):
         options = {
-            'module_width': MIN_SIZE/self.narrow,
+            'module_width': MIN_SIZE / self.narrow,
             'quiet_zone': MIN_QUIET_ZONE,
         }
         options.update(writer_options or {})

@@ -17,7 +17,6 @@ from barcode.itf import ITF
 from barcode.upc import UPCA
 from barcode.version import version  # noqa: F401
 
-
 __BARCODE_MAP = {
     'ean8': EAN8,
     'ean13': EAN13,
@@ -48,8 +47,9 @@ def get(name, code=None, writer=None, options=None):
     try:
         barcode = __BARCODE_MAP[name.lower()]
     except KeyError:
-        raise BarcodeNotFoundError('The barcode {0!r} you requested is not '
-                                   'known.'.format(name))
+        raise BarcodeNotFoundError(
+            'The barcode {0!r} you requested is not known.'.format(name)
+        )
     if code is not None:
         return barcode(code, writer, **options)
     else:
@@ -60,8 +60,15 @@ def get_class(name):
     return get_barcode(name)
 
 
-def generate(name, code, writer=None, output=None, writer_options=None,
-             text=None, pil=False):
+def generate(
+    name,
+    code,
+    writer=None,
+    output=None,
+    writer_options=None,
+    text=None,
+    pil=False
+):
     options = writer_options or {}
     barcode = get(name, code, writer, options)
     if pil:

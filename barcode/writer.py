@@ -34,13 +34,15 @@ def _set_attributes(element, **attributes):
 def create_svg_object():
     imp = xml.dom.getDOMImplementation()
     doctype = imp.createDocumentType(
-        'svg',
-        '-//W3C//DTD SVG 1.1//EN',
+        'svg', '-//W3C//DTD SVG 1.1//EN',
         'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'
     )
     document = imp.createDocument(None, 'svg', doctype)
-    _set_attributes(document.documentElement, version='1.1',
-                    xmlns='http://www.w3.org/2000/svg')
+    _set_attributes(
+        document.documentElement,
+        version='1.1',
+        xmlns='http://www.w3.org/2000/svg'
+    )
     return document
 
 
@@ -74,9 +76,9 @@ class BaseWriter(object):
             Is called: `return callback_finish()` and must return the
             rendered output.
     """
-
-    def __init__(self, initialize=None, paint_module=None, paint_text=None,
-                 finish=None):
+    def __init__(
+        self, initialize=None, paint_module=None, paint_text=None, finish=None
+    ):
         self._callbacks = {
             'initialize': initialize,
             'paint_module': paint_module,
@@ -114,8 +116,8 @@ class BaseWriter(object):
         number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
             height += (
-                pt2mm(self.font_size) / 2
-                * number_of_text_lines + self.text_distance
+                pt2mm(self.font_size) / 2 * number_of_text_lines +
+                self.text_distance
             )
             height += self.text_line_distance * (number_of_text_lines - 1)
         return int(mm2px(width, dpi)), int(mm2px(height, dpi))
@@ -184,7 +186,7 @@ class BaseWriter(object):
             c = 1
             mlist = []
             for i in range(0, len(line) - 1):
-                if line[i] == line[i+1]:
+                if line[i] == line[i + 1]:
                     c += 1
                 else:
                     if line[i] == "1":
@@ -226,10 +228,11 @@ class BaseWriter(object):
 
 
 class SVGWriter(BaseWriter):
-
     def __init__(self):
-        BaseWriter.__init__(self, self._init, self._create_module,
-                            self._create_text, self._finish)
+        BaseWriter.__init__(
+            self, self._init, self._create_module, self._create_text,
+            self._finish
+        )
         self.compress = False
         self.dpi = 25.4
         self._document = None
@@ -283,9 +286,12 @@ class SVGWriter(BaseWriter):
         for subtext in barcodetext.split('\n'):
             element = self._document.createElement('text')
             attributes = {
-                'x': SIZE.format(xpos),
-                'y': SIZE.format(ypos),
-                'style': 'fill:{0};font-size:{1}pt;text-anchor:middle;'.format(
+                'x':
+                SIZE.format(xpos),
+                'y':
+                SIZE.format(ypos),
+                'style':
+                'fill:{0};font-size:{1}pt;text-anchor:middle;'.format(
                     self.foreground,
                     self.font_size,
                 )
@@ -300,8 +306,9 @@ class SVGWriter(BaseWriter):
         if self.compress:
             return self._document.toxml(encoding='UTF-8')
         else:
-            return self._document.toprettyxml(indent=4 * ' ', newl=os.linesep,
-                                              encoding='UTF-8')
+            return self._document.toprettyxml(
+                indent=4 * ' ', newl=os.linesep, encoding='UTF-8'
+            )
 
     def save(self, filename, output):
         if self.compress:
@@ -319,11 +326,13 @@ class SVGWriter(BaseWriter):
 if Image is None:
     ImageWriter = None
 else:
-    class ImageWriter(BaseWriter):
 
+    class ImageWriter(BaseWriter):
         def __init__(self):
-            BaseWriter.__init__(self, self._init, self._paint_module,
-                                self._paint_text, self._finish)
+            BaseWriter.__init__(
+                self, self._init, self._paint_module, self._paint_text,
+                self._finish
+            )
             self.format = 'PNG'
             self.dpi = 300
             self._image = None
@@ -336,8 +345,10 @@ else:
 
         def _paint_module(self, xpos, ypos, width, color):
             size = [(mm2px(xpos, self.dpi), mm2px(ypos, self.dpi)),
-                    (mm2px(xpos + width, self.dpi),
-                     mm2px(ypos + self.module_height, self.dpi))]
+                    (
+                        mm2px(xpos + width, self.dpi),
+                        mm2px(ypos + self.module_height, self.dpi)
+                    )]
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):
@@ -345,8 +356,10 @@ else:
                 font = ImageFont.truetype(FONT, self.font_size * 2)
                 width, height = font.getsize(subtext)
                 # determine the maximum width of each line
-                pos = (mm2px(xpos, self.dpi) - width // 2,
-                       mm2px(ypos, self.dpi) - height // 4)
+                pos = (
+                    mm2px(xpos, self.dpi) - width // 2,
+                    mm2px(ypos, self.dpi) - height // 4
+                )
                 self._draw.text(pos, subtext, font=font, fill=self.foreground)
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 

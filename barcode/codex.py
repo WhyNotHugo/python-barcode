@@ -13,7 +13,6 @@ from barcode.errors import (
 
 __docformat__ = 'restructuredtext en'
 
-
 # Sizes
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 2.54
@@ -99,12 +98,15 @@ class PZN7(Code39):
         if not pzn.isdigit():
             raise IllegalCharacterError('PZN can only contain numbers.')
         if len(pzn) != self.digits:
-            raise NumberOfDigitsError('PZN must have {0} digits, not '
-                                      '{1}.'.format(self.digits, len(pzn)))
+            raise NumberOfDigitsError(
+                'PZN must have {0} digits, not '
+                '{1}.'.format(self.digits, len(pzn))
+            )
         self.pzn = pzn
         self.pzn = '{0}{1}'.format(pzn, self.calculate_checksum())
-        Code39.__init__(self, 'PZN-{0}'.format(self.pzn), writer,
-                        add_checksum=False)
+        Code39.__init__(
+            self, 'PZN-{0}'.format(self.pzn), writer, add_checksum=False
+        )
 
     def get_fullcode(self):
         return 'PZN-{0}'.format(self.pzn)

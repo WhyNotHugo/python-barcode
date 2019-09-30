@@ -1,4 +1,3 @@
-
 """Module: barcode.ean
 
 :Provided barcodes: EAN-14, EAN-13, EAN-8, JAN
@@ -18,7 +17,6 @@ try:
     reduce
 except NameError:
     from functools import reduce
-
 
 # EAN13 Specs (all sizes in mm)
 SIZES = {
@@ -57,8 +55,11 @@ class EuropeanArticleNumber13(Barcode):
         if not ean.isdigit():
             raise IllegalCharacterError('EAN code can only contain numbers.')
         if len(ean) != self.digits:
-            raise NumberOfDigitsError('EAN must have {0} digits, not '
-                                      '{1}.'.format(self.digits, len(ean)))
+            raise NumberOfDigitsError(
+                'EAN must have {0} digits, not {1}.'.format(
+                    self.digits, len(ean),
+                )
+            )
         self.ean = ean
         # If no checksum
         if no_checksum:
@@ -85,7 +86,9 @@ class EuropeanArticleNumber13(Barcode):
         :returns: The checksum for `self.ean`.
         :rtype: Integer
         """
-        def sum_(x, y): return int(x) + int(y)
+        def sum_(x, y):
+            return int(x) + int(y)
+
         evensum = reduce(sum_, self.ean[-2::-2])
         oddsum = reduce(sum_, self.ean[-1::-2])
         return (10 - ((evensum + oddsum * 3) % 10)) % 10
@@ -138,8 +141,9 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
     def __init__(self, jan, writer=None):
         if int(jan[:3]) not in JapanArticleNumber.valid_country_codes:
-            raise WrongCountryCodeError("Country code isn't between 450-460 "
-                                        "or 490-500.")
+            raise WrongCountryCodeError(
+                "Country code isn't between 450-460 or 490-500."
+            )
         EuropeanArticleNumber13.__init__(self, jan, writer)
 
 
@@ -195,8 +199,8 @@ class EuropeanArticleNumber14(EuropeanArticleNumber13):
         :returns: The checksum for `self.ean`.
         :rtype: Integer
         """
-
-        def sum_(x, y): return int(x) + int(y)
+        def sum_(x, y):
+            return int(x) + int(y)
 
         evensum = reduce(sum_, self.ean[::2])
         oddsum = reduce(sum_, self.ean[1::2])
