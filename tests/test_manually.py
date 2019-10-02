@@ -2,7 +2,6 @@
 
 import codecs
 import os
-import sys
 
 from barcode import get_barcode, get_barcode_class, version
 from barcode.writer import ImageWriter
