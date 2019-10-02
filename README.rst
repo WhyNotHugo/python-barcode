@@ -117,6 +117,17 @@ Commandline::
 Changelog
 ---------
 
+v0.11.0
+~~~~~~~
+
+* Added basic support for multiline text.
+* Dropped lots of older compat-only code and other cleanups.
+
+v0.10.0
+~~~~~~~
+
+* Added support for GS1-128.
+
 v0.9.1
 ~~~~~~
 
