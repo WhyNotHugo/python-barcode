@@ -15,3 +15,5 @@ dist/*
 docs/_build/*
 MANIFEST
 barcode/version.py
+tests/index.html
+tests/test_outputs/
