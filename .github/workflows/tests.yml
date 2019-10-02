@@ -1,0 +1,24 @@
+name: Tests
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macOS-10.14]
+        python: [ '3.5', '3.6', '3.7' ]
+    name: python${{ matrix.python }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+          architecture: x64
+      - name: Install test dependencies
+        run: |
+          pip install --upgrade --no-cache-dir pipenv
+          pipenv install --dev
+      - name: Run tests
+        run: pipenv run pytest

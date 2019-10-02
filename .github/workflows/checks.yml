@@ -1,0 +1,18 @@
+name: Checks
+
+on: [push]
+
+jobs:
+  styles:
+    runs-on: ubuntu-18.04
+    name: Linting
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+          architecture: x64
+      - name: Install test dependencies
+        run: pip install --upgrade --no-cache-dir flake8 flake8-bugbear flake8-comprehensions flake8-import-order
+      - name: Run flake8
+        run: flake8
