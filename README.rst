@@ -1,9 +1,9 @@
 python-barcode
 ==============
 
-.. image:: https://travis-ci.org/WhyNotHugo/python-barcode.svg?branch=master
-  :target: https://travis-ci.org/WhyNotHugo/python-barcode
-  :alt: build status
+.. image:: https://action-badges.now.sh/WhyNotHugo/python-barcode
+  :target: https://github.com/WhyNotHugo/python-barcode/actions
+  :alt: CI status
 
 .. image:: https://img.shields.io/pypi/v/python-barcode.svg
   :target: https://pypi.python.org/pypi/python-barcode
