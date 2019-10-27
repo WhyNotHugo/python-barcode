@@ -107,8 +107,10 @@ and see the created barcode. That's it.
 
 Commandline::
 
-    $ python-barcode create "My Text" outfile
+    `$ python-barcode create "123456789000" outfile -b ean --text "text to appear under barcode" `
     New barcode saved as outfile.svg.
+    
+    # This may not work if `ImageWriter` is None 
     $ python-barcode create -t png "My Text" outfile
     New barcode saved as outfile.png.
 
