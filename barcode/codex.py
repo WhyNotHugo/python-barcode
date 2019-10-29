@@ -44,9 +44,9 @@ class Code39(Barcode):
     """
 
     name = 'Code 39'
-    add_checksum_default = True
 
     def __init__(self, code, writer=None):
+        self.add_checksum_default = True
         self.checksum_added = False
         self.code = code.upper()
         self.writer = writer or Barcode.default_writer()
@@ -61,7 +61,7 @@ class Code39(Barcode):
         return self.code
 
     def calculate_checksum(self):
-        check = sum([code39.MAP[x][0] for x in self.code]) % 43
+        check = sum(code39.MAP[x][0] for x in self.code) % 43
         for k, v in code39.MAP.items():
             if check == v[0]:
                 return k
