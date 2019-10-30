@@ -110,7 +110,8 @@ Commandline::
     `$ python-barcode create "123456789000" outfile -b ean --text "text to appear under barcode" `
     New barcode saved as outfile.svg.
     
-    # This may not work if `ImageWriter` is None 
+    # This may not work if `ImageWriter` is None
+    # ImageWriter is unavailable if Pillow is not installed (it's required for exporting to images instead of SVG).
     $ python-barcode create -t png "My Text" outfile
     New barcode saved as outfile.png.
 
