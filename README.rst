@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FWhyNotHugo%2Fpython-barcode.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FWhyNotHugo%2Fpython-barcode?ref=badge_shield)
+
 python-barcode
 ==============
 
@@ -245,3 +247,6 @@ v0.2
 v0.1
 ~~~~
 * First release.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FWhyNotHugo%2Fpython-barcode.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FWhyNotHugo%2Fpython-barcode?ref=badge_large)
