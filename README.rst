@@ -22,24 +22,21 @@ Python standard lib. The barcodes are created as SVG objects.
 
 Please report any bugs at https://github.com/WhyNotHugo/python-barcode/issues
 
+Features
+--------
 
-Requirements
-------------
-
-- Setuptools/distribute for installation.
-- Python 3.5 or above
-- Program to open SVG objects (your browser should do it)
-- Optional: Pillow to render barcodes as images (PNG, JPG, ...)
-
+- Works on Python 3.5 to 3.8
+- No visualiser (just use your browser)
+- Generate barcodes as images (png, jpeg, etc). Requires Pillow.
 
 Installation
 ------------
 
-The best way is to use pip: ``pip install python-barcode``.
+The best way is to use pip: ``pip install python-barcode``. Don't forget to add
+this to our app's dependencies.
 
 If you'll be exporting to images (eg: not just SVG), you'll need additional
 optional dependencies, so run: ``pip install python-barcode[images]``.
-
 
 Provided Barcodes
 -----------------
@@ -56,15 +53,23 @@ Provided Barcodes
 * Code 128
 * PZN
 
-
-Todo
-----
-
-- Add documentation
-- Add more codes
+PRs for other code formats are welcome!
 
 Usage
 -----
+
+Programmatic::
+
+    from barcode import EAN13
+    from barcode.writer import ImageWriter
+
+    # print to a file-like object:
+    rv = BytesIO()
+    EAN13(str(100000902922), writer=ImageWriter()).write(rv)
+
+    # or sure, to an actual file:
+    with open('somefile.jpeg', 'wb') as f:
+        EAN13('100000011111', writer=ImageWriter()).write(f)
 
 Interactive::
 
