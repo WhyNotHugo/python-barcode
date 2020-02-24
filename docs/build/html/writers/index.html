@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pyBarcode Writer &#8212; python-barcode 0.10.0.post30+g0328810.d20200225 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyBarcode SVGWriter" href="svg.html" />
+    <link rel="prev" title="Provided barcodes" href="../codes.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="svg.html" title="pyBarcode SVGWriter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../codes.html" title="Provided barcodes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-barcode 0.10.0.post30+g0328810.d20200225 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pybarcode-writer">
+<span id="index-0"></span><h1>pyBarcode Writer<a class="headerlink" href="#pybarcode-writer" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="common-writer-options">
+<h2>Common Writer Options<a class="headerlink" href="#common-writer-options" title="Permalink to this headline">¶</a></h2>
+<p>All writer take the following options (specified as keyword arguments
+to <cite>Barcode.save(filename, options)</cite> or set via
+<cite>Writer.set_options(options)</cite>, where <cite>options</cite> is a dictionary where keys are option names and values are option
+values to be set).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See the documentation of the specific writer for special options,
+only available for this writer.</p>
+</div>
+<div class="section" id="common-options">
+<h3>Common Options:<a class="headerlink" href="#common-options" title="Permalink to this headline">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">module_width</dt>
+<dd class="field-odd"><p>The width of one barcode module in mm as <em>float</em>.
+Defaults to <strong>0.2</strong>.</p>
+</dd>
+<dt class="field-even">module_height</dt>
+<dd class="field-even"><p>The height of the barcode modules in mm as <em>float</em>.
+Defaults to <strong>15.0</strong>.</p>
+</dd>
+<dt class="field-odd">quiet_zone</dt>
+<dd class="field-odd"><p>Distance on the left and on the right from the border to the first
+(last) barcode module in mm as <em>float</em>.
+Defaults to <strong>6.5</strong>.</p>
+</dd>
+<dt class="field-even">font_size</dt>
+<dd class="field-even"><p>Font size of the text under the barcode in pt as <em>integer</em>.
+Defaults to <strong>10</strong>.</p>
+</dd>
+<dt class="field-odd">text_distance</dt>
+<dd class="field-odd"><p>Distance between the barcode and the text under it in mm as <em>float</em>.
+Defaults to <strong>5.0</strong>.</p>
+</dd>
+<dt class="field-even">background</dt>
+<dd class="field-even"><p>The background color of the created barcode as <em>string</em>.
+Defaults to <strong>white</strong>.</p>
+</dd>
+<dt class="field-odd">foreground</dt>
+<dd class="field-odd"><p>The foreground and text color of the created barcode as <em>string</em>.
+Defaults to <strong>black</strong>.</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.6.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">center_text</dt>
+<dd class="field-odd"><p>If true (the default) the text is centered under the barcode else
+left aligned.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some barcode classes change the above defaults to fit in some kind
+of specification.</p>
+</div>
+</div>
+</div>
+<div class="section" id="writers">
+<h2>Writers<a class="headerlink" href="#writers" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="svg.html">pyBarcode SVGWriter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="svg.html#special-options">Special Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">pyBarcode ImageWriter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="image.html#special-options">Special Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="create_writer.html">Create your own writer</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-barcode.writer">
+<span id="api-autogenerated"></span><h2>API (autogenerated)<a class="headerlink" href="#module-barcode.writer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="barcode.writer.BaseWriter">
+<em class="property">class </em><code class="sig-prename descclassname">barcode.writer.</code><code class="sig-name descname">BaseWriter</code><span class="sig-paren">(</span><em class="sig-param">initialize=None</em>, <em class="sig-param">paint_module=None</em>, <em class="sig-param">paint_text=None</em>, <em class="sig-param">finish=None</em><span class="sig-paren">)</span><a class="headerlink" href="#barcode.writer.BaseWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Baseclass for all writers.</p>
+<p>Initializes the basic writer options. Childclasses can add more
+attributes and can set them directly or using
+<cite>self.set_options(option=value)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>initialize<span class="classifier">Function</span></dt><dd><p>Callback for initializing the inheriting writer.
+Is called: <cite>callback_initialize(raw_code)</cite></p>
+</dd>
+<dt>paint_module<span class="classifier">Function</span></dt><dd><p>Callback for painting one barcode module.
+Is called: <cite>callback_paint_module(xpos, ypos, width, color)</cite></p>
+</dd>
+<dt>paint_text<span class="classifier">Function</span></dt><dd><p>Callback for painting the text under the barcode.
+Is called: <cite>callback_paint_text(xpos, ypos)</cite> using <cite>self.text</cite>
+as text.</p>
+</dd>
+<dt>finish<span class="classifier">Function</span></dt><dd><p>Callback for doing something with the completely rendered
+output.
+Is called: <cite>return callback_finish()</cite> and must return the
+rendered output.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="barcode.writer.BaseWriter.calculate_size">
+<code class="sig-name descname">calculate_size</code><span class="sig-paren">(</span><em class="sig-param">modules_per_line</em>, <em class="sig-param">number_of_lines</em>, <em class="sig-param">dpi=300</em><span class="sig-paren">)</span><a class="headerlink" href="#barcode.writer.BaseWriter.calculate_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the size of the barcode in pixel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>modules_per_line<span class="classifier">Integer</span></dt><dd><p>Number of modules in one line.</p>
+</dd>
+<dt>number_of_lines<span class="classifier">Integer</span></dt><dd><p>Number of lines of the barcode.</p>
+</dd>
+<dt>dpi<span class="classifier">Integer</span></dt><dd><p>DPI to calculate.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Width and height of the barcode in pixel.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="barcode.writer.BaseWriter.register_callback">
+<code class="sig-name descname">register_callback</code><span class="sig-paren">(</span><em class="sig-param">action</em>, <em class="sig-param">callback</em><span class="sig-paren">)</span><a class="headerlink" href="#barcode.writer.BaseWriter.register_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register one of the three callbacks if not given at instance
+creation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>action<span class="classifier">String</span></dt><dd><p>One of ‘initialize’, ‘paint_module’, ‘paint_text’, ‘finish’.</p>
+</dd>
+<dt>callback<span class="classifier">Function</span></dt><dd><p>The callback function for the given action.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="barcode.writer.BaseWriter.render">
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">code</em><span class="sig-paren">)</span><a class="headerlink" href="#barcode.writer.BaseWriter.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the barcode to whatever the inheriting writer provides,
+using the registered callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>code<span class="classifier">List</span></dt><dd><p>List of strings matching the writer spec
+(only contain 0 or 1).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="barcode.writer.BaseWriter.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">output</em><span class="sig-paren">)</span><a class="headerlink" href="#barcode.writer.BaseWriter.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the rendered output to <cite>filename</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>filename<span class="classifier">String</span></dt><dd><p>Filename without extension.</p>
+</dd>
+<dt>output<span class="classifier">String</span></dt><dd><p>The rendered output.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The full filename with extension.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="barcode.writer.BaseWriter.set_options">
+<code class="sig-name descname">set_options</code><span class="sig-paren">(</span><em class="sig-param">options</em><span class="sig-paren">)</span><a class="headerlink" href="#barcode.writer.BaseWriter.set_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the given options as instance attributes (only
+if they are known).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>options<span class="classifier">Dict</span></dt><dd><p>All known instance attributes and more if the childclass
+has defined them before this call.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="barcode.writer.SVGWriter">
+<em class="property">class </em><code class="sig-prename descclassname">barcode.writer.</code><code class="sig-name descname">SVGWriter</code><a class="headerlink" href="#barcode.writer.SVGWriter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="barcode.writer.SVGWriter.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">output</em><span class="sig-paren">)</span><a class="headerlink" href="#barcode.writer.SVGWriter.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the rendered output to <cite>filename</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>filename<span class="classifier">String</span></dt><dd><p>Filename without extension.</p>
+</dd>
+<dt>output<span class="classifier">String</span></dt><dd><p>The rendered output.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The full filename with extension.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/pybarcode_small.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyBarcode Writer</a><ul>
+<li><a class="reference internal" href="#common-writer-options">Common Writer Options</a><ul>
+<li><a class="reference internal" href="#common-options">Common Options:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writers">Writers</a></li>
+<li><a class="reference internal" href="#module-barcode.writer">API (autogenerated)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../codes.html"
+                        title="previous chapter">Provided barcodes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="svg.html"
+                        title="next chapter">pyBarcode SVGWriter</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/writers/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="svg.html" title="pyBarcode SVGWriter"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../codes.html" title="Provided barcodes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-barcode 0.10.0.post30+g0328810.d20200225 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2010-2017 Thorsten Weimann et al.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
+    </div>
+  </body>
+</html>
