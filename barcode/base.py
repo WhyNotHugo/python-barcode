@@ -56,7 +56,7 @@ class Barcode(object):
                 extension).
             options : Dict
                 The same as in `self.render`.
-            text : str (unicode on Python 2)
+            text : str
                 Text to render under the barcode.
 
         :returns: The full filename with extension.
@@ -79,7 +79,7 @@ class Barcode(object):
                 Object to write the raw data in.
             options : Dict
                 The same as in `self.render`.
-            text : str (unicode on Python 2)
+            text : str
                 Text to render under the barcode.
         """
         output = self.render(options, text)
@@ -94,7 +94,7 @@ class Barcode(object):
         :parameters:
             writer_options : Dict
                 Options for `self.writer`, see writer docs for details.
-            text : str (unicode on Python 2)
+            text : str
                 Text to render under the barcode.
 
         :returns: Output of the writers render method.
