@@ -47,10 +47,7 @@ class EuropeanArticleNumber13(Barcode):
 
     digits = 12
 
-    def __init__(self, ean, writer=None, **kwargs):
-        no_checksum = False
-        if "no_checksum" in kwargs.keys():
-            no_checksum = kwargs["no_checksum"]
+    def __init__(self, ean, writer=None, no_checksum=False):
         ean = ean[:self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError('EAN code can only contain numbers.')

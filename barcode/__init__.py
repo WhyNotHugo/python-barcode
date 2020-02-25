@@ -78,7 +78,7 @@ def generate(
     pil=False
 ):
     options = writer_options or {}
-    barcode = get(name, code, writer, options)
+    barcode = get(name, code, writer, **options)
     if pil:
         return barcode.render(writer_options, text)
     if isinstance(output, str):
