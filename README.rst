@@ -5,6 +5,10 @@ python-barcode
   :target: https://github.com/WhyNotHugo/python-barcode/actions
   :alt: CI status
 
+.. image:: https://readthedocs.org/projects/python-barcode/badge/
+  :target: https://python-barcode.rtfd.org/
+  :alt: documentation
+
 .. image:: https://img.shields.io/pypi/v/python-barcode.svg
   :target: https://pypi.python.org/pypi/python-barcode
   :alt: version on pypi
@@ -19,6 +23,8 @@ Python standard lib. The barcodes are created as SVG objects.
 .. image:: example-ean13.png
   :target: https://github.com/WhyNotHugo/python-barcode
   :alt: python-barcode
+
+Full documentation is published at http://python-barcode.rtfd.io/
 
 Please report any bugs at https://github.com/WhyNotHugo/python-barcode/issues
 
