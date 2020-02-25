@@ -181,6 +181,12 @@ This project is a fork of pyBarcode, which, apparently, is no longer
 maintained. v0.8.0 is our first release, and is the latest ``master`` from that
 parent project.
 
+v0.9.0
+~~~~~~
+
+* Fixed a bug in the API when combining certain barcodes and writers.
+* Published documentation again and updated all project references.
+
 v0.8
 ~~~~
 * Code 128 added.
