@@ -12,7 +12,7 @@
 barcode/__pycache*
 build/*
 dist/*
-docs/_build/*
+docs/build/*
 MANIFEST
 barcode/version.py
 tests/index.html
