@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'python-barcode'
-copyright = '2010-2017 Thorsten Weimann et al'
+copyright = '2017-2020 Hugo Osvaldo Barrera <hugo@barrera.io>, et al'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
