@@ -135,6 +135,12 @@ v0.11.0
 
 * Added basic support for multiline text.
 * Dropped lots of older compat-only code and other cleanups.
+* Fixed a bug in the API when combining certain barcodes and writers.
+* Published documentation again and updated all project references.
+* Fix python_barcode.get mixups between `options` as `writer_options`.
+  Previously, some writer/barcode combinations worked fine, while others
+  failed. Now all work consistently.
+* The cli tool has been fixed and should now work as expected again.
 
 v0.10.0
 ~~~~~~~
@@ -180,16 +186,6 @@ Previous Changelog
 This project is a fork of pyBarcode, which, apparently, is no longer
 maintained. v0.8.0 is our first release, and is the latest ``master`` from that
 parent project.
-
-v0.9.0
-~~~~~~
-
-* Fixed a bug in the API when combining certain barcodes and writers.
-* Published documentation again and updated all project references.
-* Fix python_barcode.get mixups between `options` as `writer_options`.
-  Previously, some writer/barcode combinations worked fine, while others
-  failed. Now all work consistently.
-* The cli tool has been fixed and should now work as expected again.
 
 v0.8
 ~~~~
