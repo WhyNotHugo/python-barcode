@@ -186,6 +186,9 @@ v0.9.0
 
 * Fixed a bug in the API when combining certain barcodes and writers.
 * Published documentation again and updated all project references.
+* Fix python_barcode.get mixups between `options` as `writer_options`.
+  Previously, some writer/barcode combinations worked fine, while others
+  failed. Now all work consistently.
 
 v0.8
 ~~~~
