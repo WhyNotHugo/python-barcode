@@ -189,6 +189,7 @@ v0.9.0
 * Fix python_barcode.get mixups between `options` as `writer_options`.
   Previously, some writer/barcode combinations worked fine, while others
   failed. Now all work consistently.
+* The cli tool has been fixed and should now work as expected again.
 
 v0.8
 ~~~~
