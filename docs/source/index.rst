@@ -1,5 +1,5 @@
-pyBarcode's Documentation
-=========================
+python-barcode's Documentation
+==============================
 
 .. image:: /images/pybarcode.png
 

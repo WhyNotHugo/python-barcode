@@ -14,10 +14,10 @@ HTML = """<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>pyBarcode {version} Test</title>
+        <title>python-barcode {version} Test</title>
     </head>
     <body>
-        <h1>pyBarcode {version} Tests</h1>
+        <h1>python-barcode {version} Tests</h1>
         {body}
     </body>
 </html>

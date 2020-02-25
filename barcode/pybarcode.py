@@ -21,7 +21,7 @@ def open_gui(args, parser=None):
 
 
 def list_types(args, parser=None):
-    print('\npyBarcode available barcode formats:')
+    print('\npython-barcode available barcode formats:')
     print(', '.join(barcode.PROVIDED_BARCODES))
     print('\n')
     print('Available image formats')

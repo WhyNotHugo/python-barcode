@@ -1,5 +1,5 @@
-pyBarcode ImageWriter
-=====================
+python-barcode ImageWriter
+==========================
 
 .. versionadded:: 0.4b1
 
