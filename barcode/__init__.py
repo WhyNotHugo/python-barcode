@@ -75,12 +75,9 @@ def generate(
     output=None,
     writer_options=None,
     text=None,
-    pil=False
 ):
     options = writer_options or {}
     barcode = get(name, code, writer, **options)
-    if pil:
-        return barcode.render(writer_options, text)
     if isinstance(output, str):
         fullname = barcode.save(output, options, text)
         return fullname
