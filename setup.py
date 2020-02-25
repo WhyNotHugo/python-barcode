@@ -7,8 +7,8 @@ setup(
     packages=find_packages(),
     url="https://github.com/WhyNotHugo/python-barcode",
     license='MIT',
-    author='Thorsten Weimann et al',
-    author_email='weimann.th@yahoo.com',
+    author='Hugo Osvaldo Barrera et al',
+    author_email='hugo@barrera.io',
     description=(
         'Create standard barcodes with Python. No external modules needed. '
         '(optional Pillow support included).'
