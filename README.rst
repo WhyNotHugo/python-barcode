@@ -5,6 +5,10 @@ python-barcode
   :target: https://github.com/WhyNotHugo/python-barcode/actions
   :alt: CI status
 
+.. image:: https://codecov.io/gh/WhyNotHugo/python-barcode/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/WhyNotHugo/python-barcode
+  :alt: Build coverage
+
 .. image:: https://readthedocs.org/projects/python-barcode/badge/
   :target: https://python-barcode.rtfd.org/
   :alt: documentation
