@@ -3,7 +3,7 @@ python-barcode ImageWriter
 
 .. versionadded:: 0.4b1
 
-Creates barcodes as image. All imagetypes supported by Pillow are availble.
+Creates barcodes as image. All imagetypes supported by Pillow are available.
 
 Special Options
 ---------------
