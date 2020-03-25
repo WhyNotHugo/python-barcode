@@ -8,21 +8,17 @@ from functools import reduce
 
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
-from barcode.errors import (
-    IllegalCharacterError,
-    NumberOfDigitsError,
-)
+from barcode.errors import IllegalCharacterError, NumberOfDigitsError
 
 
 class UniversalProductCodeA(Barcode):
     """Initializes new UPC-A barcode.
 
-    :parameters:
-        upc : String
-            The upc number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
-        make_ean: boolean
+    :param str upc: The upc number as string.
+    :param writer: barcode.writer instance. The writer to render the barcode
+            (default: SVGWriter).
+    :param bool make_ean: Indicates if a leading zero should be added to the
+            barcode. This converts the UPC into a valid European Article Number (EAN).
     """
 
     name = 'UPC-A'
@@ -61,7 +57,7 @@ class UniversalProductCodeA(Barcode):
         """Calculates the checksum for UPCA/UPC codes
 
         :return: The checksum for 'self.upc'
-        :rtype: Integer
+        :rtype: int
         """
         def sum_(x, y):
             return int(x) + int(y)
@@ -79,7 +75,7 @@ class UniversalProductCodeA(Barcode):
         """Builds the barcode pattern from 'self.upc'
 
         :return: The pattern as string
-        :rtype: String
+        :rtype: str
         """
         code = _upc.EDGE[:]
 
@@ -98,7 +94,7 @@ class UniversalProductCodeA(Barcode):
     def to_ascii(self):
         """Returns an ascii representation of the barcode.
 
-        :rtype: String
+        :rtype: str
         """
 
         code = self.build()
