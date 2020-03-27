@@ -24,10 +24,11 @@ class UniversalProductCodeA(Barcode):
         """Initializes new UPC-A barcode.
 
         :param str upc: The upc number as string.
-        :param writer: barcode.writer instance. The writer to render the barcode
-                (default: SVGWriter).
-        :param bool make_ean: Indicates if a leading zero should be added to the
-                barcode. This converts the UPC into a valid European Article Number (EAN).
+        :param writer: barcode.writer instance. The writer to render the
+            barcode (default: SVGWriter).
+        :param bool make_ean: Indicates if a leading zero should be added to
+            the barcode. This converts the UPC into a valid European Article
+            Number (EAN).
         """
         self.ean = make_ean
         upc = upc[:self.digits]
