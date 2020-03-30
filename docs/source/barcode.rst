@@ -2,7 +2,7 @@ Introduction
 ============
 
 This package was created to have barcodes available with pure-python.
-Pillow_ is required for exporting for exporting images (png, jpg), although not
+Pillow_ is required for exporting images (png, jpg), although not
 for SVGs.
 
 All you need to create a barcode is to know the system (EAN, UPC, ...)
@@ -10,8 +10,6 @@ and the code (e.g. for EAN-13: 123456789102). As you see, you do not
 need the checksum, it will be calculated automatically. In some systems
 (Code 39) the checksum is optional, there you can give the `add_checksum`
 keyword argument (default is True).
-
-As of version 0.7beta3 Python 3 is supported, but not well tested.
 
 .. _Pillow: https://python-pillow.org/
 

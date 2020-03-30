@@ -1,7 +1,7 @@
 ㊙️ python-barcode's documentation
-=================================
+===================================
 
-.. image:: /images/pybarcode.png
+.. image:: _static/images/pybarcode.png
 
 Contents
 --------
