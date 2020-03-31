@@ -179,7 +179,7 @@ class Code128(Barcode):
                     digits += 1
                 else:
                     break
-            return digits > 3 and (digits%2) == 0
+            return digits > 3 and (digits % 2) == 0
 
         codes = []
         if self._charset == 'C' and not char.isdigit():
