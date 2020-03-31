@@ -37,6 +37,7 @@ Features
 
 - Works on Python 3.5 to 3.8
 - No visualiser (just use your browser)
+- Generate barcodes as SVG files.
 - Generate barcodes as images (png, jpeg, etc). Requires Pillow.
 
 Installation
