@@ -31,6 +31,10 @@ Common Options:
     (last) barcode module in mm as *float*.
     Defaults to **6.5**.
 
+:font_path:
+    Path to the font file to be used. Defaults to **DejaVuSansMono** (which
+    is bundled with this package).
+
 :font_size:
     Font size of the text under the barcode in pt as *integer*.
     Defaults to **10**.
