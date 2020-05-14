@@ -37,7 +37,7 @@ PROVIDED_BARCODES = list(__BARCODE_MAP)
 PROVIDED_BARCODES.sort()
 
 
-def get(name, code=None, writer=None, options=None, writer_options=None):
+def get(name, code=None, writer=None, options=None):
     """Helper method for getting a generator or even a generated code.
 
     :param str name: The name of the type of barcode desired.
