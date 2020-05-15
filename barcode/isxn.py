@@ -84,10 +84,8 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         else:
             return tmp
 
-    def __unicode__(self):
+    def __str__(self):
         return self.isbn10
-
-    __str__ = __unicode__
 
 
 class InternationalStandardSerialNumber(EuropeanArticleNumber13):
@@ -124,10 +122,8 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
     def make_ean(self):
         return '977{0}00{1}'.format(self.issn[:7], self._calculate_checksum())
 
-    def __unicode__(self):
+    def __str__(self):
         return self.issn
-
-    __str__ = __unicode__
 
 
 # Shortcuts

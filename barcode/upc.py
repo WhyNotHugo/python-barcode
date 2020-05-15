@@ -43,13 +43,11 @@ class UniversalProductCodeA(Barcode):
         self.upc = '{}{}'.format(upc, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
 
-    def __unicode__(self):
+    def __str__(self):
         if self.ean:
             return '0' + self.upc
         else:
             return self.upc
-
-    __str__ = __unicode__
 
     def get_fullcode(self):
         if self.ean:
