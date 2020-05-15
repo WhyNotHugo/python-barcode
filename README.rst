@@ -21,6 +21,10 @@ python-barcode
   :target: https://github.com/WhyNotHugo/python-barcode/blob/master/LICENCE
   :alt: licence
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+  :target: https://github.com/psf/black
+  :alt: code style
+
 This library provides a simple way to create barcodes using only the
 Python standard lib. The barcodes are created as SVG objects.
 
@@ -125,7 +129,7 @@ Commandline::
 
     `$ python-barcode create "123456789000" outfile -b ean --text "text to appear under barcode" `
     New barcode saved as outfile.svg.
-    
+
     # The following will not work if Pillow is not installed (Pillow is required for exporting to images instead of SVG).
     $ python-barcode create -t png "My Text" outfile
     New barcode saved as outfile.png.
