@@ -135,6 +135,11 @@ Commandline::
 Changelog
 ---------
 
+v0.12.0
+~~~~~~~
+
+* Removed `writer_options` from `barcode.get`. This parameter was not used.
+
 v0.11.0
 ~~~~~~~
 
