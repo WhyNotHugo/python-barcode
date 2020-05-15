@@ -1,12 +1,8 @@
-"""barcode.errors"""
-__docformat__ = 'restructuredtext en'
-
-
 class BarcodeError(Exception):
-    def __init__(self, msg):
+    def __init__(self, msg: str):
         self.msg = msg
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.msg
 
 
