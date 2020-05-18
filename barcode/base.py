@@ -7,34 +7,32 @@ from barcode.writer import SVGWriter
 
 class Barcode(object):
 
-    name = ''
+    name = ""
 
     digits = 0
 
     default_writer = SVGWriter
 
     default_writer_options = {
-        'module_width': 0.2,
-        'module_height': 15.0,
-        'quiet_zone': 6.5,
-        'font_size': 10,
-        'text_distance': 5.0,
-        'background': 'white',
-        'foreground': 'black',
-        'write_text': True,
-        'text': '',
+        "module_width": 0.2,
+        "module_height": 15.0,
+        "quiet_zone": 6.5,
+        "font_size": 10,
+        "text_distance": 5.0,
+        "background": "white",
+        "foreground": "black",
+        "write_text": True,
+        "text": "",
     }
 
     def to_ascii(self):
         code = self.build()
         for i, line in enumerate(code):
-            code[i] = line.replace('1', 'X').replace('0', ' ')
-        return '\n'.join(code)
+            code[i] = line.replace("1", "X").replace("0", " ")
+        return "\n".join(code)
 
     def __repr__(self):
-        return '<{0}({1!r})>'.format(
-            self.__class__.__name__, self.get_fullcode()
-        )
+        return "<{0}({1!r})>".format(self.__class__.__name__, self.get_fullcode())
 
     def build(self):
         raise NotImplementedError
@@ -83,7 +81,7 @@ class Barcode(object):
                 Text to render under the barcode.
         """
         output = self.render(options, text)
-        if hasattr(output, 'tostring'):
+        if hasattr(output, "tostring"):
             output.save(fp, format=self.writer.format)
         else:
             fp.write(output)
@@ -101,11 +99,11 @@ class Barcode(object):
         """
         options = Barcode.default_writer_options.copy()
         options.update(writer_options or {})
-        if options['write_text'] or text is not None:
+        if options["write_text"] or text is not None:
             if text is not None:
-                options['text'] = text
+                options["text"] = text
             else:
-                options['text'] = self.get_fullcode()
+                options["text"] = self.get_fullcode()
         self.writer.set_options(options)
         code = self.build()
         raw = self.writer.render(code)

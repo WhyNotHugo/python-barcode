@@ -13,24 +13,24 @@ from barcode.upc import UPCA
 from barcode.version import version  # noqa: F401
 
 __BARCODE_MAP = {
-    'ean8': EAN8,
-    'ean13': EAN13,
-    'ean': EAN13,
-    'gtin': EAN14,
-    'ean14': EAN14,
-    'jan': JAN,
-    'upc': UPCA,
-    'upca': UPCA,
-    'isbn': ISBN13,
-    'isbn13': ISBN13,
-    'gs1': ISBN13,
-    'isbn10': ISBN10,
-    'issn': ISSN,
-    'code39': Code39,
-    'pzn': PZN,
-    'code128': Code128,
-    'itf': ITF,
-    'gs1_128': Gs1_128,
+    "ean8": EAN8,
+    "ean13": EAN13,
+    "ean": EAN13,
+    "gtin": EAN14,
+    "ean14": EAN14,
+    "jan": JAN,
+    "upc": UPCA,
+    "upca": UPCA,
+    "isbn": ISBN13,
+    "isbn13": ISBN13,
+    "gs1": ISBN13,
+    "isbn10": ISBN10,
+    "issn": ISSN,
+    "code39": Code39,
+    "pzn": PZN,
+    "code128": Code128,
+    "itf": ITF,
+    "gs1_128": Gs1_128,
 }
 
 PROVIDED_BARCODES = list(__BARCODE_MAP)
@@ -55,7 +55,7 @@ def get(name, code=None, writer=None, options=None):
         barcode = __BARCODE_MAP[name.lower()]
     except KeyError:
         raise BarcodeNotFoundError(
-            'The barcode {0!r} you requested is not known.'.format(name)
+            "The barcode {0!r} you requested is not known.".format(name)
         )
 
     if code is not None:
@@ -69,12 +69,7 @@ def get_class(name):
 
 
 def generate(
-    name,
-    code,
-    writer=None,
-    output=None,
-    writer_options=None,
-    text=None,
+    name, code, writer=None, output=None, writer_options=None, text=None,
 ):
     writer_options = writer_options or {}
     barcode = get(name, code, writer, writer_options=writer_options)
