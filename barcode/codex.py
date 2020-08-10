@@ -31,7 +31,7 @@ def check_code(code, name, allowed):
 
 
 class Code39(Barcode):
-    r"""Initializes a new Code39 instance.
+    """Initializes a new Code39 instance.
 
     :parameters:
         code : String
@@ -45,10 +45,10 @@ class Code39(Barcode):
 
     name = 'Code 39'
 
-    def __init__(self, code, writer=None, add_checksum=True):
+    def __init__(self, code, writer=None):
+        self.add_checksum_default = True
+        self.checksum_added = False
         self.code = code.upper()
-        if add_checksum:
-            self.code += self.calculate_checksum()
         self.writer = writer or Barcode.default_writer()
         check_code(self.code, self.name, code39.REF)
 
@@ -74,7 +74,12 @@ class Code39(Barcode):
         return [code39.MIDDLE.join(chars)]
 
     def render(self, writer_options=None, text=None):
-        options = {'module_width': MIN_SIZE, 'quiet_zone': MIN_QUIET_ZONE}
+        options = dict(module_width=MIN_SIZE, quiet_zone=MIN_QUIET_ZONE)
+        # moved check sum logic here
+        add_checksum = writer_options.get('add_checksum', self.add_checksum_default)
+        if add_checksum and not self.checksum_added:
+            self.code += self.calculate_checksum()
+            self.checksum_added = True
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
 
