@@ -31,13 +31,13 @@ def _set_attributes(element, **attributes):
         element.setAttribute(key, value)
 
 
-def create_svg_object():
+def create_svg_object(with_doctype):
     imp = xml.dom.getDOMImplementation()
     doctype = imp.createDocumentType(
         'svg', '-//W3C//DTD SVG 1.1//EN',
         'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'
     )
-    document = imp.createDocument(None, 'svg', doctype)
+    document = imp.createDocument(None, 'svg', doctype if with_doctype else None)
     _set_attributes(
         document.documentElement,
         version='1.1',
@@ -235,13 +235,14 @@ class SVGWriter(BaseWriter):
         )
         self.compress = False
         self.dpi = 25.4
+        self.with_doctype = True
         self._document = None
         self._root = None
         self._group = None
 
     def _init(self, code):
         width, height = self.calculate_size(len(code[0]), len(code), self.dpi)
-        self._document = create_svg_object()
+        self._document = create_svg_object(self.with_doctype)
         self._root = self._document.documentElement
         attributes = {
             'width': SIZE.format(width),
