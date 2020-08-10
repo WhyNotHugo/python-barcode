@@ -31,7 +31,7 @@ def _set_attributes(element, **attributes):
         element.setAttribute(key, value)
 
 
-def create_svg_object(with_doctype):
+def create_svg_object(with_doctype=False):
     imp = xml.dom.getDOMImplementation()
     doctype = imp.createDocumentType(
         'svg', '-//W3C//DTD SVG 1.1//EN',
