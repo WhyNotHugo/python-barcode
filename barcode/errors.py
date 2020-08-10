@@ -1,5 +1,5 @@
 """barcode.errors"""
-__docformat__ = 'restructuredtext en'
+__docformat__ = "restructuredtext en"
 
 
 class BarcodeError(Exception):

@@ -15,4 +15,3 @@ Special Option:
 :compress:
     Boolean value to output a compressed SVG object (.svgz).
     Defaults to **False**.
-

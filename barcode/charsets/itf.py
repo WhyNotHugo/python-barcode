@@ -3,17 +3,17 @@
 # N = Narrow bar
 # n = narrow space
 
-START = 'NnNn'
-STOP = 'WnN'
+START = "NnNn"
+STOP = "WnN"
 CODES = (
-    'NNWWN',
-    'WNNNW',
-    'NWNNW',
-    'WWNNN',
-    'NNWNW',
-    'WNWNN',
-    'NWWNN',
-    'NNNWW',
-    'WNNWN',
-    'NWNWN',
+    "NNWWN",
+    "WNNNW",
+    "NWNNW",
+    "WWNNN",
+    "NNWNW",
+    "WNWNN",
+    "NWWNN",
+    "NNNWW",
+    "WNNWN",
+    "NWNWN",
 )

@@ -2,16 +2,14 @@
 
 :Provided barcodes: Code 39, Code 128, PZN
 """
-
 from barcode.base import Barcode
-from barcode.charsets import code128, code39
-from barcode.errors import (
-    BarcodeError,
-    IllegalCharacterError,
-    NumberOfDigitsError,
-)
+from barcode.charsets import code128
+from barcode.charsets import code39
+from barcode.errors import BarcodeError
+from barcode.errors import IllegalCharacterError
+from barcode.errors import NumberOfDigitsError
 
-__docformat__ = 'restructuredtext en'
+__docformat__ = "restructuredtext en"
 
 # Sizes
 MIN_SIZE = 0.2
@@ -25,8 +23,9 @@ def check_code(code, name, allowed):
             wrong.append(char)
     if wrong:
         raise IllegalCharacterError(
-            'The following characters are not valid for '
-            '{name}: {wrong}'.format(name=name, wrong=', '.join(wrong))
+            "The following characters are not valid for {name}: {wrong}".format(
+                name=name, wrong=", ".join(wrong)
+            )
         )
 
 
@@ -43,7 +42,7 @@ class Code39(Barcode):
             Add the checksum to code or not (default: True).
     """
 
-    name = 'Code 39'
+    name = "Code 39"
 
     def __init__(self, code, writer=None, add_checksum=True):
         self.code = code.upper()
@@ -74,7 +73,7 @@ class Code39(Barcode):
         return [code39.MIDDLE.join(chars)]
 
     def render(self, writer_options=None, text=None):
-        options = {'module_width': MIN_SIZE, 'quiet_zone': MIN_QUIET_ZONE}
+        options = {"module_width": MIN_SIZE, "quiet_zone": MIN_QUIET_ZONE}
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
 
@@ -89,33 +88,30 @@ class PZN7(Code39):
             The writer to render the barcode (default: SVGWriter).
     """
 
-    name = 'Pharmazentralnummer'
+    name = "Pharmazentralnummer"
 
     digits = 6
 
     def __init__(self, pzn, writer=None):
-        pzn = pzn[:self.digits]
+        pzn = pzn[: self.digits]
         if not pzn.isdigit():
-            raise IllegalCharacterError('PZN can only contain numbers.')
+            raise IllegalCharacterError("PZN can only contain numbers.")
         if len(pzn) != self.digits:
             raise NumberOfDigitsError(
-                'PZN must have {0} digits, not '
-                '{1}.'.format(self.digits, len(pzn))
+                "PZN must have {0} digits, not {1}.".format(self.digits, len(pzn))
             )
         self.pzn = pzn
-        self.pzn = '{0}{1}'.format(pzn, self.calculate_checksum())
-        Code39.__init__(
-            self, 'PZN-{0}'.format(self.pzn), writer, add_checksum=False
-        )
+        self.pzn = "{0}{1}".format(pzn, self.calculate_checksum())
+        Code39.__init__(self, "PZN-{0}".format(self.pzn), writer, add_checksum=False)
 
     def get_fullcode(self):
-        return 'PZN-{0}'.format(self.pzn)
+        return "PZN-{0}".format(self.pzn)
 
     def calculate_checksum(self):
         sum_ = sum(int(x) * int(y) for x, y in enumerate(self.pzn, start=2))
         checksum = sum_ % 11
         if checksum == 10:
-            raise BarcodeError('Checksum can not be 10 for PZN.')
+            raise BarcodeError("Checksum can not be 10 for PZN.")
         else:
             return checksum
 
@@ -137,13 +133,13 @@ class Code128(Barcode):
             The writer to render the barcode (default: SVGWriter).
     """
 
-    name = 'Code 128'
+    name = "Code 128"
 
     def __init__(self, code, writer=None):
         self.code = code
         self.writer = writer or Barcode.default_writer()
-        self._charset = 'B'
-        self._buffer = ''
+        self._charset = "B"
+        self._buffer = ""
         check_code(self.code, self.name, code128.ALL)
 
     def __unicode__(self):
@@ -159,18 +155,18 @@ class Code128(Barcode):
         return self.code
 
     def _new_charset(self, which):
-        if which == 'A':
-            code = self._convert('TO_A')
-        elif which == 'B':
-            code = self._convert('TO_B')
-        elif which == 'C':
-            code = self._convert('TO_C')
+        if which == "A":
+            code = self._convert("TO_A")
+        elif which == "B":
+            code = self._convert("TO_B")
+        elif which == "C":
+            code = self._convert("TO_C")
         self._charset = which
         return [code]
 
     def _maybe_switch_charset(self, pos):
         char = self.code[pos]
-        next_ = self.code[pos:pos + 10]
+        next_ = self.code[pos : pos + 10]
 
         def look_next():
             digits = 0
@@ -182,41 +178,41 @@ class Code128(Barcode):
             return digits > 3 and (digits % 2) == 0
 
         codes = []
-        if self._charset == 'C' and not char.isdigit():
+        if self._charset == "C" and not char.isdigit():
             if char in code128.B:
-                codes = self._new_charset('B')
+                codes = self._new_charset("B")
             elif char in code128.A:
-                codes = self._new_charset('A')
+                codes = self._new_charset("A")
             if len(self._buffer) == 1:
                 codes.append(self._convert(self._buffer[0]))
-                self._buffer = ''
-        elif self._charset == 'B':
+                self._buffer = ""
+        elif self._charset == "B":
             if look_next():
-                codes = self._new_charset('C')
+                codes = self._new_charset("C")
             elif char not in code128.B:
                 if char in code128.A:
-                    codes = self._new_charset('A')
-        elif self._charset == 'A':
+                    codes = self._new_charset("A")
+        elif self._charset == "A":
             if look_next():
-                codes = self._new_charset('C')
+                codes = self._new_charset("C")
             elif char not in code128.A:
                 if char in code128.B:
-                    codes = self._new_charset('B')
+                    codes = self._new_charset("B")
         return codes
 
     def _convert(self, char):
-        if self._charset == 'A':
+        if self._charset == "A":
             return code128.A[char]
-        elif self._charset == 'B':
+        elif self._charset == "B":
             return code128.B[char]
-        elif self._charset == 'C':
+        elif self._charset == "C":
             if char in code128.C:
                 return code128.C[char]
             elif char.isdigit():
                 self._buffer += char
                 if len(self._buffer) == 2:
                     value = int(self._buffer)
-                    self._buffer = ''
+                    self._buffer = ""
                     return value
 
     def _try_to_optimize(self, encoded):
@@ -239,24 +235,24 @@ class Code128(Barcode):
                 encoded.append(code_num)
         # Finally look in the buffer
         if len(self._buffer) == 1:
-            encoded.extend(self._new_charset('B'))
+            encoded.extend(self._new_charset("B"))
             encoded.append(self._convert(self._buffer[0]))
-            self._buffer = ''
+            self._buffer = ""
         encoded = self._try_to_optimize(encoded)
         return encoded
 
     def build(self):
         encoded = self._build()
         encoded.append(self._calculate_checksum(encoded))
-        code = ''
+        code = ""
         for code_num in encoded:
             code += code128.CODES[code_num]
         code += code128.STOP
-        code += '11'
+        code += "11"
         return [code]
 
     def render(self, writer_options=None, text=None):
-        options = {'module_width': MIN_SIZE, 'quiet_zone': MIN_QUIET_ZONE}
+        options = {"module_width": MIN_SIZE, "quiet_zone": MIN_QUIET_ZONE}
         options.update(writer_options or {})
         return Barcode.render(self, options, text)
 
@@ -269,9 +265,9 @@ class Gs1_128(Code128):
     https://www.gs1-128.info/
     """
 
-    name = 'GS1-128'
+    name = "GS1-128"
 
-    FNC1_CHAR = '\xf1'
+    FNC1_CHAR = "\xf1"
 
     def __init__(self, code, writer=None):
         code = self.FNC1_CHAR + code

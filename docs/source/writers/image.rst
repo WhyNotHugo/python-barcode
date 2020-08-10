@@ -23,4 +23,3 @@ Special Options:
     DPI as *integer* to calculate the image size in pixel. This value is
     used for all mm to px calculations.
     Defaults to **300**.
-

@@ -122,4 +122,3 @@ Class Hirarchy
 
 .. inheritance-diagram:: barcode.upc.UniversalProductCodeA
    :parts: 1
-
