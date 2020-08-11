@@ -66,7 +66,7 @@ def test_generating_barcodes():
             options["center_text"] = True
         filename = bcode.save(os.path.join(TESTPATH, codename), options=options)
         print(
-            "Code: {0}, Input: {1}, Output: {2}".format(
+            "Code: {}, Input: {}, Output: {}".format(
                 bcode.name, code, bcode.get_fullcode()
             )
         )

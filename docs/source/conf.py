@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # pyBarcode documentation build configuration file, created by
 # sphinx-quickstart on Fri Mar 12 13:29:48 2010.

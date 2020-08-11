@@ -37,7 +37,7 @@ class UniversalProductCodeA(Barcode):
             raise IllegalCharacterError("UPC code can only contain numbers.")
         if len(upc) != self.digits:
             raise NumberOfDigitsError(
-                "UPC must have {0} digits, not {1}.".format(self.digits, len(upc))
+                "UPC must have {} digits, not {}.".format(self.digits, len(upc))
             )
         self.upc = upc
         self.upc = "{}{}".format(upc, self.calculate_checksum())

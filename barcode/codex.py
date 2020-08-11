@@ -98,14 +98,14 @@ class PZN7(Code39):
             raise IllegalCharacterError("PZN can only contain numbers.")
         if len(pzn) != self.digits:
             raise NumberOfDigitsError(
-                "PZN must have {0} digits, not {1}.".format(self.digits, len(pzn))
+                "PZN must have {} digits, not {}.".format(self.digits, len(pzn))
             )
         self.pzn = pzn
-        self.pzn = "{0}{1}".format(pzn, self.calculate_checksum())
-        Code39.__init__(self, "PZN-{0}".format(self.pzn), writer, add_checksum=False)
+        self.pzn = "{}{}".format(pzn, self.calculate_checksum())
+        Code39.__init__(self, "PZN-{}".format(self.pzn), writer, add_checksum=False)
 
     def get_fullcode(self):
-        return "PZN-{0}".format(self.pzn)
+        return "PZN-{}".format(self.pzn)
 
     def calculate_checksum(self):
         sum_ = sum(int(x) * int(y) for x, y in enumerate(self.pzn, start=2))
@@ -271,10 +271,10 @@ class Gs1_128(Code128):
 
     def __init__(self, code, writer=None):
         code = self.FNC1_CHAR + code
-        super(Gs1_128, self).__init__(code, writer)
+        super().__init__(code, writer)
 
     def get_fullcode(self):
-        return super(Gs1_128, self).get_fullcode()[1:]
+        return super().get_fullcode()[1:]
 
 
 # For pre 0.8 compatibility

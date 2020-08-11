@@ -70,7 +70,7 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         isbn = isbn.replace("-", "")
         isbn = isbn[: self.digits]
         self.isbn10 = isbn
-        self.isbn10 = "{0}{1}".format(isbn, self._calculate_checksum())
+        self.isbn10 = "{}{}".format(isbn, self._calculate_checksum())
         InternationalStandardBookNumber13.__init__(self, "978" + isbn, writer)
 
     def _calculate_checksum(self):
@@ -105,7 +105,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
         issn = issn.replace("-", "")
         issn = issn[: self.digits]
         self.issn = issn
-        self.issn = "{0}{1}".format(issn, self._calculate_checksum())
+        self.issn = "{}{}".format(issn, self._calculate_checksum())
         EuropeanArticleNumber13.__init__(self, self.make_ean(), writer)
 
     def _calculate_checksum(self):
@@ -120,7 +120,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
             return tmp
 
     def make_ean(self):
-        return "977{0}00{1}".format(self.issn[:7], self._calculate_checksum())
+        return "977{}00{}".format(self.issn[:7], self._calculate_checksum())
 
     def __unicode__(self):
         return self.issn

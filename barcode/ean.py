@@ -53,18 +53,18 @@ class EuropeanArticleNumber13(Barcode):
             raise IllegalCharacterError("EAN code can only contain numbers.")
         if len(ean) != self.digits:
             raise NumberOfDigitsError(
-                "EAN must have {0} digits, not {1}.".format(self.digits, len(ean),)
+                "EAN must have {} digits, not {}.".format(self.digits, len(ean),)
             )
         self.ean = ean
         # If no checksum
         if no_checksum:
             # Add a thirteen char if given in parameter,
             # otherwise pad with zero
-            self.ean = "{0}{1}".format(
+            self.ean = "{}{}".format(
                 ean, ean[self.digits] if len(ean) > self.digits else 0
             )
         else:
-            self.ean = "{0}{1}".format(ean, self.calculate_checksum())
+            self.ean = "{}{}".format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
 
     def __unicode__(self):
