@@ -141,6 +141,7 @@ v0.12.0
 * Removed `writer_options` from `barcode.get`. This parameter was not used.
 * Add a ``with_doctype`` flag to ``SVGWriter``. Set this to false to avoid including a
   ``DOCTYPE`` in the resulting SVG.
+* Add support for ``Pillow>=8.0.0``.
 
 v0.11.0
 ~~~~~~~
