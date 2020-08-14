@@ -80,10 +80,7 @@ class Barcode:
                 Text to render under the barcode.
         """
         output = self.render(options, text)
-        if hasattr(output, "tostring"):
-            output.save(fp, format=self.writer.format)
-        else:
-            fp.write(output)
+        self.writer.write(output, fp)
 
     def render(self, writer_options=None, text=None):
         """Renders the barcode using `self.writer`.

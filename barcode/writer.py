@@ -1,6 +1,7 @@
 import gzip
 import os
 import xml.dom
+from typing.io import BinaryIO
 
 from barcode.version import version
 
@@ -318,6 +319,13 @@ class SVGWriter(BaseWriter):
                 f.write(output)
         return _filename
 
+    def write(self, content, fp: BinaryIO):
+        """Write `content` into a file-like object.
+
+        Content should be a barcode rendered by this writer.
+        """
+        fp.write(content)
+
 
 if Image is None:
     ImageWriter = None
@@ -367,3 +375,10 @@ else:
             filename = "{}.{}".format(filename, self.format.lower())
             output.save(filename, self.format.upper())
             return filename
+
+        def write(self, content, fp: BinaryIO):
+            """Write `content` into a file-like object.
+
+            Content should be a barcode rendered by this writer.
+            """
+            content.save(fp, format=self.format)
