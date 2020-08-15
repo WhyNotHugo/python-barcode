@@ -9,22 +9,20 @@ jobs:
       matrix:
         os: [ubuntu-18.04, macOS-10.14]
         python: [ '3.5', '3.6', '3.7' ]
-        extras: [ "", "[images]" ]
-    name: python${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.extras }}
+        variant: [ "py", "py-images" ]
+    name: python${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.variant }}
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-          architecture: x64
-      - name: Install test dependencies
-        run: |
-          pip install --upgrade --no-cache-dir pipenv
-          pipenv install --dev
-          pipenv install .${{ matrix.extras }}
+      - name: Install test dependency
+        run: pip install tox codecov
       - name: Run tests
-        run: pipenv run pytest
+        run: tox
+        env:
+          TOXENV: ${{ matrix.variant }}
       - name: Report coverage
-        run: pipenv run codecov
+        run: codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
