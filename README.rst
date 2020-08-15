@@ -135,10 +135,16 @@ Commandline::
 Changelog
 ---------
 
+v0.13.0
+~~~~~~~
+
+* Added support for transparent backgrounds. This is done by setting the ``mode`` option
+  for a writer to ``RGBA``.
+
 v0.12.0
 ~~~~~~~
 
-* Removed `writer_options` from `barcode.get`. This parameter was not used.
+* Removed ``writer_options`` from ``barcode.get``. This parameter was not used.
 * Add a ``with_doctype`` flag to ``SVGWriter``. Set this to false to avoid including a
   ``DOCTYPE`` in the resulting SVG.
 * Add support for ``Pillow>=8.0.0``.

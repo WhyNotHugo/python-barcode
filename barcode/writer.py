@@ -332,18 +332,30 @@ if Image is None:
 else:
 
     class ImageWriter(BaseWriter):  # type: ignore
-        def __init__(self):
+        format: str
+        mode: str
+        dpi: int
+
+        def __init__(self, format="PNG", mode="RGB"):
+            """Initialise a new write instance.
+
+            :params format: The file format for the generated image. This parameter can
+                take any value that Pillow accepts.
+            :params mode: The colour-mode for the generated image. Set this to RGBA if
+                you wish to use colours with transparency.
+            """
             BaseWriter.__init__(
                 self, self._init, self._paint_module, self._paint_text, self._finish
             )
-            self.format = "PNG"
+            self.format = format
+            self.mode = mode
             self.dpi = 300
             self._image = None
             self._draw = None
 
         def _init(self, code):
             size = self.calculate_size(len(code[0]), len(code), self.dpi)
-            self._image = Image.new("RGB", size, self.background)
+            self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
 
         def _paint_module(self, xpos, ypos, width, color):

@@ -18,6 +18,17 @@ if ImageWriter:
         with open(f"{TESTPATH}/somefile.jpeg", "wb") as f:
             EAN13("100000011111", writer=ImageWriter()).write(f)
 
+    def test_saving_rgba_image():
+        rv = BytesIO()
+        EAN13(str(100000902922), writer=ImageWriter()).write(rv)
+
+        with open(f"{TESTPATH}/ean13-with-transparent-bg.png", "wb") as f:
+            writer = ImageWriter(mode="RGBA")
+
+            EAN13("100000011111", writer=writer).write(
+                f, options={"background": "rgba(255,0,0,0)"}
+            )
+
 
 def test_saving_svg_to_byteio():
     rv = BytesIO()
