@@ -35,7 +35,7 @@ Please report any bugs at https://github.com/WhyNotHugo/python-barcode/issues
 Features
 --------
 
-- Works on Python 3.5 to 3.8
+- Works on Python 3.6 to 3.9
 - No visualiser (just use your browser)
 - Generate barcodes as SVG files.
 - Generate barcodes as images (png, jpeg, etc). Requires Pillow.
