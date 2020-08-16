@@ -47,7 +47,8 @@ The best way is to use pip: ``pip install python-barcode``. Don't forget to add
 this to our app's dependencies.
 
 If you'll be exporting to images (eg: not just SVG), you'll need additional
-optional dependencies, so run: ``pip install python-barcode[images]``.
+optional dependencies, so run: ``pip install "python-barcode[images]"`` (keep the
+quotes, most shells don't play nice with square brackets).
 
 Provided Barcodes
 -----------------
