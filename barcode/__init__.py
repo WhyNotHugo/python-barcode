@@ -3,6 +3,11 @@ It needs no external packages to be installed, the barcodes are
 created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
+import os
+from typing import BinaryIO
+from typing import Dict
+from typing import Union
+
 from barcode.codex import Code128
 from barcode.codex import Code39
 from barcode.codex import Gs1_128
@@ -76,15 +81,37 @@ def get_class(name):
 
 
 def generate(
-    name, code, writer=None, output=None, writer_options=None, text=None,
+    name: str,
+    code: str,
+    writer=None,
+    output: Union[str, os.PathLike, BinaryIO] = None,
+    writer_options: Dict = None,
+    text: str = None,
 ):
-    writer_options = writer_options or {}
-    barcode = get(name, code, writer, writer_options=writer_options)
+    """Shortcut to generate a barcode in one line.
+
+    :param name: Name of the type of barcode to use.
+    :param code: Data to encode into the barcode.
+    :param writer: A writer to use (e.g.: ImageWriter or SVGWriter).
+    :param output: Destination file-like or path-like where to save the generated
+     barcode.
+    :param writer_options: Options to pass on to the writer instance.
+    :param text: Text to render under the barcode.
+    """
+    from barcode.base import Barcode
+
+    writer = writer or Barcode.default_writer()
+    writer.set_options(writer_options or {})
+
+    barcode = get(name, code, writer)
+
     if isinstance(output, str):
         fullname = barcode.save(output, writer_options, text)
         return fullname
-    else:
+    elif output:
         barcode.write(output, writer_options, text)
+    else:
+        raise TypeError("'output' cannot be None")
 
 
 get_barcode = get
