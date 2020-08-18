@@ -16,20 +16,22 @@ def test_generate_without_output():
 
 
 def test_generate_with_file():
-    with open(f"{TESTPATH}/generate_with_file.jpeg", "wb") as f:
+    with open(os.path.join(TESTPATH, "generate_with_file.jpeg"), "wb") as f:
         barcode.generate("ean13", "123455559121112", output=f)
 
 
 def test_generate_with_filepath():
     # FIXME: extension is added to the filepath even if you include it.
     rv = barcode.generate(
-        "ean13", "123455559121112", output=f"{TESTPATH}/generate_with_filepath"
+        "ean13",
+        "123455559121112",
+        output=os.path.join(TESTPATH, "generate_with_filepath"),
     )
-    assert rv == os.path.abspath(f"{TESTPATH}/generate_with_filepath.svg")
+    assert rv == os.path.abspath(os.path.join(TESTPATH, "generate_with_filepath.svg"))
 
 
 def test_generate_with_file_and_writer():
-    with open(f"{TESTPATH}/generate_with_file_and_writer.jpeg", "wb") as f:
+    with open(os.path.join(TESTPATH, "generate_with_file_and_writer.jpeg"), "wb") as f:
         barcode.generate("ean13", "123455559121112", output=f, writer=SVGWriter())
 
 
