@@ -136,6 +136,11 @@ Commandline::
 Changelog
 ---------
 
+v0.13.1
+~~~~~~~
+
+* Fix a crash when using the ``generate`` shortcut function.
+
 v0.13.0
 ~~~~~~~
 
