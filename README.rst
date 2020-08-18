@@ -70,7 +70,9 @@ PRs for other code formats are welcome!
 Usage
 -----
 
-Programmatic::
+Programmatic:
+
+.. code-block:: python
 
     from barcode import EAN13
     from barcode.writer import ImageWriter
@@ -83,7 +85,9 @@ Programmatic::
     with open('somefile.jpeg', 'wb') as f:
         EAN13('100000011111', writer=ImageWriter()).write(f)
 
-Interactive::
+Interactive:
+
+.. code-block:: pycon
 
     >>> import barcode
     >>> barcode.PROVIDED_BARCODES
@@ -122,16 +126,21 @@ Interactive::
 Now open ean13_barcode.[svg|png] in a graphic app or simply in your browser
 and see the created barcode. That's it.
 
-Commandline::
+Command Line:
 
-    `$ python-barcode create "123456789000" outfile -b ean --text "text to appear under barcode" `
-    New barcode saved as outfile.svg.
+.. code-block:: sh
 
-    # The following will not work if Pillow is not installed (Pillow is required for exporting to images instead of SVG).
-    $ python-barcode create -t png "My Text" outfile
-    New barcode saved as outfile.png.
+    # Save a barcode to `outfile.svg`:
+    python-barcode create "123456789000" outfile -b ean --text "text to appear under barcode"
 
-    Try `python-barcode -h` for help.
+    # The following will not work if Pillow is not installed (Pillow is required for
+    # exporting to images instead of SVG).
+    #
+    # Save a barcode to `outfile.png`
+    python-barcode create -t png "My Text" outfile
+
+    # More usage instructions:
+    python-barcode --help
 
 Changelog
 ---------
