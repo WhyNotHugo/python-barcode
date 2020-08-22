@@ -17,6 +17,10 @@ python-barcode
   :target: https://pypi.python.org/pypi/python-barcode
   :alt: version on pypi
 
+.. image:: https://img.shields.io/pypi/dm/python-barcode.svg
+  :target: https://pypi.python.org/pypi/python-barcode
+  :alt: downloads
+
 .. image:: https://img.shields.io/pypi/l/python-barcode.svg
   :target: https://github.com/WhyNotHugo/python-barcode/blob/master/LICENCE
   :alt: licence
