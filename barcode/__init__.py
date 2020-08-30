@@ -58,10 +58,9 @@ def get(name, code=None, writer=None, options=None):
         is returned.
     :param Writer writer: An alternative writer to use when generating the
         barcode.
-    :param dict options: Aditional options to be passed on to the barcode when
+    :param dict options: Additional options to be passed on to the barcode when
         generating.
     """
-
     options = options or {}
     try:
         barcode = __BARCODE_MAP[name.lower()]
@@ -69,7 +68,6 @@ def get(name, code=None, writer=None, options=None):
         raise BarcodeNotFoundError(
             "The barcode {!r} you requested is not known.".format(name)
         )
-
     if code is not None:
         return barcode(code, writer, **options)
     else:
