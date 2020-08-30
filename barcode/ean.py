@@ -5,13 +5,11 @@
 __docformat__ = "restructuredtext en"
 
 from functools import reduce
+
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
-from barcode.errors import (
-    IllegalCharacterError,
-    NumberOfDigitsError,
-    WrongCountryCodeError,
-)
+from barcode.errors import (IllegalCharacterError, NumberOfDigitsError,
+                            WrongCountryCodeError)
 
 # EAN13 Specs (all sizes in mm)
 SIZES = {
