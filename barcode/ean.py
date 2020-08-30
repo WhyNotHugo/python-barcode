@@ -4,6 +4,7 @@
 """
 __docformat__ = "restructuredtext en"
 
+from functools import reduce
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
 from barcode.errors import (
@@ -11,12 +12,6 @@ from barcode.errors import (
     NumberOfDigitsError,
     WrongCountryCodeError,
 )
-
-# Python 3
-try:
-    reduce
-except NameError:
-    from functools import reduce
 
 # EAN13 Specs (all sizes in mm)
 SIZES = {
@@ -67,10 +62,8 @@ class EuropeanArticleNumber13(Barcode):
             self.ean = "{}{}".format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.ean
-
-    __str__ = __unicode__
 
     def get_fullcode(self):
         return self.ean

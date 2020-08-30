@@ -40,10 +40,8 @@ class ITF(Barcode):
         self.narrow = narrow
         self.wide = wide
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
-
-    __str__ = __unicode__
 
     def get_fullcode(self):
         return self.code

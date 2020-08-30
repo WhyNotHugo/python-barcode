@@ -11,13 +11,13 @@ Example::
     >>> from barcode import get_barcode
     >>> ISBN = get_barcode('isbn10')
     >>> isbn = ISBN('0132354187')
-    >>> unicode(isbn)
+    >>> isbn
     '0132354187'
     >>> isbn.get_fullcode()
     '9780132354189'
     >>> # Test with wrong checksum
     >>> isbn = ISBN('0132354180')
-    >>> unicode(isbn)
+    >>> isbn
     '0132354187'
 
 """
@@ -80,10 +80,8 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         else:
             return tmp
 
-    def __unicode__(self):
+    def __str__(self):
         return self.isbn10
-
-    __str__ = __unicode__
 
 
 class InternationalStandardSerialNumber(EuropeanArticleNumber13):
@@ -122,10 +120,8 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
     def make_ean(self):
         return "977{}00{}".format(self.issn[:7], self._calculate_checksum())
 
-    def __unicode__(self):
+    def __str__(self):
         return self.issn
-
-    __str__ = __unicode__
 
 
 # Shortcuts

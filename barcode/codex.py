@@ -51,10 +51,8 @@ class Code39(Barcode):
         self.writer = writer or Barcode.default_writer()
         check_code(self.code, self.name, code39.REF)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
-
-    __str__ = __unicode__
 
     def get_fullcode(self):
         return self.code
@@ -142,10 +140,8 @@ class Code128(Barcode):
         self._buffer = ""
         check_code(self.code, self.name, code128.ALL)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
-
-    __str__ = __unicode__
 
     @property
     def encoded(self):

@@ -6,19 +6,7 @@ from barcode.version import version
 from barcode.writer import ImageWriter
 from barcode.writer import SVGWriter
 
-# Optional PyQt4 GUI
-try:
-    from PyQt4 import QtCore
-except ImportError:
-    QtCore = None  # lint:ok
-
-# No GUI available yet
-QtCore = None
 IMG_FORMATS = ("BMP", "GIF", "JPEG", "MSP", "PCX", "PNG", "TIFF", "XBM")
-
-
-def open_gui(args, parser=None):
-    pass
 
 
 def list_types(args, parser=None):
@@ -69,10 +57,6 @@ def main():
             "Image output enabled, use --type option to give image "
             "format (png, jpeg, ...)."
         )
-    if QtCore is None:
-        msg.append("PyQt not found, gui action disabled.")
-    else:
-        msg.append("PyQt found. Use gui action to get a simple GUI.")
     parser = ArgumentParser(
         description="Create standard barcodes via cli.", epilog=" ".join(msg)
     )
@@ -105,11 +89,6 @@ def main():
         "list", help="List available image and code types."
     )
     list_parser.set_defaults(func=list_types)
-    if QtCore is not None:
-        gui_parser = subparsers.add_parser(
-            "gui", help="Opens a simple PyQt GUI to create barcodes."
-        )
-        gui_parser.set_defaults(func=open_gui)
     create_parser.set_defaults(
         type="svg", compress=False, func=create_barcode, barcode="code39", text=None
     )

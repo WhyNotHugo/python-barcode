@@ -1,7 +1,7 @@
 import gzip
 import os
 import xml.dom
-from typing.io import BinaryIO
+from typing import BinaryIO
 
 from barcode.version import version
 
