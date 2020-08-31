@@ -4,11 +4,11 @@
 """
 __docformat__ = "restructuredtext en"
 
+from functools import reduce
+
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
 from barcode.errors import IllegalCharacterError, NumberOfDigitsError
-
-from functools import reduce
 
 
 class UniversalProductCodeA(Barcode):
