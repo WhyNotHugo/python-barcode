@@ -8,8 +8,11 @@ from functools import reduce
 
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
-from barcode.errors import (IllegalCharacterError, NumberOfDigitsError,
-                            WrongCountryCodeError)
+from barcode.errors import (
+    IllegalCharacterError,
+    NumberOfDigitsError,
+    WrongCountryCodeError,
+)
 
 # EAN13 Specs (all sizes in mm)
 SIZES = {
@@ -46,7 +49,10 @@ class EuropeanArticleNumber13(Barcode):
             raise IllegalCharacterError("EAN code can only contain numbers.")
         if len(ean) != self.digits:
             raise NumberOfDigitsError(
-                "EAN must have {} digits, not {}.".format(self.digits, len(ean),)
+                "EAN must have {} digits, not {}.".format(
+                    self.digits,
+                    len(ean),
+                )
             )
         self.ean = ean
         # If no checksum

@@ -290,7 +290,8 @@ class SVGWriter(BaseWriter):
                 "x": SIZE.format(xpos),
                 "y": SIZE.format(ypos),
                 "style": "fill:{};font-size:{}pt;text-anchor:middle;".format(
-                    self.foreground, self.font_size,
+                    self.foreground,
+                    self.font_size,
                 ),
             }
             _set_attributes(element, **attributes)
