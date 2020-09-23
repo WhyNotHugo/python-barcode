@@ -30,21 +30,18 @@ def check_code(code, name, allowed):
 
 
 class Code39(Barcode):
-    r"""Initializes a new Code39 instance.
-
-    :parameters:
-        code : String
-            Code 39 string without \* and checksum (added automatically if
-            `add_checksum` is True).
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
-        add_checksum : Boolean
-            Add the checksum to code or not (default: True).
-    """
+    """A Code39 barcode implementation"""
 
     name = "Code 39"
 
-    def __init__(self, code, writer=None, add_checksum=True):
+    def __init__(self, code: str, writer=None, add_checksum: bool = True):
+        r"""
+        :param code: Code 39 string without \* and without checksum.
+        :param writer: A ``barcode.writer`` instance used to render the barcode
+            (default: SVGWriter).
+        :param add_checksum: Add the checksum to code or not
+        """
+
         self.code = code.upper()
         if add_checksum:
             self.code += self.calculate_checksum()
@@ -54,7 +51,8 @@ class Code39(Barcode):
     def __str__(self):
         return self.code
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
+        """:returns: The full code as it will be encoded."""
         return self.code
 
     def calculate_checksum(self):
