@@ -370,7 +370,8 @@ else:
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):
-            font = ImageFont.truetype(self.font_path, self.font_size * 2)
+            font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
+            font = ImageFont.truetype(self.font_path, font_size)
             for subtext in self.text.split("\n"):
                 width, height = font.getsize(subtext)
                 # determine the maximum width of each line
