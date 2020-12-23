@@ -65,6 +65,7 @@ class EuropeanArticleNumber13(Barcode):
         else:
             self.ean = "{}{}".format(ean, self.calculate_checksum())
 
+        self.guardbar = guardbar
         if guardbar:
             self.EDGE = _ean.EDGE.replace("1", "G")
             self.MIDDLE = _ean.MIDDLE.replace("1", "G")
@@ -77,6 +78,8 @@ class EuropeanArticleNumber13(Barcode):
         return self.ean
 
     def get_fullcode(self):
+        if self.guardbar:
+            return self.ean[0] + " " + self.ean[1:7] + " " + self.ean[7:] + " >"
         return self.ean
 
     def calculate_checksum(self):
@@ -179,6 +182,10 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         code += self.EDGE
         return [code]
 
+    def get_fullcode(self):
+        if self.guardbar:
+            return "< " + self.ean[:4] + " " + self.ean[4:] + " >"
+        return self.ean
 
 class EuropeanArticleNumber14(EuropeanArticleNumber13):
     """Represents an EAN-14 barcode. See EAN13's __init__ for details.
