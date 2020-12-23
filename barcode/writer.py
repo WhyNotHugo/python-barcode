@@ -177,6 +177,7 @@ class BaseWriter:
         if self._callbacks["initialize"] is not None:
             self._callbacks["initialize"](code)
         ypos = 1.0
+        base_height = self.module_height
         for cc, line in enumerate(code):
             """
             Pack line to list give better gfx result, otherwise in can
@@ -191,14 +192,19 @@ class BaseWriter:
                     c += 1
                 else:
                     if line[i] == "1":
-                        mlist.append(c)
+                        mlist.append((c, 1))
+                    elif line[i] == "G":
+                        mlist.append((c, 1.1))
                     else:
-                        mlist.append(-c)
+                        mlist.append((-c, 1))
                     c = 1
             # Left quiet zone is x startposition
             xpos = self.quiet_zone
             bxs = xpos  # x start of barcode
             for mod in mlist:
+                self.module_height = base_height * mod[1]
+                mod = mod[0]
+
                 if mod < 1:
                     color = self.background
                 else:

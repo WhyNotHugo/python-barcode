@@ -43,7 +43,7 @@ class EuropeanArticleNumber13(Barcode):
 
     digits = 12
 
-    def __init__(self, ean, writer=None, no_checksum=False):
+    def __init__(self, ean, writer=None, no_checksum=False, guardbar=False):
         ean = ean[: self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError("EAN code can only contain numbers.")
@@ -64,6 +64,13 @@ class EuropeanArticleNumber13(Barcode):
             )
         else:
             self.ean = "{}{}".format(ean, self.calculate_checksum())
+
+        if guardbar:
+            self.EDGE = _ean.EDGE.replace("1", "G")
+            self.MIDDLE = _ean.MIDDLE.replace("1", "G")
+        else:
+            self.EDGE = _ean.EDGE
+            self.MIDDLE = _ean.MIDDLE
         self.writer = writer or Barcode.default_writer()
 
     def __str__(self):
@@ -92,14 +99,14 @@ class EuropeanArticleNumber13(Barcode):
         :returns: The pattern as string
         :rtype: String
         """
-        code = _ean.EDGE[:]
+        code = self.EDGE[:]
         pattern = _ean.LEFT_PATTERN[int(self.ean[0])]
         for i, number in enumerate(self.ean[1:7]):
             code += _ean.CODES[pattern[i]][int(number)]
-        code += _ean.MIDDLE
+        code += self.MIDDLE
         for number in self.ean[7:]:
             code += _ean.CODES["C"][int(number)]
-        code += _ean.EDGE
+        code += self.EDGE
         return [code]
 
     def to_ascii(self):
@@ -109,7 +116,7 @@ class EuropeanArticleNumber13(Barcode):
         """
         code = self.build()
         for i, line in enumerate(code):
-            code[i] = line.replace("1", "|").replace("0", " ")
+            code[i] = line.replace("G", "|").replace("1", "|").replace("0", " ")
         return "\n".join(code)
 
     def render(self, writer_options=None, text=None):
@@ -154,8 +161,8 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
 
     digits = 7
 
-    def __init__(self, ean, writer=None):
-        EuropeanArticleNumber13.__init__(self, ean, writer)
+    def __init__(self, ean, writer=None, guardbar=False):
+        EuropeanArticleNumber13.__init__(self, ean, writer, guardbar=guardbar)
 
     def build(self):
         """Builds the barcode pattern from `self.ean`.
@@ -163,13 +170,13 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         :returns: The pattern as string
         :rtype: String
         """
-        code = _ean.EDGE[:]
+        code = self.EDGE[:]
         for number in self.ean[:4]:
             code += _ean.CODES["A"][int(number)]
-        code += _ean.MIDDLE
+        code += self.MIDDLE
         for number in self.ean[4:]:
             code += _ean.CODES["C"][int(number)]
-        code += _ean.EDGE
+        code += self.EDGE
         return [code]
 
 
