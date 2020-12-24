@@ -99,7 +99,7 @@ class BaseWriter:
         self.text_line_distance = 1
         self.center_text = True
 
-    def calculate_size(self, modules_per_line, number_of_lines, dpi=300):
+    def calculate_size(self, modules_per_line, number_of_lines):
         """Calculates the size of the barcode in pixel.
 
         :parameters:
@@ -107,8 +107,6 @@ class BaseWriter:
                 Number of modules in one line.
             number_of_lines : Integer
                 Number of lines of the barcode.
-            dpi : Integer
-                DPI to calculate.
 
         :returns: Width and height of the barcode in pixel.
         :rtype: Tuple
@@ -121,7 +119,7 @@ class BaseWriter:
                 pt2mm(self.font_size) / 2 * number_of_text_lines + self.text_distance
             )
             height += self.text_line_distance * (number_of_text_lines - 1)
-        return int(mm2px(width, dpi)), int(mm2px(height, dpi))
+        return width, height
 
     def save(self, filename, output):
         """Saves the rendered output to `filename`.
@@ -234,14 +232,13 @@ class SVGWriter(BaseWriter):
             self, self._init, self._create_module, self._create_text, self._finish
         )
         self.compress = False
-        self.dpi = 25.4
         self.with_doctype = True
         self._document = None
         self._root = None
         self._group = None
 
     def _init(self, code):
-        width, height = self.calculate_size(len(code[0]), len(code), self.dpi)
+        width, height = self.calculate_size(len(code[0]), len(code))
         self._document = create_svg_object(self.with_doctype)
         self._root = self._document.documentElement
         attributes = {
@@ -355,7 +352,8 @@ else:
             self._draw = None
 
         def _init(self, code):
-            size = self.calculate_size(len(code[0]), len(code), self.dpi)
+            width, height = self.calculate_size(len(code[0]), len(code))
+            size = (int(mm2px(width, self.dpi)), int(mm2px(height, self.dpi)))
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
 

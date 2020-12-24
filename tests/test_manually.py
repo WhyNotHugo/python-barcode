@@ -57,7 +57,7 @@ def test_generating_barcodes():
     def append_img(x, y):
         objects.append(IMAGES.format(filename=x, name=y))
 
-    options = {"module_width": 0.495, "module_height": 25.0}
+    options = {}
     for codename, code in TESTCODES:
         bcode = get_barcode(codename, code)
         if codename.startswith("i"):
@@ -74,7 +74,7 @@ def test_generating_barcodes():
         if ImageWriter is not None:
             bcodec = get_barcode_class(codename)
             bcode = bcodec(code, writer=ImageWriter())
-            opts = {"font_size": 14, "text_distance": 1}
+            opts = {}
             if codename.startswith("i"):
                 opts["center_text"] = False
             else:
