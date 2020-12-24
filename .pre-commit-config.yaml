@@ -3,14 +3,14 @@
 # vim: set nospell:
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v3.4.0
     hooks:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
       - id: end-of-file-fixer
       - id: debug-statements
   - repo: https://github.com/asottile/reorder_python_imports
-    rev: v2.3.5
+    rev: v2.3.6
     hooks:
     -   id: reorder-python-imports
   - repo: https://github.com/psf/black
@@ -18,11 +18,11 @@ repos:
     hooks:
       - id: black
   - repo: https://gitlab.com/pycqa/flake8
-    rev: "3.8.3" # pick a git hash / tag to point to
+    rev: "3.8.4" # pick a git hash / tag to point to
     hooks:
       - id: flake8
         additional_dependencies: [flake8-comprehensions, flake8-import-order, flake8-bugbear]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v0.782'  # Use the sha / tag you want to point at
+    rev: 'v0.790'  # Use the sha / tag you want to point at
     hooks:
     -   id: mypy
