@@ -196,7 +196,7 @@ class BaseWriter:
                     elif line[i] == "G":
                         mlist.append((c, 1.1))
                     else:
-                        mlist.append((-c, 1))
+                        mlist.append((-c, 1.1))
                     c = 1
             # Left quiet zone is x startposition
             xpos = self.quiet_zone
