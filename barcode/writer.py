@@ -201,19 +201,42 @@ class BaseWriter:
             # Left quiet zone is x startposition
             xpos = self.quiet_zone
             bxs = xpos  # x start of barcode
+            text = {
+                "start": [],       # The x start of a guard
+                "end": [],         # The x end of a guard
+                "xpos": [],        # The x position where to write a text block
+                "was_guard": False # Flag that indicates if the previous mod
+                                   # was part of an guard block
+            }
             for mod in mlist:
-                self.module_height = base_height * mod[1]
+                height_factor = mod[1]
                 mod = mod[0]
 
                 if mod < 1:
                     color = self.background
                 else:
                     color = self.foreground
+
+                    if text["was_guard"] and height_factor == 1:
+                        # The current guard ended, store its x position
+                        text["end"].append(xpos)
+                        text["was_guard"] = False
+                    elif not text["was_guard"] and height_factor != 1:
+                        # A guard started, store its x position
+                        text["start"].append(xpos)
+                        text["was_guard"] = True
+
+                self.module_height = base_height * height_factor
                 # remove painting for background colored tiles?
                 self._callbacks["paint_module"](
                     xpos, ypos, self.module_width * abs(mod), color
                 )
                 xpos += self.module_width * abs(mod)
+            else:
+                if height_factor != 1:
+                    text["end"].append(xpos)
+                self.module_height = base_height
+
             bxe = xpos
             # Add right quiet zone to every line, except last line,
             # quiet zone already provided with background,
@@ -223,14 +246,41 @@ class BaseWriter:
                     xpos, ypos, self.quiet_zone, self.background
                 )
             ypos += self.module_height
+
         if self.text and self._callbacks["paint_text"] is not None:
-            ypos += self.text_distance
-            if self.center_text:
-                # better center position for text
-                xpos = bxs + ((bxe - bxs) / 2.0)
+            if not text["start"]:
+                # If we don't have any start value, print the entire ean
+                ypos += self.text_distance
+                if self.center_text:
+                    # better center position for text
+                    xpos = bxs + ((bxe - bxs) / 2.0)
+                else:
+                    xpos = bxs
+                self._callbacks["paint_text"](xpos, ypos)
             else:
-                xpos = bxs
-            self._callbacks["paint_text"](xpos, ypos)
+                # Else, divide the ean into blocks and print each block
+                # in the expected position.
+                text["xpos"] = [bxs - 4 * self.module_width]
+
+                # Calculates the position of the text by getting the difference
+                # between a guard end and the next start
+                text["start"].pop(0)
+                for (s, e) in zip(text["start"], text["end"]):
+                    text["xpos"].append(e + (s - e) / 2)
+
+                # The last text block is always put after the last guard end
+                text["xpos"].append(text["end"][-1] + 4 * self.module_width)
+
+                # Split the ean into its blocks
+                self.text = self.text.split(" ")
+
+                ypos += pt2mm(self.font_size)
+
+                blocks = self.text
+                for (text, xpos) in zip(blocks, text["xpos"]):
+                    self.text = text
+                    self._callbacks["paint_text"](xpos, ypos)
+
         return self._callbacks["finish"]()
 
 
