@@ -32,7 +32,9 @@ NO_PIL = "<h3>Pillow was not found. No PNG-Image created.</h3></p>\n"
 
 TESTCODES = (
     ("ean8", "40267708"),
+    ("ean8-guard", "40267708"),
     ("ean13", "5901234123457"),
+    ("ean13-guard", "5901234123457"),
     ("ean14", "12345678911230"),
     ("upca", "36000291453"),
     ("jan", "4901234567894"),

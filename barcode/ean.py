@@ -128,6 +128,14 @@ class EuropeanArticleNumber13(Barcode):
         return Barcode.render(self, options, text)
 
 
+class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
+
+    name = "EAN-13 with guards"
+
+    def __init__(self, *args, guardbar=True, **kwargs):
+        return super().__init__(*args, guardbar=guardbar, **kwargs)
+
+
 class JapanArticleNumber(EuropeanArticleNumber13):
     """Initializes JAN barcode.
 
@@ -187,6 +195,15 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
             return "< " + self.ean[:4] + " " + self.ean[4:] + " >"
         return self.ean
 
+
+class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
+
+    name = "EAN-8 with guards"
+
+    def __init__(self, *args, guardbar=True, **kwargs):
+        return super().__init__(*args, guardbar=guardbar, **kwargs)
+
+
 class EuropeanArticleNumber14(EuropeanArticleNumber13):
     """Represents an EAN-14 barcode. See EAN13's __init__ for details.
 
@@ -218,5 +235,7 @@ class EuropeanArticleNumber14(EuropeanArticleNumber13):
 # Shortcuts
 EAN14 = EuropeanArticleNumber14
 EAN13 = EuropeanArticleNumber13
+EAN13_GUARD = EuropeanArticleNumber13WithGuard
 EAN8 = EuropeanArticleNumber8
+EAN8_GUARD = EuropeanArticleNumber8WithGuard
 JAN = JapanArticleNumber

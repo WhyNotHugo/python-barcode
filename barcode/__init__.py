@@ -13,8 +13,10 @@ from barcode.codex import Code39
 from barcode.codex import Gs1_128
 from barcode.codex import PZN
 from barcode.ean import EAN13
+from barcode.ean import EAN13_GUARD
 from barcode.ean import EAN14
 from barcode.ean import EAN8
+from barcode.ean import EAN8_GUARD
 from barcode.ean import JAN
 from barcode.errors import BarcodeNotFoundError
 from barcode.isxn import ISBN10
@@ -26,7 +28,9 @@ from barcode.version import version  # noqa: F401
 
 __BARCODE_MAP = {
     "ean8": EAN8,
+    "ean8-guard": EAN8_GUARD,
     "ean13": EAN13,
+    "ean13-guard": EAN13_GUARD,
     "ean": EAN13,
     "gtin": EAN14,
     "ean14": EAN14,
