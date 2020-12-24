@@ -99,7 +99,7 @@ class BaseWriter:
         self.text_line_distance = 1
         self.center_text = True
 
-    def calculate_size(self, modules_per_line, number_of_lines, dpi=300):
+    def calculate_size(self, modules_per_line, number_of_lines):
         """Calculates the size of the barcode in pixel.
 
         :parameters:
@@ -107,8 +107,6 @@ class BaseWriter:
                 Number of modules in one line.
             number_of_lines : Integer
                 Number of lines of the barcode.
-            dpi : Integer
-                DPI to calculate.
 
         :returns: Width and height of the barcode in pixel.
         :rtype: Tuple
@@ -121,7 +119,7 @@ class BaseWriter:
                 pt2mm(self.font_size) / 2 * number_of_text_lines + self.text_distance
             )
             height += self.text_line_distance * (number_of_text_lines - 1)
-        return int(mm2px(width, dpi)), int(mm2px(height, dpi))
+        return width, height
 
     def save(self, filename, output):
         """Saves the rendered output to `filename`.
@@ -234,14 +232,13 @@ class SVGWriter(BaseWriter):
             self, self._init, self._create_module, self._create_text, self._finish
         )
         self.compress = False
-        self.dpi = 25.4
         self.with_doctype = True
         self._document = None
         self._root = None
         self._group = None
 
     def _init(self, code):
-        width, height = self.calculate_size(len(code[0]), len(code), self.dpi)
+        width, height = self.calculate_size(len(code[0]), len(code))
         self._document = create_svg_object(self.with_doctype)
         self._root = self._document.documentElement
         attributes = {
@@ -355,7 +352,8 @@ else:
             self._draw = None
 
         def _init(self, code):
-            size = self.calculate_size(len(code[0]), len(code), self.dpi)
+            width, height = self.calculate_size(len(code[0]), len(code))
+            size = (int(mm2px(width, self.dpi)), int(mm2px(height, self.dpi)))
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
 
@@ -370,13 +368,14 @@ else:
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):
-            font = ImageFont.truetype(self.font_path, self.font_size * 2)
+            font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
+            font = ImageFont.truetype(self.font_path, font_size)
             for subtext in self.text.split("\n"):
                 width, height = font.getsize(subtext)
                 # determine the maximum width of each line
                 pos = (
                     mm2px(xpos, self.dpi) - width // 2,
-                    mm2px(ypos, self.dpi) - height // 4,
+                    mm2px(ypos, self.dpi) - height,
                 )
                 self._draw.text(pos, subtext, font=font, fill=self.foreground)
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
