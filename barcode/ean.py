@@ -44,6 +44,8 @@ class EuropeanArticleNumber13(Barcode):
     digits = 12
 
     def __init__(self, ean, writer=None, no_checksum=False):
+        self.digits = 13 if no_checksum else 12
+
         ean = ean[: self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError("EAN code can only contain numbers.")
@@ -54,14 +56,9 @@ class EuropeanArticleNumber13(Barcode):
                     len(ean),
                 )
             )
-        self.ean = ean
-        # If no checksum
+
         if no_checksum:
-            # Add a thirteen char if given in parameter,
-            # otherwise pad with zero
-            self.ean = "{}{}".format(
-                ean, ean[self.digits] if len(ean) > self.digits else 0
-            )
+            self.ean = ean
         else:
             self.ean = "{}{}".format(ean, self.calculate_checksum())
         self.writer = writer or Barcode.default_writer()
