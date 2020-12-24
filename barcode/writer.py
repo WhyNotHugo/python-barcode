@@ -200,11 +200,11 @@ class BaseWriter:
             xpos = self.quiet_zone
             bxs = xpos  # x start of barcode
             text = {
-                "start": [],       # The x start of a guard
-                "end": [],         # The x end of a guard
-                "xpos": [],        # The x position where to write a text block
-                "was_guard": False # Flag that indicates if the previous mod
-                                   # was part of an guard block
+                "start": [],  # The x start of a guard
+                "end": [],  # The x end of a guard
+                "xpos": [],  # The x position where to write a text block
+                # Flag that indicates if the previous mod was part of an guard block:
+                "was_guard": False,
             }
             for mod in mlist:
                 height_factor = mod[1]
