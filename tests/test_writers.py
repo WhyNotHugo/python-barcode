@@ -36,3 +36,11 @@ def test_saving_svg_to_byteio():
 
     with open(f"{TESTPATH}/somefile.svg", "wb") as f:
         EAN13("100000011111", writer=SVGWriter()).write(f)
+
+def test_saving_svg_to_byteio_with_guardbar():
+    rv = BytesIO()
+    EAN13(str(100000902922), writer=SVGWriter(), guardbar=True).write(rv)
+
+    with open(f"{TESTPATH}/somefile_guardbar.svg", "wb") as f:
+        EAN13("100000011111", writer=SVGWriter(), guardbar=True).write(f)
+
