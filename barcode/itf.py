@@ -73,4 +73,4 @@ class ITF(Barcode):
             "quiet_zone": MIN_QUIET_ZONE,
         }
         options.update(writer_options or {})
-        return Barcode.render(self, options, text)
+        return super().render(options, text)

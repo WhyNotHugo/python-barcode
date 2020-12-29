@@ -108,7 +108,7 @@ class UniversalProductCodeA(Barcode):
     def render(self, writer_options=None, text=None):
         options = {"module_width": 0.33}
         options.update(writer_options or {})
-        return Barcode.render(self, options, text)
+        return super().render(options, text)
 
 
 UPCA = UniversalProductCodeA
