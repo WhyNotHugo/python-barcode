@@ -72,7 +72,7 @@ class EuropeanArticleNumber13(Barcode):
         else:
             self.EDGE = _ean.EDGE
             self.MIDDLE = _ean.MIDDLE
-        self.writer = writer or Barcode.default_writer()
+        self.writer = writer or self.default_writer()
 
     def __str__(self):
         return self.ean
@@ -125,7 +125,7 @@ class EuropeanArticleNumber13(Barcode):
     def render(self, writer_options=None, text=None):
         options = {"module_width": SIZES["SC2"]}
         options.update(writer_options or {})
-        return Barcode.render(self, options, text)
+        return super().render(options, text)
 
 
 class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
@@ -150,12 +150,12 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
     valid_country_codes = list(range(450, 460)) + list(range(490, 500))
 
-    def __init__(self, jan, writer=None):
-        if int(jan[:3]) not in JapanArticleNumber.valid_country_codes:
+    def __init__(self, jan, *args, **kwargs):
+        if int(jan[:3]) not in self.valid_country_codes:
             raise WrongCountryCodeError(
                 "Country code isn't between 450-460 or 490-500."
             )
-        EuropeanArticleNumber13.__init__(self, jan, writer)
+        super().__init__(jan, *args, **kwargs)
 
 
 class EuropeanArticleNumber8(EuropeanArticleNumber13):
@@ -171,9 +171,6 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
     name = "EAN-8"
 
     digits = 7
-
-    def __init__(self, ean, writer=None, guardbar=False):
-        EuropeanArticleNumber13.__init__(self, ean, writer, guardbar=guardbar)
 
     def build(self):
         """Builds the barcode pattern from `self.ean`.

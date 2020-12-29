@@ -98,6 +98,7 @@ class BaseWriter:
         self.text_distance = 5
         self.text_line_distance = 1
         self.center_text = True
+        self.guard_height_factor = 1.1
 
     def calculate_size(self, modules_per_line, number_of_lines):
         """Calculates the size of the barcode in pixel.
@@ -163,6 +164,33 @@ class BaseWriter:
             if hasattr(self, key):
                 setattr(self, key, val)
 
+    def packed(self, line):
+        """
+        Pack line to list give better gfx result, otherwise in can
+        result in aliasing gaps
+        '11010111' -> [2, -1, 1, -1, 3]
+
+        This method will yield a sequence of pairs (width, height_factor).
+
+        :parameters:
+            line: String
+                A string matching the writer spec
+                (only contain 0 or 1 or G).
+        """
+        line += " "
+        c = 1
+        for i in range(0, len(line) - 1):
+            if line[i] == line[i + 1]:
+                c += 1
+            else:
+                if line[i] == "1":
+                    yield (c, 1)
+                elif line[i] == "G":
+                    yield (c, self.guard_height_factor)
+                else:
+                    yield (-c, self.guard_height_factor)
+                c = 1
+
     def render(self, code):
         """Renders the barcode to whatever the inheriting writer provides,
         using the registered callbacks.
@@ -170,32 +198,13 @@ class BaseWriter:
         :parameters:
             code : List
                 List of strings matching the writer spec
-                (only contain 0 or 1).
+                (only contain 0 or 1 or G).
         """
         if self._callbacks["initialize"] is not None:
             self._callbacks["initialize"](code)
         ypos = 1.0
         base_height = self.module_height
         for cc, line in enumerate(code):
-            """
-            Pack line to list give better gfx result, otherwise in can
-            result in aliasing gaps
-            '11010111' -> [2, -1, 1, -1, 3]
-            """
-            line += " "
-            c = 1
-            mlist = []
-            for i in range(0, len(line) - 1):
-                if line[i] == line[i + 1]:
-                    c += 1
-                else:
-                    if line[i] == "1":
-                        mlist.append((c, 1))
-                    elif line[i] == "G":
-                        mlist.append((c, 1.1))
-                    else:
-                        mlist.append((-c, 1.1))
-                    c = 1
             # Left quiet zone is x startposition
             xpos = self.quiet_zone
             bxs = xpos  # x start of barcode
@@ -206,10 +215,7 @@ class BaseWriter:
                 # Flag that indicates if the previous mod was part of an guard block:
                 "was_guard": False,
             }
-            for mod in mlist:
-                height_factor = mod[1]
-                mod = mod[0]
-
+            for mod, height_factor in self.packed(line):
                 if mod < 1:
                     color = self.background
                 else:

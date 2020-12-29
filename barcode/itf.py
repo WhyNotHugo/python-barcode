@@ -36,7 +36,7 @@ class ITF(Barcode):
         if len(code) % 2 != 0:
             code = "0" + code
         self.code = code
-        self.writer = writer or Barcode.default_writer()
+        self.writer = writer or self.default_writer()
         self.narrow = narrow
         self.wide = wide
 
@@ -73,4 +73,4 @@ class ITF(Barcode):
             "quiet_zone": MIN_QUIET_ZONE,
         }
         options.update(writer_options or {})
-        return Barcode.render(self, options, text)
+        return super().render(options, text)

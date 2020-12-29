@@ -48,7 +48,7 @@ class InternationalStandardBookNumber13(EuropeanArticleNumber13):
         if isbn[:3] == "979":
             if isbn[3:5] not in ("10", "11"):
                 raise BarcodeError("ISBN must start with 97910 or 97911.")
-        EuropeanArticleNumber13.__init__(self, isbn, writer)
+        super().__init__(isbn, writer)
 
 
 class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
@@ -71,7 +71,7 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         isbn = isbn[: self.digits]
         self.isbn10 = isbn
         self.isbn10 = "{}{}".format(isbn, self._calculate_checksum())
-        InternationalStandardBookNumber13.__init__(self, "978" + isbn, writer)
+        super().__init__("978" + isbn, writer)
 
     def _calculate_checksum(self):
         tmp = sum(x * int(y) for x, y in enumerate(self.isbn10[:9], start=1)) % 11
@@ -104,7 +104,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
         issn = issn[: self.digits]
         self.issn = issn
         self.issn = "{}{}".format(issn, self._calculate_checksum())
-        EuropeanArticleNumber13.__init__(self, self.make_ean(), writer)
+        super().__init__(self.make_ean(), writer)
 
     def _calculate_checksum(self):
         tmp = (

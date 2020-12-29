@@ -45,7 +45,7 @@ class Code39(Barcode):
         self.code = code.upper()
         if add_checksum:
             self.code += self.calculate_checksum()
-        self.writer = writer or Barcode.default_writer()
+        self.writer = writer or self.default_writer()
         check_code(self.code, self.name, code39.REF)
 
     def __str__(self):
@@ -71,7 +71,7 @@ class Code39(Barcode):
     def render(self, writer_options=None, text=None):
         options = {"module_width": MIN_SIZE, "quiet_zone": MIN_QUIET_ZONE}
         options.update(writer_options or {})
-        return Barcode.render(self, options, text)
+        return super().render(options, text)
 
 
 class PZN7(Code39):
@@ -98,7 +98,7 @@ class PZN7(Code39):
             )
         self.pzn = pzn
         self.pzn = "{}{}".format(pzn, self.calculate_checksum())
-        Code39.__init__(self, "PZN-{}".format(self.pzn), writer, add_checksum=False)
+        super().__init__("PZN-{}".format(self.pzn), writer, add_checksum=False)
 
     def get_fullcode(self):
         return "PZN-{}".format(self.pzn)
@@ -133,7 +133,7 @@ class Code128(Barcode):
 
     def __init__(self, code, writer=None):
         self.code = code
-        self.writer = writer or Barcode.default_writer()
+        self.writer = writer or self.default_writer()
         self._charset = "B"
         self._buffer = ""
         check_code(self.code, self.name, code128.ALL)
@@ -248,7 +248,7 @@ class Code128(Barcode):
     def render(self, writer_options=None, text=None):
         options = {"module_width": MIN_SIZE, "quiet_zone": MIN_QUIET_ZONE}
         options.update(writer_options or {})
-        return Barcode.render(self, options, text)
+        return super().render(options, text)
 
 
 class Gs1_128(Code128):
