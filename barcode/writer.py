@@ -180,16 +180,16 @@ class BaseWriter:
         line += " "
         c = 1
         for i in range(0, len(line) - 1):
-           if line[i] == line[i + 1]:
-               c += 1
-           else:
-               if line[i] == "1":
-                   yield (c, 1)
-               elif line[i] == "G":
-                   yield (c, self.guard_height_factor)
-               else:
-                   yield (-c, self.guard_height_factor)
-               c = 1
+            if line[i] == line[i + 1]:
+                c += 1
+            else:
+                if line[i] == "1":
+                    yield (c, 1)
+                elif line[i] == "G":
+                    yield (c, self.guard_height_factor)
+                else:
+                    yield (-c, self.guard_height_factor)
+                c = 1
 
     def render(self, code):
         """Renders the barcode to whatever the inheriting writer provides,
