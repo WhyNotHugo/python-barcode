@@ -93,7 +93,7 @@ class Barcode:
 
         :returns: Output of the writers render method.
         """
-        options = Barcode.default_writer_options.copy()
+        options = self.default_writer_options.copy()
         options.update(writer_options or {})
         if options["write_text"] or text is not None:
             if text is not None:

@@ -72,7 +72,7 @@ class EuropeanArticleNumber13(Barcode):
         else:
             self.EDGE = _ean.EDGE
             self.MIDDLE = _ean.MIDDLE
-        self.writer = writer or Barcode.default_writer()
+        self.writer = writer or self.default_writer()
 
     def __str__(self):
         return self.ean

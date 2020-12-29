@@ -45,7 +45,7 @@ class Code39(Barcode):
         self.code = code.upper()
         if add_checksum:
             self.code += self.calculate_checksum()
-        self.writer = writer or Barcode.default_writer()
+        self.writer = writer or self.default_writer()
         check_code(self.code, self.name, code39.REF)
 
     def __str__(self):
@@ -133,7 +133,7 @@ class Code128(Barcode):
 
     def __init__(self, code, writer=None):
         self.code = code
-        self.writer = writer or Barcode.default_writer()
+        self.writer = writer or self.default_writer()
         self._charset = "B"
         self._buffer = ""
         check_code(self.code, self.name, code128.ALL)
