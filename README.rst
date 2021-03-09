@@ -5,7 +5,7 @@ python-barcode
   :target: https://github.com/WhyNotHugo/python-barcode/actions
   :alt: CI status
 
-.. image:: https://codecov.io/gh/WhyNotHugo/python-barcode/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/WhyNotHugo/python-barcode/branch/main/graph/badge.svg
   :target: https://codecov.io/gh/WhyNotHugo/python-barcode
   :alt: Build coverage
 
@@ -22,7 +22,7 @@ python-barcode
   :alt: downloads
 
 .. image:: https://img.shields.io/pypi/l/python-barcode.svg
-  :target: https://github.com/WhyNotHugo/python-barcode/blob/master/LICENCE
+  :target: https://github.com/WhyNotHugo/python-barcode/blob/main/LICENCE
   :alt: licence
 
 **python-barcode** provides a simple way to create barcodes in Python.
