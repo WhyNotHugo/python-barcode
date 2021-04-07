@@ -61,7 +61,6 @@ html_theme_options = {
     "github_user": "WhyNotHugo",
     "github_repo": "python-barcode",
     "github_banner": "true",
-    "sidebar_collapse": False,
 }
 
 graphviz_output_format = "svg"
