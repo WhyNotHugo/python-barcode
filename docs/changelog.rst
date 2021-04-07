@@ -6,6 +6,13 @@ Unreleased
 
 * The default dimensions have changed slightly. This is so that the results of
   generating a PNG and an SVG look more alike.
+* Previous versions included an empty text element for SVGs with no comment.
+  This is no longer the case.
+* Some internals have been improved so as to allow better subclassing.
+  Subclasses of ``Barcode`` can now override ``default_writer_options`` and
+  ``default_writer()``.
+* A ``guardbar`` parameter has been added to EAN barcodes. This renders
+  barcodes with guardars (longer bars).
 
 v0.13.1
 ~~~~~~~
@@ -17,6 +24,8 @@ v0.13.0
 
 * Added support for transparent backgrounds. This is done by setting the ``mode`` option
   for a writer to ``RGBA``.
+* Dropped support for Python 3.5.
+* Added support for Python 3.9.
 
 v0.12.0
 ~~~~~~~
