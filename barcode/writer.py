@@ -308,7 +308,8 @@ class SVGWriter(BaseWriter):
             "height": SIZE.format(height),
         }
         _set_attributes(self._root, **attributes)
-        self._root.appendChild(self._document.createComment(COMMENT))
+        if COMMENT:
+            self._root.appendChild(self._document.createComment(COMMENT))
         # create group for easier handling in 3rd party software
         # like corel draw, inkscape, ...
         group = self._document.createElement("g")
