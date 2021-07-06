@@ -3,11 +3,8 @@
 :Provided barcodes: Code 39, Code 128, PZN
 """
 from barcode.base import Barcode
-from barcode.charsets import code128
-from barcode.charsets import code39
-from barcode.errors import BarcodeError
-from barcode.errors import IllegalCharacterError
-from barcode.errors import NumberOfDigitsError
+from barcode.charsets import code39, code128
+from barcode.errors import BarcodeError, IllegalCharacterError, NumberOfDigitsError
 
 __docformat__ = "restructuredtext en"
 
@@ -169,7 +166,7 @@ class Code128(Barcode):
                     digits += 1
                 else:
                     break
-            return digits > 3 and (digits % 2) == 0
+            return digits > 3
 
         codes = []
         if self._charset == "C" and not char.isdigit():
