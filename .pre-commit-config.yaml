@@ -10,14 +10,14 @@ repos:
       - id: end-of-file-fixer
       - id: debug-statements
   - repo: https://github.com/asottile/reorder_python_imports
-    rev: v2.5.0
+    rev: v2.6.0
     hooks:
     -   id: reorder-python-imports
   - repo: https://github.com/psf/black
-    rev: "21.6b0"
+    rev: "21.7b0"
     hooks:
       - id: black
-  - repo: https://gitlab.com/pycqa/flake8
+  - repo: https://github.com/PyCQA/flake8
     rev: "3.9.2" # pick a git hash / tag to point to
     hooks:
       - id: flake8
