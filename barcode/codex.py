@@ -94,14 +94,14 @@ class PZN7(Code39):
             raise IllegalCharacterError("PZN can only contain numbers.")
         if len(pzn) != self.digits:
             raise NumberOfDigitsError(
-                "PZN must have {} digits, not {}.".format(self.digits, len(pzn))
+                f"PZN must have {self.digits} digits, not {len(pzn)}."
             )
         self.pzn = pzn
-        self.pzn = "{}{}".format(pzn, self.calculate_checksum())
-        super().__init__("PZN-{}".format(self.pzn), writer, add_checksum=False)
+        self.pzn = f"{pzn}{self.calculate_checksum()}"
+        super().__init__(f"PZN-{self.pzn}", writer, add_checksum=False)
 
     def get_fullcode(self):
-        return "PZN-{}".format(self.pzn)
+        return f"PZN-{self.pzn}"
 
     def calculate_checksum(self):
         sum_ = sum(int(x) * int(y) for x, y in enumerate(self.pzn, start=2))

@@ -61,7 +61,7 @@ class EuropeanArticleNumber13(Barcode):
                 ean, ean[self.digits] if len(ean) > self.digits else 0
             )
         else:
-            self.ean = "{}{}".format(ean, self.calculate_checksum())
+            self.ean = f"{ean}{self.calculate_checksum()}"
 
         self.guardbar = guardbar
         if guardbar:

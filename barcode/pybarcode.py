@@ -45,7 +45,7 @@ def create_barcode(args, parser):
         writer = SVGWriter()
     out = os.path.normpath(os.path.abspath(args.output))
     name = barcode.generate(args.barcode, args.code, writer, out, opts, args.text)
-    print("New barcode saved as {}.".format(name))
+    print(f"New barcode saved as {name}.")
 
 
 def main():

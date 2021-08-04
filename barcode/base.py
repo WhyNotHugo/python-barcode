@@ -31,7 +31,7 @@ class Barcode:
         return "\n".join(code)
 
     def __repr__(self):
-        return "<{}({!r})>".format(self.__class__.__name__, self.get_fullcode())
+        return f"<{self.__class__.__name__}({self.get_fullcode()!r})>"
 
     def build(self):
         raise NotImplementedError

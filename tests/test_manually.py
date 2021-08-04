@@ -90,4 +90,4 @@ def test_generating_barcodes():
         obj = "\n".join(objects)
         f.write(HTML.format(version=version, body=obj))
 
-    print("\nNow open {htmlfile} in your browser.".format(htmlfile=HTMLFILE))
+    print(f"\nNow open {HTMLFILE} in your browser.")
