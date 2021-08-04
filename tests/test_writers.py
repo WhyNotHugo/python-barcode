@@ -5,7 +5,6 @@ from barcode import EAN13
 from barcode.writer import ImageWriter
 from barcode.writer import SVGWriter
 
-
 PATH = os.path.dirname(os.path.abspath(__file__))
 TESTPATH = os.path.join(PATH, "test_outputs")
 

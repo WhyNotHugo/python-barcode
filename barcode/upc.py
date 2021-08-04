@@ -8,7 +8,8 @@ from functools import reduce
 
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
-from barcode.errors import IllegalCharacterError, NumberOfDigitsError
+from barcode.errors import IllegalCharacterError
+from barcode.errors import NumberOfDigitsError
 
 
 class UniversalProductCodeA(Barcode):

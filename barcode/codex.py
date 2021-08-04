@@ -3,8 +3,8 @@
 :Provided barcodes: Code 39, Code 128, PZN
 """
 from barcode.base import Barcode
-from barcode.charsets import code128
 from barcode.charsets import code39
+from barcode.charsets import code128
 from barcode.errors import BarcodeError
 from barcode.errors import IllegalCharacterError
 from barcode.errors import NumberOfDigitsError

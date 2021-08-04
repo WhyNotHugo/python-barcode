@@ -8,15 +8,15 @@ from typing import BinaryIO
 from typing import Dict
 from typing import Union
 
-from barcode.codex import Code128
-from barcode.codex import Code39
-from barcode.codex import Gs1_128
 from barcode.codex import PZN
+from barcode.codex import Code39
+from barcode.codex import Code128
+from barcode.codex import Gs1_128
+from barcode.ean import EAN8
+from barcode.ean import EAN8_GUARD
 from barcode.ean import EAN13
 from barcode.ean import EAN13_GUARD
 from barcode.ean import EAN14
-from barcode.ean import EAN8
-from barcode.ean import EAN8_GUARD
 from barcode.ean import JAN
 from barcode.errors import BarcodeNotFoundError
 from barcode.isxn import ISBN10

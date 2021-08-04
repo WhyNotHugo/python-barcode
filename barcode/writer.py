@@ -11,7 +11,9 @@ try:
     import ImageFont
 except ImportError:
     try:
-        from PIL import Image, ImageDraw, ImageFont  # lint:ok
+        from PIL import Image  # lint:ok
+        from PIL import ImageDraw
+        from PIL import ImageFont
     except ImportError:
         import logging
 
