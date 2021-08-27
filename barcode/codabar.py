@@ -9,6 +9,7 @@ from barcode.charsets import codabar
 from barcode.errors import BarcodeError
 from barcode.errors import IllegalCharacterError
 
+
 class CODABAR(Barcode):
     """Initializes a new CODABAR instance.
 
@@ -40,18 +41,22 @@ class CODABAR(Barcode):
 
     def build(self):
         try:
-            data = codabar.STARTSTOP[self.code[0]] + 'n' # Start with [A-D], followed by a narrow space
+            data = (
+                codabar.STARTSTOP[self.code[0]] + "n"
+            )  # Start with [A-D], followed by a narrow space
 
         except KeyError:
             raise BarcodeError("Codabar should start with either A,B,C or D")
 
         try:
-            data += 'n'.join([codabar.CODES[c] for c in self.code[1:-1]]) # separated by a narrow space
+            data += "n".join(
+                [codabar.CODES[c] for c in self.code[1:-1]]
+            )  # separated by a narrow space
         except KeyError:
             raise IllegalCharacterError("Codabar can only contain numerics or $:/.+-")
 
         try:
-            data += 'n' + codabar.STARTSTOP[self.code[-1]] # End with [A-D]
+            data += "n" + codabar.STARTSTOP[self.code[-1]]  # End with [A-D]
         except KeyError:
             raise BarcodeError("Codabar should end with either A,B,C or D")
 
