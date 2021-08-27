@@ -24,6 +24,7 @@ from barcode.isxn import ISBN13
 from barcode.isxn import ISSN
 from barcode.itf import ITF
 from barcode.upc import UPCA
+from barcode.codabar import CODABAR
 from barcode.version import version  # noqa: F401
 
 __BARCODE_MAP = {
@@ -47,6 +48,8 @@ __BARCODE_MAP = {
     "code128": Code128,
     "itf": ITF,
     "gs1_128": Gs1_128,
+    "codabar": CODABAR,
+    "nw-7": CODABAR
 }
 
 PROVIDED_BARCODES = list(__BARCODE_MAP)
