@@ -17,6 +17,5 @@ MANIFEST
 barcode/version.py
 tests/index.html
 tests/test_outputs/
-.vscode/*
 tests/test.py
 test.py
