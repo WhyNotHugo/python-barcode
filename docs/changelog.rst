@@ -13,6 +13,7 @@ Unreleased
   ``default_writer()``.
 * A ``guardbar`` parameter has been added to EAN barcodes. This renders
   barcodes with guardars (longer bars).
+* Added support for Python 3.10.
 
 v0.13.1
 ~~~~~~~
