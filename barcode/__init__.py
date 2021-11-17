@@ -8,6 +8,7 @@ from typing import BinaryIO
 from typing import Dict
 from typing import Union
 
+from barcode.codabar import CODABAR
 from barcode.codex import PZN
 from barcode.codex import Code39
 from barcode.codex import Code128
@@ -47,6 +48,8 @@ __BARCODE_MAP = {
     "code128": Code128,
     "itf": ITF,
     "gs1_128": Gs1_128,
+    "codabar": CODABAR,
+    "nw-7": CODABAR,
 }
 
 PROVIDED_BARCODES = list(__BARCODE_MAP)
