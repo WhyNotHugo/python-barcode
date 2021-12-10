@@ -328,16 +328,18 @@ class SVGWriter(BaseWriter):
         self._group.appendChild(background)
 
     def _create_module(self, xpos, ypos, width, color):
-        element = self._document.createElement("rect")
-        attributes = {
-            "x": SIZE.format(xpos),
-            "y": SIZE.format(ypos),
-            "width": SIZE.format(width),
-            "height": SIZE.format(self.module_height),
-            "style": f"fill:{color};",
-        }
-        _set_attributes(element, **attributes)
-        self._group.appendChild(element)
+        # Background rect has been provided already, so skipping "spaces"
+        if color != self.background:
+            element = self._document.createElement("rect")
+            attributes = {
+                "x": SIZE.format(xpos),
+                "y": SIZE.format(ypos),
+                "width": SIZE.format(width),
+                "height": SIZE.format(self.module_height),
+                "style": f"fill:{color};",
+            }
+            _set_attributes(element, **attributes)
+            self._group.appendChild(element)
 
     def _create_text(self, xpos, ypos):
         # check option to override self.text with self.human (barcode as
