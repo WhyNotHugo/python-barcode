@@ -283,8 +283,8 @@ class BaseWriter:
                 ypos += pt2mm(self.font_size)
 
                 blocks = self.text
-                for (text, xpos) in zip(blocks, text["xpos"]):
-                    self.text = text
+                for (text_, xpos) in zip(blocks, text["xpos"]):
+                    self.text = text_
                     self._callbacks["paint_text"](xpos, ypos)
 
         return self._callbacks["finish"]()
