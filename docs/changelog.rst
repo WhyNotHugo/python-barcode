@@ -1,11 +1,11 @@
 Changelog
 ---------
 
-Unreleased
+v0.14.0
 ~~~~~~~~~~
 
-* The default dimensions have changed slightly. This is so that the results of
-  generating a PNG and an SVG look more alike.
+* **Breaking**: The default dimensions have changed slightly. This is so that
+  the results of generating a PNG and an SVG look more alike.
 * Previous versions included an empty text element for SVGs with no comment.
   This is no longer the case.
 * Some internals have been improved so as to allow better subclassing.
@@ -14,6 +14,10 @@ Unreleased
 * A ``guardbar`` parameter has been added to EAN barcodes. This renders
   barcodes with guardars (longer bars).
 * Added support for Python 3.10.
+* The documentation setup has been redone, hopefully squashing a lot of legacy
+  quirks.
+* Previous versions installed the `tests` module. This was not intentional and
+  have been fixed.
 
 v0.13.1
 ~~~~~~~
