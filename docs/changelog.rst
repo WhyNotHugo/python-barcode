@@ -1,8 +1,13 @@
 Changelog
 ---------
 
-v0.14.0
+unreleased
 ~~~~~~~~~~
+
+* **Breaking** Dropped support for Python 3.6.
+
+v0.14.0
+~~~~~~~
 
 * **Breaking**: The default dimensions have changed slightly. This is so that
   the results of generating a PNG and an SVG look more alike.
