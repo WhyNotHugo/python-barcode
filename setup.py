@@ -32,10 +32,6 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     entry_points={"console_scripts": ["python-barcode = barcode.pybarcode:main"]},
-    use_scm_version={
-        "version_scheme": "post-release",
-        "write_to": "barcode/version.py",
-    },
     setup_requires=["setuptools_scm"],
     extras_require={"images": ["pillow"]},
     include_package_data=True,
