@@ -197,13 +197,13 @@ class Code128(Barcode):
     def _convert(self, char):
         if self._charset == "A":
             if char in code128.ISO_8859_1:
-                yield code128.A['\xf4']
+                yield code128.A["\xf4"]
                 yield code128.ISO_8859_1[char]
             else:
                 yield code128.A[char]
         elif self._charset == "B":
             if char not in code128.B:
-                yield code128.B['\xf4']
+                yield code128.B["\xf4"]
                 yield code128.ISO_8859_1[char]
             else:
                 yield code128.B[char]

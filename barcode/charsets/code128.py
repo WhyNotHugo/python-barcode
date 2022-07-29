@@ -103,7 +103,7 @@ _charset_b = (
     )
 )
 
-ISO_8859_1 = {bytes([i]).decode('latin1'): i - 128 for i in range(160, 256)}
+ISO_8859_1 = {bytes([i]).decode("latin1"): i - 128 for i in range(160, 256)}
 
 ALL = set(_common + _charset_a + _charset_b + tuple(ISO_8859_1.keys()))
 
