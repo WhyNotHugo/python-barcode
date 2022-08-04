@@ -438,13 +438,13 @@ else:
             font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
             font = ImageFont.truetype(self.font_path, font_size)
             for subtext in self.text.split("\n"):
-                width, height = font.getsize(subtext)
-                # determine the maximum width of each line
                 pos = (
-                    mm2px(xpos, self.dpi) - width // 2,
-                    mm2px(ypos, self.dpi) - height,
+                    mm2px(xpos, self.dpi),
+                    mm2px(ypos, self.dpi),
                 )
-                self._draw.text(pos, subtext, font=font, fill=self.foreground)
+                self._draw.text(
+                    pos, subtext, font=font, fill=self.foreground, anchor="ms"
+                )
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
         def _finish(self):
