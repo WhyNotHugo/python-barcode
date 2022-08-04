@@ -443,7 +443,7 @@ else:
                     mm2px(ypos, self.dpi),
                 )
                 self._draw.text(
-                    pos, subtext, font=font, fill=self.foreground, anchor="ms"
+                    pos, subtext, font=font, fill=self.foreground, anchor="md"
                 )
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
