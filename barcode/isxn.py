@@ -69,9 +69,10 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
     def __init__(self, isbn, writer=None):
         isbn = isbn.replace("-", "")
         isbn = isbn[: self.digits]
+        super().__init__("978" + isbn, writer)
         self.isbn10 = isbn
         self.isbn10 = f"{isbn}{self._calculate_checksum()}"
-        super().__init__("978" + isbn, writer)
+        
 
     def _calculate_checksum(self):
         tmp = sum(x * int(y) for x, y in enumerate(self.isbn10[:9], start=1)) % 11
