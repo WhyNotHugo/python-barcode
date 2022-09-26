@@ -22,7 +22,7 @@ repos:
           - flake8-comprehensions
           - flake8-bugbear
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.38.0
+    rev: v2.38.2
     hooks:
     -   id: pyupgrade
         args: [--py37-plus]
