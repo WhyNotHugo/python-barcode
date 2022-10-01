@@ -3,17 +3,19 @@ import atheris
 import os
 from io import BytesIO
 import barcode
-
+from barcode import EAN13
+#from barcode.writer import SVGWriter
 @atheris.instrument_func
-def TestOneInput(input_bytes):
+def TestOneInput(data):
   barray=bytearray(data)
   fdp=atheris.FuzzedDataProvider(data)
   try:
-    rv = BytesIO()
     EAN = barcode.get_barcode_class('ean13')
-    EAN(fdp.ConsumeInt(len(data)), writer=SVGWriter()).write(rv)
-  except barcode.errors.IllegalCharacterError:
+    my_ean = EAN(fdp.ConsumeString(data))
+    fullname = my_ean.save('test_barcode')
+  except Exception:
     None
+
 
 
 def main():
