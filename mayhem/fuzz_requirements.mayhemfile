@@ -1,0 +1,9 @@
+project: PROJECT
+target: fuzz_requirements
+cmds:
+- cmd: /out/fuzz_requirements.pkg
+  env:
+    LD_PRELOAD: /out/sanitizer_with_fuzzer.so
+    ASAN_OPTIONS: symbolize=1:external_symbolizer_path=/out/llvm-symbolizer:detect_leaks=0
+  timeout: 250
+  libfuzzer: true

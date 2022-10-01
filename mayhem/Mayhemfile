@@ -1,0 +1,6 @@
+project: python-barcode
+target: fuzz-requirements
+
+cmds:
+  - cmd: python3 fuzz-requiremets.py
+    libfuzzer: true
