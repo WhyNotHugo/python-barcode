@@ -1,10 +1,8 @@
 FROM gcr.io/oss-fuzz-base/base-builder-python
-COPY . python-barcode
-RUN rm -rf pip/mayhem
-WORKDIR $SRC/python-barcode
-COPY mayhem/build.sh $SRC/
-COPY mayhem/fuzz_* $SRC/
+ADD ./mayhem/fuzz_barcode.py /fuzz_barcode.py
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install barcode
 
-ENV FUZZING_LANGUAGE=python SANITIZER=address FUZZING_ENGINE=libfuzzer
-RUN compile
-RUN chmod +x /out/fuzz_requirements.pkg
+
+
+CMD ["/fuzz_barcode.py"]

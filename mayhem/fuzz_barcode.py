@@ -1,11 +1,8 @@
 import sys
 import atheris
 import os
-
 from io import BytesIO
-
-from barcode import EAN13
-from barcode.writer import SVGWriter
+import barcode
 
 @atheris.instrument_func
 def TestOneInput(input_bytes):
@@ -13,7 +10,8 @@ def TestOneInput(input_bytes):
   fdp=atheris.FuzzedDataProvider(data)
   try:
     rv = BytesIO()
-    EAN13(fdp.ConsumeInt(len(data)), writer=SVGWriter()).write(rv)
+    EAN = barcode.get_barcode_class('ean13')
+    EAN(fdp.ConsumeInt(len(data)), writer=SVGWriter()).write(rv)
   except barcode.errors.IllegalCharacterError:
     None
 

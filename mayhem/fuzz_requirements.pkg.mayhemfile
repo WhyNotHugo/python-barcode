@@ -1,4 +1,0 @@
-project: PROJECT
-target: fuzz_requirements.pkg
-cmds:
-- cmd: /out/fuzz_requirements.pkg
