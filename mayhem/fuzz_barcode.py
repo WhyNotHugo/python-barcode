@@ -9,8 +9,8 @@ from barcode.errors import BarcodeError
 @atheris.instrument_func
 def TestOneInput(data):
 
-    if len(data) < 1:
-      return
+    #if len(data) < 1:
+    # return
     
     barray=bytearray(data)
     fdp=atheris.FuzzedDataProvider(data)
@@ -27,7 +27,7 @@ def TestOneInput(data):
 
 def main():
   atheris.instrument_all()
-  atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
+  atheris.Setup(sys.argv, TestOneInput)
   atheris.Fuzz()
 
 
