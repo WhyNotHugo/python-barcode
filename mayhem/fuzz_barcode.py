@@ -29,7 +29,7 @@ def TestOneInput(input_bytes):
     fullname = jan.save('jan')
       
   except BarcodeError as be:
-    #print(be)
+    print(be)
     None
     
     
