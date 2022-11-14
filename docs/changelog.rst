@@ -5,6 +5,7 @@ unreleased
 ~~~~~~~~~~
 
 * **Breaking** Dropped support for Python 3.6.
+* Added support for Python 3.11.
 
 v0.14.0
 ~~~~~~~
