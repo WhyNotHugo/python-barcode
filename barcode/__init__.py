@@ -87,9 +87,9 @@ def generate(
     name: str,
     code: str,
     writer=None,
-    output: Union[str, os.PathLike, BinaryIO] = None,
-    writer_options: Dict = None,
-    text: str = None,
+    output: Union[str, os.PathLike, BinaryIO, None] = None,
+    writer_options: Union[Dict, None] = None,
+    text: Union[str, None] = None,
 ):
     """Shortcut to generate a barcode in one line.
 
