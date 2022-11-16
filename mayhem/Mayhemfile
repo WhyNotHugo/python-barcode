@@ -2,5 +2,5 @@ project: python-barcode
 target: fuzz-barcode
 
 cmds:
-  - cmd: python3 /fuzz_barcode.py
+  - cmd: /fuzz_barcode.py
     libfuzzer: true
