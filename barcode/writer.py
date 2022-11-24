@@ -117,7 +117,9 @@ class BaseWriter:
         :rtype: Tuple
         """
         width = 2 * self.quiet_zone + modules_per_line * self.module_width
-        height = self.margin_bottom + self.margin_top + self.module_height * number_of_lines
+        height = (
+            self.margin_bottom + self.margin_top + self.module_height * number_of_lines
+        )
         number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
             height += (
