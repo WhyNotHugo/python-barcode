@@ -428,7 +428,7 @@ else:
             size = [
                 (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi)),
                 (
-                    mm2px(xpos + width, self.dpi),
+                    mm2px(xpos + width, self.dpi) - 1,
                     mm2px(ypos + self.module_height, self.dpi),
                 ),
             ]
