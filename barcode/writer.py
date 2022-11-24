@@ -101,6 +101,8 @@ class BaseWriter:
         self.text_line_distance = 1
         self.center_text = True
         self.guard_height_factor = 1.1
+        self.margin_top = 1
+        self.margin_bottom = 1
 
     def calculate_size(self, modules_per_line, number_of_lines):
         """Calculates the size of the barcode in pixel.
@@ -115,7 +117,7 @@ class BaseWriter:
         :rtype: Tuple
         """
         width = 2 * self.quiet_zone + modules_per_line * self.module_width
-        height = 2.0 + self.module_height * number_of_lines
+        height = self.margin_bottom + self.margin_top + self.module_height * number_of_lines
         number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
             height += (
@@ -204,7 +206,7 @@ class BaseWriter:
         """
         if self._callbacks["initialize"] is not None:
             self._callbacks["initialize"](code)
-        ypos = 1.0
+        ypos = self.margin_top
         base_height = self.module_height
         for cc, line in enumerate(code):
             # Left quiet zone is x startposition
