@@ -98,7 +98,7 @@ class PZN7(Code39):
             )
         self.pzn = pzn
         self.pzn = f"{pzn}{self.calculate_checksum()}"
-        super().__init__(f"PZN-{self.pzn}", writer, add_checksum=False)
+        super().__init__(f"-{self.pzn}", writer, add_checksum=False)
 
     def get_fullcode(self):
         return f"PZN-{self.pzn}"
@@ -113,7 +113,16 @@ class PZN7(Code39):
 
 
 class PZN8(PZN7):
-    """Will be fully added in v0.9."""
+    """Represents an PZN8 barcode. See PZN7's __init__ for details.
+
+    :parameters:
+        pzn : String
+            Code to render.
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+    """
+
+    name = "Pharmazentralnummer-8"
 
     digits = 7
 

@@ -10,6 +10,7 @@ from typing import Union
 
 from barcode.codabar import CODABAR
 from barcode.codex import PZN
+from barcode.codex import PZN8
 from barcode.codex import Code39
 from barcode.codex import Code128
 from barcode.codex import Gs1_128
