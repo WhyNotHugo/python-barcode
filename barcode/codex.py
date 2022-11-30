@@ -87,29 +87,45 @@ class PZN7(Code39):
     name = "Pharmazentralnummer"
 
     digits = 6
+    checksum_length = 1
 
     def __init__(self, pzn, writer=None):
-        pzn = pzn[: self.digits]
+
         if not pzn.isdigit():
             raise IllegalCharacterError("PZN can only contain numbers.")
-        if len(pzn) != self.digits:
+
+        # calculate and append checksum if not included in supplied code, verify last digit otherwise
+        if len(pzn) == self.digits:
+            self.pzn_core = pzn
+            self.pzn = pzn + self.calculate_checksum()
+        
+        elif len(pzn) == self.digits + self.checksum_length:
+            self.pzn_core = pzn[:-1]
+            checksum_ok = pzn[-1] == self.calculate_checksum()
+            if checksum_ok:
+                self.pzn = pzn
+            else:
+                raise BarcodeError(
+                    f"Checksum (last digit) is not valid for the supplied {self.__class__.__name__} code.")
+
+        else:
             raise NumberOfDigitsError(
-                f"PZN must have {self.digits} digits, not {len(pzn)}."
+                f"{self.__class__.__name__} must have {self.digits} digits (excluding checksum) "
+                f"or {self.digits + self.checksum_length} digits (including checksum), not {len(pzn)}."
             )
-        self.pzn = pzn
-        self.pzn = f"{pzn}{self.calculate_checksum()}"
+        
         super().__init__(f"-{self.pzn}", writer, add_checksum=False)
 
     def get_fullcode(self):
         return f"PZN-{self.pzn}"
 
-    def calculate_checksum(self):
-        sum_ = sum(int(x) * int(y) for x, y in enumerate(self.pzn, start=2))
+    def calculate_checksum(self, start=2):
+        sum_ = sum(int(x) * int(y) for x, y in enumerate(self.pzn_core, start))
         checksum = sum_ % 11
         if checksum == 10:
             raise BarcodeError("Checksum can not be 10 for PZN.")
         else:
-            return checksum
+            return str(checksum)
 
 
 class PZN8(PZN7):
@@ -125,6 +141,9 @@ class PZN8(PZN7):
     name = "Pharmazentralnummer-8"
 
     digits = 7
+
+    def calculate_checksum(self, start=1):
+        return super().calculate_checksum(start=start)
 
 
 class Code128(Barcode):
