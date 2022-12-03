@@ -173,7 +173,7 @@ class Code128(Barcode):
 
         codes = []
         if self._charset == "C" and not char.isdigit():
-            if char in code128.B:
+            if char in code128.B or char in code128.ISO_8859_1:
                 codes = self._new_charset("B")
             elif char in code128.A:
                 codes = self._new_charset("A")
@@ -183,31 +183,39 @@ class Code128(Barcode):
         elif self._charset == "B":
             if look_next():
                 codes = self._new_charset("C")
-            elif char not in code128.B:
+            elif char not in code128.B and char not in code128.ISO_8859_1:
                 if char in code128.A:
                     codes = self._new_charset("A")
         elif self._charset == "A":
             if look_next():
                 codes = self._new_charset("C")
-            elif char not in code128.A:
+            elif char not in code128.A and char not in code128.ISO_8859_1:
                 if char in code128.B:
                     codes = self._new_charset("B")
         return codes
 
     def _convert(self, char):
         if self._charset == "A":
-            return code128.A[char]
+            if char in code128.ISO_8859_1:
+                yield code128.A["\xf4"]
+                yield code128.ISO_8859_1[char]
+            else:
+                yield code128.A[char]
         elif self._charset == "B":
-            return code128.B[char]
+            if char not in code128.B:
+                yield code128.B["\xf4"]
+                yield code128.ISO_8859_1[char]
+            else:
+                yield code128.B[char]
         elif self._charset == "C":
             if char in code128.C:
-                return code128.C[char]
+                yield code128.C[char]
             elif char.isdigit():
                 self._buffer += char
                 if len(self._buffer) == 2:
                     value = int(self._buffer)
                     self._buffer = ""
-                    return value
+                    yield value
 
     def _try_to_optimize(self, encoded):
         if encoded[1] in code128.TO:
@@ -226,11 +234,11 @@ class Code128(Barcode):
             encoded.extend(self._maybe_switch_charset(i))
             code_num = self._convert(char)
             if code_num is not None:
-                encoded.append(code_num)
+                encoded.extend(code_num)
         # Finally look in the buffer
         if len(self._buffer) == 1:
             encoded.extend(self._new_charset("B"))
-            encoded.append(self._convert(self._buffer[0]))
+            encoded.extend(self._convert(self._buffer[0]))
             self._buffer = ""
         encoded = self._try_to_optimize(encoded)
         return encoded

@@ -103,7 +103,10 @@ _charset_b = (
     )
 )
 
-ALL = set(_common + _charset_a + _charset_b)
+ISO_8859_1 = {bytes([i]).decode("latin1"): i - 128 for i in range(160, 256)}
+
+ALL = set(_common + _charset_a + _charset_b + tuple(ISO_8859_1.keys()))
+
 A = {c: i for i, c in enumerate(_charset_a)}
 B = {c: i for i, c in enumerate(_charset_b)}
 C = {"TO_B": 100, "TO_A": 101, "\xf1": 102}
