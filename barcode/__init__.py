@@ -13,6 +13,7 @@ from barcode.codex import PZN
 from barcode.codex import Code39
 from barcode.codex import Code128
 from barcode.codex import Gs1_128
+from barcode.codex import MSI
 from barcode.ean import EAN8
 from barcode.ean import EAN8_GUARD
 from barcode.ean import EAN13
@@ -50,6 +51,7 @@ __BARCODE_MAP = {
     "gs1_128": Gs1_128,
     "codabar": CODABAR,
     "nw-7": CODABAR,
+    "msi": MSI,
 }
 
 PROVIDED_BARCODES = list(__BARCODE_MAP)

@@ -1,6 +1,6 @@
 """Module: barcode.codex
 
-:Provided barcodes: Code 39, Code 128, PZN
+:Provided barcodes: Code 39, Code 128, PZN, MSI
 """
 from barcode.base import Barcode
 from barcode.charsets import code39
@@ -129,7 +129,7 @@ class Code128(Barcode):
             The writer to render the barcode (default: SVGWriter).
     """
 
-    name = "Code 128"
+    ame = "Code 128"
 
     def __init__(self, code, writer=None):
         self.code = code
@@ -269,6 +269,65 @@ class Gs1_128(Code128):
 
     def get_fullcode(self):
         return super().get_fullcode()[1:]
+
+
+class MSI(Barcode):
+    """Initializes a new MSI (Modified Plessy) instance. The checksum is added automatically
+    when building the bars.
+
+    :parameters:
+        code : int or bytes or string
+            Code MSI int without checksum (added automatically).
+            Code MSI bytes without checksum. requires byteorder for int conversion
+            Code MSI string without checksum. requires encoding and byteorder for int conversion
+        writer : barcode.writer Instance
+            The writer to render the barcode (default: SVGWriter).
+        byteorder : string
+            'big' or 'little' ; to convert bytes to int
+        encoding : string
+            if set, convert bytes to string and use this as a label. defaults to utf-8
+    """
+    name = "MSI/Modified Plessy"
+
+    def __init__(self, code, writer=None, byteorder = 'big', encoding = 'utf-8' ):
+        self.writer = writer or self.default_writer()
+        self._buffer = ""
+
+        if type(code) is int:
+            self.code = str(code)
+        elif type(code) is bytes:
+            self.code = str( int.from_bytes( code, byteorder ) )
+            if encoding is not None:
+                self.label = code.decode(encoding)
+            else:
+                self.label = self.code
+        elif type(code) is str:
+            self.code = str( int.from_bytes( bytes(code, encoding), byteorder ) )
+            self.label = code
+
+    def __str__(self):
+        return self.label
+
+    @property
+    def encoded(self):
+        return self._build()
+
+    def get_fullcode(self):
+        return self.label
+
+    def _build(self):
+        from luhn import append as luhn_check_append
+
+        bcd = ''.join([f"{bin(int(n))[2:]:0>4}" for n in luhn_check_append( self.code )])
+
+        conv = {
+                '0': '100',
+                '1': '110',
+            }
+        return ['110' + ''.join([conv[i] for i in bcd]) + '1001']
+
+    def build(self):
+        return self.encoded
 
 
 # For pre 0.8 compatibility
