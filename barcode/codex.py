@@ -77,10 +77,10 @@ class Code39(Barcode):
 class PZN7(Code39):
     """Initializes new German number for pharmaceutical products.
 
-        :param pzn: String
-            Code to render.
-        :param writer: barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param pzn: String
+        Code to render.
+    :param writer: barcode.writer Instance
+        The writer to render the barcode (default: SVGWriter).
     """
 
     name = "Pharmazentralnummer"
