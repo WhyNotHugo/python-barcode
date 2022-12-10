@@ -270,13 +270,13 @@ class Gs1_128(Code128):
 
 
 class MSI(Barcode):
-    """Initializes a new MSI (Modified Plessey) instance. The checksum is added automatically
-    when building the bars.
+    """Initializes a new MSI (Modified Plessey) instance. The checksum is added 
+    automatically when building the bars.
 
     :parameters:
         :param code: int or bytes
             Code MSI int without checksum (added automatically).
-            Code MSI bytes without checksum. requires byteorder (WARNING: non-standard use)
+            Code bytes without checksum. requires byteorder (WARNING: non-standard use)
         :param writer: barcode.writer Instance
             The writer to render the barcode (default: SVGWriter).
         :param byteorder: string
@@ -294,11 +294,11 @@ class MSI(Barcode):
 
     def __init__(
         self,
-        code: (int, bytes),
+        code: [int, bytes],
         writer=None,
-        byteorder: str = None,
-        encoding: str = "utf-8",
-        label: str = None,
+        byteorder: [NoneType,str] = None,
+        encoding: [NoneType,str] = "utf-8",
+        label: [NoneType,str] = None,
     ):
         self.writer = writer or self.default_writer()
         self._buffer = ""
