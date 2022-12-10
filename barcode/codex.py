@@ -270,7 +270,7 @@ class Gs1_128(Code128):
 
 
 class MSI(Barcode):
-    """Initializes a new MSI (Modified Plessey) instance. The checksum is added 
+    """Initializes a new MSI (Modified Plessey) instance. The checksum is added
     automatically when building the bars.
 
     :parameters:
@@ -296,9 +296,9 @@ class MSI(Barcode):
         self,
         code: [int, bytes],
         writer=None,
-        byteorder: [NoneType,str] = None,
-        encoding: [NoneType,str] = "utf-8",
-        label: [NoneType,str] = None,
+        byteorder: [NoneType, str] = None,
+        encoding: [NoneType, str] = "utf-8",
+        label: [NoneType, str] = None,
     ):
         self.writer = writer or self.default_writer()
         self._buffer = ""
