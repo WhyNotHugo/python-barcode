@@ -77,10 +77,9 @@ class Code39(Barcode):
 class PZN7(Code39):
     """Initializes new German number for pharmaceutical products.
 
-    :parameters:
-        pzn : String
+        :param pzn: String
             Code to render.
-        writer : barcode.writer Instance
+        :param writer: barcode.writer Instance
             The writer to render the barcode (default: SVGWriter).
     """
 
@@ -122,10 +121,9 @@ class Code128(Barcode):
     """Initializes a new Code128 instance. The checksum is added automatically
     when building the bars.
 
-    :parameters:
-        code : String
+        :param code: String
             Code 128 string without checksum (added automatically).
-        writer : barcode.writer Instance
+        :param writer: barcode.writer Instance
             The writer to render the barcode (default: SVGWriter).
     """
 
@@ -276,14 +274,14 @@ class MSI(Barcode):
     when building the bars.
 
     :parameters:
-        code : int or bytes
+        :param code: int or bytes
             Code MSI int without checksum (added automatically).
             Code MSI bytes without checksum. requires byteorder (WARNING: non-standard use)
-        writer : barcode.writer Instance
+        :param writer: barcode.writer Instance
             The writer to render the barcode (default: SVGWriter).
-        byteorder : string
+        :param byteorder: string
             'big' or 'little' ; to convert bytes to int
-        encoding : string
+        :param encoding: string
             if set, convert bytes to string and use this as a label. defaults to utf-8
             if unset, use integer value as label
 
