@@ -298,9 +298,9 @@ class MSI(Barcode):
         self,
         code: Tuple[int, bytes],
         writer=None,
-        byteorder: Tuple[None, str] = None,
-        encoding: Tuple[str, None] = "utf-8",
-        label: Tuple[None, str] = None,
+        byteorder = None,
+        encoding = "utf-8",
+        label = None,
     ):
         self.writer = writer or self.default_writer()
         self._buffer = ""
