@@ -276,16 +276,16 @@ class MSI(Barcode):
     when building the bars.
 
     :parameters:
-        code : int or bytes or string
+        code : int or bytes
             Code MSI int without checksum (added automatically).
-            Code MSI bytes without checksum. requires byteorder for int conversion
-            Code MSI string without checksum. requires encoding and byteorder for int conversion
+            Code MSI bytes without checksum. requires byteorder (WARNING: non-standard use)
         writer : barcode.writer Instance
             The writer to render the barcode (default: SVGWriter).
         byteorder : string
             'big' or 'little' ; to convert bytes to int
         encoding : string
             if set, convert bytes to string and use this as a label. defaults to utf-8
+            if unset, use integer value as label
 
     limitations:
         - only one check digit (Luhn Mod10)
@@ -294,7 +294,7 @@ class MSI(Barcode):
 
     name = "MSI/Modified Plessey"
 
-    def __init__(self, code, writer=None, byteorder=None, encoding=None):
+    def __init__(self, code:(int,bytes), writer=None, byteorder:str=None, encoding:str='utf-8', label:str=None ):
         self.writer = writer or self.default_writer()
         self._buffer = ""
 
@@ -303,12 +303,9 @@ class MSI(Barcode):
         elif type(code) is bytes:
             self.code = str(int.from_bytes(code, byteorder))
             if encoding is not None:
-                self.label = code.decode(encoding)
+                self.label = code.decode(encoding) if label is None else label
             else:
-                self.label = self.code
-        elif type(code) is str:
-            self.code = str(int.from_bytes(bytes(code, encoding), byteorder))
-            self.label = code
+                self.label = self.code if label is None else label
 
     def __str__(self):
         return self.label
