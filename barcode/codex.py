@@ -272,7 +272,7 @@ class Gs1_128(Code128):
 
 
 class MSI(Barcode):
-    """Initializes a new MSI (Modified Plessy) instance. The checksum is added automatically
+    """Initializes a new MSI (Modified Plessey) instance. The checksum is added automatically
     when building the bars.
 
     :parameters:
@@ -286,8 +286,12 @@ class MSI(Barcode):
             'big' or 'little' ; to convert bytes to int
         encoding : string
             if set, convert bytes to string and use this as a label. defaults to utf-8
+
+    limitations:
+        - only one check digit (Luhn Mod10)
+        - only standard prefix/suffix
     """
-    name = "MSI/Modified Plessy"
+    name = "MSI/Modified Plessey"
 
     def __init__(self, code, writer=None, byteorder = 'big', encoding = 'utf-8' ):
         self.writer = writer or self.default_writer()
@@ -316,6 +320,9 @@ class MSI(Barcode):
         return self.label
 
     def _build(self):
+        """
+        check digit is computed with https://pypi.org/project/luhn/
+        """
         from luhn import append as luhn_check_append
 
         bcd = ''.join([f"{bin(int(n))[2:]:0>4}" for n in luhn_check_append( self.code )])

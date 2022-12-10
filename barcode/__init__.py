@@ -1,12 +1,10 @@
-"""This package provides a simple way to create standard barcodes.
-It needs no external packages to be installed, the barcodes are
+"""This package provides a simple way to create standard barcodes.  It needs no
+external packages to be installed (exception: 'luhn' for MSI), the barcodes are
 created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
-import os
-from typing import BinaryIO
-from typing import Dict
-from typing import Union
+import os from
+typing import BinaryIO from typing import Dict from typing import Union
 
 from barcode.codabar import CODABAR
 from barcode.codex import PZN
