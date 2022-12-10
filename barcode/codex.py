@@ -294,7 +294,7 @@ class MSI(Barcode):
 
     name = "MSI/Modified Plessey"
 
-    def __init__(self, code, writer=None, byteorder="big", encoding="utf-8"):
+    def __init__(self, code, writer=None, byteorder=None, encoding=None ):
         self.writer = writer or self.default_writer()
         self._buffer = ""
 

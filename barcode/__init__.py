@@ -4,8 +4,9 @@ created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
 import os
-
-typing import BinaryIO from typing import Dict from typing import Union
+from typing import BinaryIO
+from typing import Dict
+from typing import Union
 
 from barcode.codabar import CODABAR
 from barcode.codex import MSI
