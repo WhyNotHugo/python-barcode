@@ -2,8 +2,6 @@
 
 :Provided barcodes: Code 39, Code 128, PZN, MSI
 """
-from typing import Tuple
-
 from barcode.base import Barcode
 from barcode.charsets import code39
 from barcode.charsets import code128
