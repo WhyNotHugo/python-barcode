@@ -294,7 +294,7 @@ class MSI(Barcode):
 
     def __init__(
         self,
-        code: [int, bytes],
+        code: Tuple(int, bytes),
         writer=None,
         byteorder: str = None,
         encoding: str = "utf-8",
