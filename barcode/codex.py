@@ -127,7 +127,7 @@ class Code128(Barcode):
             The writer to render the barcode (default: SVGWriter).
     """
 
-    ame = "Code 128"
+    name = "Code 128"
 
     def __init__(self, code, writer=None):
         self.code = code
