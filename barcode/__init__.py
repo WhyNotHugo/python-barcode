@@ -3,15 +3,16 @@ external packages to be installed (exception: 'luhn' for MSI), the barcodes are
 created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
-import os from
+import os
+
 typing import BinaryIO from typing import Dict from typing import Union
 
 from barcode.codabar import CODABAR
+from barcode.codex import MSI
 from barcode.codex import PZN
 from barcode.codex import Code39
 from barcode.codex import Code128
 from barcode.codex import Gs1_128
-from barcode.codex import MSI
 from barcode.ean import EAN8
 from barcode.ean import EAN8_GUARD
 from barcode.ean import EAN13

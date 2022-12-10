@@ -291,22 +291,23 @@ class MSI(Barcode):
         - only one check digit (Luhn Mod10)
         - only standard prefix/suffix
     """
+
     name = "MSI/Modified Plessey"
 
-    def __init__(self, code, writer=None, byteorder = 'big', encoding = 'utf-8' ):
+    def __init__(self, code, writer=None, byteorder="big", encoding="utf-8"):
         self.writer = writer or self.default_writer()
         self._buffer = ""
 
         if type(code) is int:
             self.code = str(code)
         elif type(code) is bytes:
-            self.code = str( int.from_bytes( code, byteorder ) )
+            self.code = str(int.from_bytes(code, byteorder))
             if encoding is not None:
                 self.label = code.decode(encoding)
             else:
                 self.label = self.code
         elif type(code) is str:
-            self.code = str( int.from_bytes( bytes(code, encoding), byteorder ) )
+            self.code = str(int.from_bytes(bytes(code, encoding), byteorder))
             self.label = code
 
     def __str__(self):
@@ -325,13 +326,13 @@ class MSI(Barcode):
         """
         from luhn import append as luhn_check_append
 
-        bcd = ''.join([f"{bin(int(n))[2:]:0>4}" for n in luhn_check_append( self.code )])
+        bcd = "".join([f"{bin(int(n))[2:]:0>4}" for n in luhn_check_append(self.code)])
 
         conv = {
-                '0': '100',
-                '1': '110',
-            }
-        return ['110' + ''.join([conv[i] for i in bcd]) + '1001']
+            "0": "100",
+            "1": "110",
+        }
+        return ["110" + "".join([conv[i] for i in bcd]) + "1001"]
 
     def build(self):
         return self.encoded
