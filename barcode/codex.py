@@ -296,9 +296,9 @@ class MSI(Barcode):
         self,
         code: [int, bytes],
         writer=None,
-        byteorder: [NoneType, str] = None,
-        encoding: [NoneType, str] = "utf-8",
-        label: [NoneType, str] = None,
+        byteorder: str = None,
+        encoding: str = "utf-8",
+        label: str = None,
     ):
         self.writer = writer or self.default_writer()
         self._buffer = ""
