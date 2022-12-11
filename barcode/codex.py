@@ -284,7 +284,8 @@ class MSI(Barcode):
         :param encoding: string
             if set, convert bytes to string and use this as a label. defaults to utf-8
             if unset, use integer value as label
-            Note: label can also be set when calling save() with param 'text'
+            Note: for convenience ; label can also be set when calling save() with param
+            'text'
 
     limitations:
         - only one check digit (Luhn Mod10)
@@ -309,7 +310,7 @@ class MSI(Barcode):
         elif type(code) is bytes:
             self.code = str(int.from_bytes(code, byteorder))
             if encoding is not None:
-                self.label = code.decode(encoding) if label is None else label
+                self.label = code.decode(encoding)
             else:
                 self.label = self.code if label is None else label
 
