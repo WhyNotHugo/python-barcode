@@ -306,15 +306,11 @@ class MSI(Barcode):
         if type(code) is int:
             self.code = str(code)
         elif type(code) is bytes:
-            try:
-                self.code = str(int.from_bytes(code, byteorder))
-            except TypeError:
-                raise
+            self.code = str(int.from_bytes(code, byteorder))
+            if encoding is not None:
+                self.label = code.decode(encoding) if label is None else label
             else:
-                if encoding is not None:
-                    self.label = code.decode(encoding) if label is None else label
-                else:
-                    self.label = self.code if label is None else label
+                self.label = self.code if label is None else label
 
     def __str__(self):
         return self.label
