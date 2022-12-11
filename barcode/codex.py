@@ -305,6 +305,7 @@ class MSI(Barcode):
 
         if type(code) is int:
             self.code = str(code)
+            self.label = label if label is not None else self.code
         elif type(code) is bytes:
             self.code = str(int.from_bytes(code, byteorder))
             if encoding is not None:
