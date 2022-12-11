@@ -284,10 +284,12 @@ class MSI(Barcode):
         :param encoding: string
             if set, convert bytes to string and use this as a label. defaults to utf-8
             if unset, use integer value as label
+            Note: label can also be set when calling save() with param 'text'
 
     limitations:
         - only one check digit (Luhn Mod10)
         - only standard prefix/suffix
+
     """
 
     name = "MSI/Modified Plessey"
@@ -298,14 +300,12 @@ class MSI(Barcode):
         writer=None,
         byteorder=None,
         encoding="utf-8",
-        label=None,
     ):
         self.writer = writer or self.default_writer()
         self._buffer = ""
 
         if type(code) is int:
-            self.code = str(code)
-            self.label = label if label is not None else self.code
+            self.label = self.code = str(code)
         elif type(code) is bytes:
             self.code = str(int.from_bytes(code, byteorder))
             if encoding is not None:
