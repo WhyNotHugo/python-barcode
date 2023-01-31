@@ -7,3 +7,22 @@ version_scheme = "post-release"
 
 [tool.black]
 target-version = ['py37']
+
+[tool.ruff]
+select = [
+    "E",
+    "F",
+    "W",
+    "B0",
+    "I",
+    "UP",
+    # "N",
+    "C4",
+    "PT",
+    # "SIM",
+    "TID",
+]
+target-version = "py37"
+
+[tool.ruff.isort]
+force-single-line = true
