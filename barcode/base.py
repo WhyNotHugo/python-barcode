@@ -59,10 +59,7 @@ class Barcode:
         :returns: The full filename with extension.
         :rtype: String
         """
-        if text:
-            output = self.render(options, text)
-        else:
-            output = self.render(options)
+        output = self.render(options, text) if text else self.render(options)
 
         _filename = self.writer.save(filename, output)
         return _filename

@@ -348,10 +348,7 @@ class SVGWriter(BaseWriter):
     def _create_text(self, xpos, ypos):
         # check option to override self.text with self.human (barcode as
         # human readable data, can be used to print own formats)
-        if self.human != "":
-            barcodetext = self.human
-        else:
-            barcodetext = self.text
+        barcodetext = self.human if self.human != "" else self.text
         for subtext in barcodetext.split("\n"):
             element = self._document.createElement("text")
             attributes = {

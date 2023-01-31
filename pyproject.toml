@@ -19,7 +19,7 @@ select = [
     # "N",
     "C4",
     "PT",
-    # "SIM",
+    "SIM",
     "TID",
 ]
 target-version = "py37"

@@ -183,15 +183,13 @@ class Code128(Barcode):
         elif self._charset == "B":
             if look_next():
                 codes = self._new_charset("C")
-            elif char not in code128.B:
-                if char in code128.A:
-                    codes = self._new_charset("A")
+            elif char not in code128.B and char in code128.A:
+                codes = self._new_charset("A")
         elif self._charset == "A":
             if look_next():
                 codes = self._new_charset("C")
-            elif char not in code128.A:
-                if char in code128.B:
-                    codes = self._new_charset("B")
+            elif char not in code128.A and char in code128.B:
+                codes = self._new_charset("B")
         return codes
 
     def _convert(self, char):
