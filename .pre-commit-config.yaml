@@ -7,7 +7,7 @@ repos:
       - id: end-of-file-fixer
       - id: debug-statements
   - repo: https://github.com/psf/black
-    rev: "22.10.0"
+    rev: "23.1.0"
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -15,6 +15,6 @@ repos:
     hooks:
     -   id: mypy
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: 'v0.0.238'
+    rev: 'v0.0.243'
     hooks:
       - id: ruff
