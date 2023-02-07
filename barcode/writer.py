@@ -261,11 +261,7 @@ class BaseWriter:
             if not text["start"]:
                 # If we don't have any start value, print the entire ean
                 ypos += self.text_distance
-                if self.center_text:
-                    # better center position for text
-                    xpos = bxs + ((bxe - bxs) / 2.0)
-                else:
-                    xpos = bxs
+                xpos = bxs + (bxe - bxs) / 2.0 if self.center_text else bxs
                 self._callbacks["paint_text"](xpos, ypos)
             else:
                 # Else, divide the ean into blocks and print each block
