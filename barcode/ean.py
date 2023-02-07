@@ -127,7 +127,6 @@ class EuropeanArticleNumber13(Barcode):
 
 
 class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
-
     name = "EAN-13 with guards"
 
     def __init__(self, *args, guardbar=True, **kwargs):
@@ -192,7 +191,6 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
 
 
 class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
-
     name = "EAN-8 with guards"
 
     def __init__(self, *args, guardbar=True, **kwargs):

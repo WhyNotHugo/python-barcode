@@ -275,7 +275,7 @@ class BaseWriter:
                 # Calculates the position of the text by getting the difference
                 # between a guard end and the next start
                 text["start"].pop(0)
-                for (s, e) in zip(text["start"], text["end"]):
+                for s, e in zip(text["start"], text["end"]):
                     text["xpos"].append(e + (s - e) / 2)
 
                 # The last text block is always put after the last guard end
@@ -287,7 +287,7 @@ class BaseWriter:
                 ypos += pt2mm(self.font_size)
 
                 blocks = self.text
-                for (text_, xpos) in zip(blocks, text["xpos"]):
+                for text_, xpos in zip(blocks, text["xpos"]):
                     self.text = text_
                     self._callbacks["paint_text"](xpos, ypos)
 

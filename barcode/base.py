@@ -5,7 +5,6 @@ from barcode.writer import SVGWriter
 
 
 class Barcode:
-
     name = ""
 
     digits = 0
