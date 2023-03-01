@@ -43,7 +43,7 @@ Generating SVG files
 
     # Write to a file-like object:
     rv = BytesIO()
-    EAN13(str("100000902922"), writer=SVGWriter()).write(rv)
+    EAN13("100000902922", writer=SVGWriter()).write(rv)
 
     # Or to an actual file:
     with open("somefile.svg", "wb") as f:
