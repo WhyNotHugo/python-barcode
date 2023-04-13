@@ -25,12 +25,8 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Install test dependency
-        run: pip install tox codecov
+        run: pip install tox
       - name: Run tests
         run: tox
         env:
           TOXENV: ${{ matrix.variant }}
-      - name: Report coverage
-        run: codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
