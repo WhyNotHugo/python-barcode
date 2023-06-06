@@ -32,6 +32,7 @@ be set).
 
 :font_size:
     Font size of the text under the barcode in pt as *integer*.
+    Font size zero suppresses text.
     Defaults to **10**.
 
 :text_distance:
