@@ -41,7 +41,7 @@ class EuropeanArticleNumber13(Barcode):
 
     digits = 12
 
-    def __init__(self, ean, writer=None, no_checksum=False, guardbar=False):
+    def __init__(self, ean, writer=None, no_checksum=False, guardbar=False) -> None:
         ean = ean[: self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError("EAN code can only contain numbers.")
@@ -72,7 +72,7 @@ class EuropeanArticleNumber13(Barcode):
             self.MIDDLE = _ean.MIDDLE
         self.writer = writer or self.default_writer()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.ean
 
     def get_fullcode(self):
@@ -129,8 +129,8 @@ class EuropeanArticleNumber13(Barcode):
 class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
     name = "EAN-13 with guards"
 
-    def __init__(self, *args, guardbar=True, **kwargs):
-        super().__init__(*args, guardbar=guardbar, **kwargs)
+    def __init__(self, ean, writer=None, no_checksum=False, guardbar=True) -> None:
+        super().__init__(ean, writer, no_checksum, guardbar)
 
 
 class JapanArticleNumber(EuropeanArticleNumber13):
@@ -147,7 +147,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
     valid_country_codes = list(range(450, 460)) + list(range(490, 500))
 
-    def __init__(self, jan, *args, **kwargs):
+    def __init__(self, jan, *args, **kwargs) -> None:
         if int(jan[:3]) not in self.valid_country_codes:
             raise WrongCountryCodeError(
                 "Country code isn't between 450-460 or 490-500."
@@ -193,8 +193,8 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
 class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
     name = "EAN-8 with guards"
 
-    def __init__(self, *args, guardbar=True, **kwargs):
-        super().__init__(*args, guardbar=guardbar, **kwargs)
+    def __init__(self, ean, writer=None, no_checksum=False, guardbar=True) -> None:
+        super().__init__(ean, writer, no_checksum, guardbar)
 
 
 class EuropeanArticleNumber14(EuropeanArticleNumber13):

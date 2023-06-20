@@ -80,8 +80,12 @@ class BaseWriter:
     """
 
     def __init__(
-        self, initialize=None, paint_module=None, paint_text=None, finish=None
-    ):
+        self,
+        initialize=None,
+        paint_module=None,
+        paint_text=None,
+        finish=None,
+    ) -> None:
         self._callbacks = {
             "initialize": initialize,
             "paint_module": paint_module,
@@ -291,7 +295,7 @@ class BaseWriter:
 
 
 class SVGWriter(BaseWriter):
-    def __init__(self):
+    def __init__(self) -> None:
         BaseWriter.__init__(
             self, self._init, self._create_module, self._create_text, self._finish
         )
@@ -398,7 +402,7 @@ else:
         mode: str
         dpi: int
 
-        def __init__(self, format="PNG", mode="RGB"):
+        def __init__(self, format="PNG", mode="RGB") -> None:
             """Initialise a new write instance.
 
             :params format: The file format for the generated image. This parameter can

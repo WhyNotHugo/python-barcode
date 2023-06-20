@@ -29,7 +29,7 @@ class ITF(Barcode):
 
     name = "ITF"
 
-    def __init__(self, code, writer=None, narrow=2, wide=5):
+    def __init__(self, code, writer=None, narrow=2, wide=5) -> None:
         if not code.isdigit():
             raise IllegalCharacterError("ITF code can only contain numbers.")
         # Length must be even, prepend 0 if necessary
@@ -40,7 +40,7 @@ class ITF(Barcode):
         self.narrow = narrow
         self.wide = wide
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.code
 
     def get_fullcode(self):

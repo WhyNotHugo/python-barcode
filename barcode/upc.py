@@ -22,7 +22,7 @@ class UniversalProductCodeA(Barcode):
 
     digits = 11
 
-    def __init__(self, upc, writer=None, make_ean=False):
+    def __init__(self, upc, writer=None, make_ean=False) -> None:
         """Initializes new UPC-A barcode.
 
         :param str upc: The upc number as string.
@@ -44,7 +44,7 @@ class UniversalProductCodeA(Barcode):
         self.upc = f"{upc}{self.calculate_checksum()}"
         self.writer = writer or self.default_writer()
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.ean:
             return "0" + self.upc
 

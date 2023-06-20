@@ -40,7 +40,7 @@ class InternationalStandardBookNumber13(EuropeanArticleNumber13):
 
     name = "ISBN-13"
 
-    def __init__(self, isbn, writer=None):
+    def __init__(self, isbn, writer=None) -> None:
         isbn = isbn.replace("-", "")
         self.isbn13 = isbn
         if isbn[:3] not in ("978", "979"):
@@ -65,7 +65,7 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
     digits = 9
 
-    def __init__(self, isbn, writer=None):
+    def __init__(self, isbn, writer=None) -> None:
         isbn = isbn.replace("-", "")
         isbn = isbn[: self.digits]
         super().__init__("978" + isbn, writer)
@@ -79,7 +79,7 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
         return tmp
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.isbn10
 
 
@@ -98,7 +98,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
     digits = 7
 
-    def __init__(self, issn, writer=None):
+    def __init__(self, issn, writer=None) -> None:
         issn = issn.replace("-", "")
         issn = issn[: self.digits]
         self.issn = issn
@@ -119,7 +119,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
     def make_ean(self):
         return f"977{self.issn[:7]}00{self._calculate_checksum()}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.issn
 
 

@@ -27,13 +27,13 @@ class CODABAR(Barcode):
 
     name = "Codabar (NW-7)"
 
-    def __init__(self, code, writer=None, narrow=2, wide=5):
+    def __init__(self, code, writer=None, narrow=2, wide=5) -> None:
         self.code = code
         self.writer = writer or self.default_writer()
         self.narrow = narrow
         self.wide = wide
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.code
 
     def get_fullcode(self):

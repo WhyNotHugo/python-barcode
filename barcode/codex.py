@@ -3,7 +3,7 @@
 :Provided barcodes: Code 39, Code 128, PZN
 """
 
-from typing import Tuple
+from typing import Collection
 
 from barcode.base import Barcode
 from barcode.charsets import code39
@@ -19,7 +19,7 @@ MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 2.54
 
 
-def check_code(code: str, name: str, allowed: Tuple[str, ...]) -> None:
+def check_code(code: str, name: str, allowed: Collection[str]) -> None:
     wrong = []
     for char in code:
         if char not in allowed:
@@ -37,7 +37,7 @@ class Code39(Barcode):
 
     name = "Code 39"
 
-    def __init__(self, code: str, writer=None, add_checksum: bool = True):
+    def __init__(self, code: str, writer=None, add_checksum: bool = True) -> None:
         r"""
         :param code: Code 39 string without \* and without checksum.
         :param writer: A ``barcode.writer`` instance used to render the barcode
@@ -92,7 +92,7 @@ class PZN7(Code39):
 
     digits = 6
 
-    def __init__(self, pzn, writer=None):
+    def __init__(self, pzn, writer=None) -> None:
         pzn = pzn[: self.digits]
         if not pzn.isdigit():
             raise IllegalCharacterError("PZN can only contain numbers.")
@@ -135,14 +135,14 @@ class Code128(Barcode):
 
     name = "Code 128"
 
-    def __init__(self, code, writer=None):
+    def __init__(self, code, writer=None) -> None:
         self.code = code
         self.writer = writer or self.default_writer()
         self._charset = "B"
         self._buffer = ""
         check_code(self.code, self.name, code128.ALL)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.code
 
     @property
@@ -268,7 +268,7 @@ class Gs1_128(Code128):  # noqa: N801
 
     FNC1_CHAR = "\xf1"
 
-    def __init__(self, code, writer=None):
+    def __init__(self, code, writer=None) -> None:
         code = self.FNC1_CHAR + code
         super().__init__(code, writer)
 
