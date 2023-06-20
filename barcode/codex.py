@@ -2,6 +2,9 @@
 
 :Provided barcodes: Code 39, Code 128, PZN
 """
+
+from typing import Tuple
+
 from barcode.base import Barcode
 from barcode.charsets import code39
 from barcode.charsets import code128
@@ -16,7 +19,7 @@ MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 2.54
 
 
-def check_code(code, name, allowed):
+def check_code(code: str, name: str, allowed: Tuple[str, ...]) -> None:
     wrong = []
     for char in code:
         if char not in allowed:
@@ -48,7 +51,7 @@ class Code39(Barcode):
         self.writer = writer or self.default_writer()
         check_code(self.code, self.name, code39.REF)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.code
 
     def get_fullcode(self) -> str:

@@ -1,6 +1,10 @@
 """barcode.base
 
 """
+from typing import List
+from typing import Optional
+
+from barcode.writer import BaseWriter
 from barcode.writer import SVGWriter
 
 
@@ -23,7 +27,9 @@ class Barcode:
         "text": "",
     }
 
-    def to_ascii(self):
+    writer: BaseWriter
+
+    def to_ascii(self) -> str:
         code = self.build()
         for i, line in enumerate(code):
             code[i] = line.replace("1", "X").replace("0", " ")
@@ -32,7 +38,7 @@ class Barcode:
     def __repr__(self):
         return f"<{self.__class__.__name__}({self.get_fullcode()!r})>"
 
-    def build(self):
+    def build(self) -> List[str]:
         raise NotImplementedError
 
     def get_fullcode(self):
@@ -43,20 +49,16 @@ class Barcode:
         """
         raise NotImplementedError
 
-    def save(self, filename, options=None, text=None):
+    def save(
+        self, filename: str, options: Optional[dict] = None, text: Optional[str] = None
+    ) -> str:
         """Renders the barcode and saves it in `filename`.
 
-        :parameters:
-            filename : String
-                Filename to save the barcode in (without filename
-                extension).
-            options : Dict
-                The same as in `self.render`.
-            text : str
-                Text to render under the barcode.
+        :param filename: Filename to save the barcode in (without filename extension).
+        :param options: The same as in `self.render`.
+        :param text: Text to render under the barcode.
 
         :returns: The full filename with extension.
-        :rtype: String
         """
         output = self.render(options, text) if text else self.render(options)
 
@@ -77,14 +79,11 @@ class Barcode:
         output = self.render(options, text)
         self.writer.write(output, fp)
 
-    def render(self, writer_options=None, text=None):
+    def render(self, writer_options: Optional[dict] = None, text: Optional[str] = None):
         """Renders the barcode using `self.writer`.
 
-        :parameters:
-            writer_options : Dict
-                Options for `self.writer`, see writer docs for details.
-            text : str
-                Text to render under the barcode.
+        :param writer_options: Options for `self.writer`, see writer docs for details.
+        :param text: Text to render under the barcode.
 
         :returns: Output of the writers render method.
         """

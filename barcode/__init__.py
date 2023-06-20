@@ -6,6 +6,7 @@ rendered as images (all formats supported by Pillow).
 import os
 from typing import BinaryIO
 from typing import Dict
+from typing import Optional
 from typing import Union
 
 from barcode.codabar import CODABAR
@@ -56,16 +57,21 @@ PROVIDED_BARCODES = list(__BARCODE_MAP)
 PROVIDED_BARCODES.sort()
 
 
-def get(name, code=None, writer=None, options=None):
+def get(
+    name: str,
+    code: Optional[str] = None,
+    writer=None,
+    options: Optional[dict] = None,
+):
     """Helper method for getting a generator or even a generated code.
 
-    :param str name: The name of the type of barcode desired.
-    :param str code: The actual information to encode. If this parameter is
+    :param name: The name of the type of barcode desired.
+    :param code: The actual information to encode. If this parameter is
         provided, a generated barcode is returned. Otherwise, the barcode class
         is returned.
     :param Writer writer: An alternative writer to use when generating the
         barcode.
-    :param dict options: Additional options to be passed on to the barcode when
+    :param options: Additional options to be passed on to the barcode when
         generating.
     """
     options = options or {}
