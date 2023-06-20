@@ -393,7 +393,7 @@ if Image is None:
     ImageWriter = None
 else:
 
-    class ImageWriter(BaseWriter):  # type: ignore
+    class ImageWriter(BaseWriter):  # type: ignore[no-redef]
         format: str
         mode: str
         dpi: int
