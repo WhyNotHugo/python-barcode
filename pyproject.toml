@@ -16,11 +16,22 @@ select = [
     "I",
     "N",
     "UP",
+    "YTT",
+    "BLE",
     "B",
     "C4",
+    "ISC",
+    "ICN",
+    "G",
+    "PIE",
+    "PYI",
     "PT",
+    "Q",
+    "RSE",
     "SIM",
     "TID",
+    "TCH",
+    "INT",
 ]
 target-version = "py37"
 
