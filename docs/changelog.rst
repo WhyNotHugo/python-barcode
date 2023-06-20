@@ -9,7 +9,7 @@ v0.15.1
 v0.15.0
 ~~~~~~~~~~
 
-* **Breaking** Dropped support for Python 3.6.
+* **Breaking** Dropped support for Python 3.6 and 3.7.
 * Added support for Python 3.11.
 * Fixed compatibility with Pillow 10.0.
 * Updated ISBN to support newer allocated ranges.

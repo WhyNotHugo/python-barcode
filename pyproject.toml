@@ -6,7 +6,7 @@ write_to = "barcode/version.py"
 version_scheme = "post-release"
 
 [tool.black]
-target-version = ['py37']
+target-version = ['py38']
 
 [tool.ruff]
 select = [
@@ -39,7 +39,7 @@ select = [
     "PLE",
     "RUF",
 ]
-target-version = "py37"
+target-version = "py38"
 
 [tool.ruff.isort]
 force-single-line = true
