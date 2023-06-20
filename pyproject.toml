@@ -23,6 +23,7 @@ select = [
     "ISC",
     "ICN",
     "G",
+    "INP",
     "PIE",
     "PYI",
     "PT",
