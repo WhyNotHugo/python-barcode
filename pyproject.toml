@@ -28,6 +28,7 @@ select = [
     "PT",
     "Q",
     "RSE",
+    "RET",
     "SIM",
     "TID",
     "TCH",

@@ -47,14 +47,14 @@ class UniversalProductCodeA(Barcode):
     def __str__(self):
         if self.ean:
             return "0" + self.upc
-        else:
-            return self.upc
+
+        return self.upc
 
     def get_fullcode(self):
         if self.ean:
             return "0" + self.upc
-        else:
-            return self.upc
+
+        return self.upc
 
     def calculate_checksum(self):
         """Calculates the checksum for UPCA/UPC codes
@@ -72,8 +72,8 @@ class UniversalProductCodeA(Barcode):
         check = (evensum + oddsum * 3) % 10
         if check == 0:
             return 0
-        else:
-            return 10 - check
+
+        return 10 - check
 
     def build(self):
         """Builds the barcode pattern from 'self.upc'

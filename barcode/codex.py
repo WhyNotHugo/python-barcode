@@ -60,6 +60,7 @@ class Code39(Barcode):
         for k, v in code39.MAP.items():
             if check == v[0]:
                 return k
+        return None
 
     def build(self):
         chars = [code39.EDGE]
@@ -108,8 +109,8 @@ class PZN7(Code39):
         checksum = sum_ % 11
         if checksum == 10:
             raise BarcodeError("Checksum can not be 10 for PZN.")
-        else:
-            return checksum
+
+        return checksum
 
 
 class PZN8(PZN7):
@@ -195,17 +196,20 @@ class Code128(Barcode):
     def _convert(self, char):
         if self._charset == "A":
             return code128.A[char]
-        elif self._charset == "B":
+        if self._charset == "B":
             return code128.B[char]
-        elif self._charset == "C":
+        if self._charset == "C":
             if char in code128.C:
                 return code128.C[char]
-            elif char.isdigit():
+            if char.isdigit():
                 self._buffer += char
                 if len(self._buffer) == 2:
                     value = int(self._buffer)
                     self._buffer = ""
                     return value
+                return None
+            return None
+        return None
 
     def _try_to_optimize(self, encoded):
         if encoded[1] in code128.TO:

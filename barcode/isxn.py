@@ -76,8 +76,8 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         tmp = sum(x * int(y) for x, y in enumerate(self.isbn10[:9], start=1)) % 11
         if tmp == 10:
             return "X"
-        else:
-            return tmp
+
+        return tmp
 
     def __str__(self):
         return self.isbn10
@@ -113,8 +113,8 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
         )
         if tmp == 10:
             return "X"
-        else:
-            return tmp
+
+        return tmp
 
     def make_ean(self):
         return f"977{self.issn[:7]}00{self._calculate_checksum()}"

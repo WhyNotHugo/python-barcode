@@ -60,8 +60,7 @@ class Barcode:
         """
         output = self.render(options, text) if text else self.render(options)
 
-        _filename = self.writer.save(filename, output)
-        return _filename
+        return self.writer.save(filename, output)
 
     def write(self, fp, options=None, text=None):
         """Renders the barcode and writes it to the file like object
@@ -98,5 +97,4 @@ class Barcode:
                 options["text"] = self.get_fullcode()
         self.writer.set_options(options)
         code = self.build()
-        raw = self.writer.render(code)
-        return raw
+        return self.writer.render(code)

@@ -75,8 +75,8 @@ def get(name, code=None, writer=None, options=None):
         raise BarcodeNotFoundError(f"The barcode {name!r} is not known.") from e
     if code is not None:
         return barcode(code, writer, **options)
-    else:
-        return barcode
+
+    return barcode
 
 
 def get_class(name):
@@ -111,10 +111,11 @@ def generate(
     if isinstance(output, str):
         fullname = barcode.save(output, writer_options, text)
         return fullname
-    elif output:
+    if output:
         barcode.write(output, writer_options, text)
-    else:
-        raise TypeError("'output' cannot be None")
+        return None
+
+    raise TypeError("'output' cannot be None")
 
 
 get_barcode = get

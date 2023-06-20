@@ -364,10 +364,10 @@ class SVGWriter(BaseWriter):
     def _finish(self):
         if self.compress:
             return self._document.toxml(encoding="UTF-8")
-        else:
-            return self._document.toprettyxml(
-                indent=4 * " ", newl=os.linesep, encoding="UTF-8"
-            )
+
+        return self._document.toprettyxml(
+            indent=4 * " ", newl=os.linesep, encoding="UTF-8"
+        )
 
     def save(self, filename, output):
         if self.compress:
