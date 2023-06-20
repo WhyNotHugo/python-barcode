@@ -39,4 +39,4 @@ def test_generate_with_bytesio():
     bio = BytesIO()
     barcode.generate("ean13", "123455559121112", output=bio)
     # XXX: File is not 100% deterministic; needs to be addressed at some point.
-    # assert len(bio.getvalue()) == 6127
+    # assert len(bio.getvalue()) == 6127  # noqa: ERA001
