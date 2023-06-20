@@ -130,7 +130,7 @@ class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
     name = "EAN-13 with guards"
 
     def __init__(self, *args, guardbar=True, **kwargs):
-        return super().__init__(*args, guardbar=guardbar, **kwargs)
+        super().__init__(*args, guardbar=guardbar, **kwargs)
 
 
 class JapanArticleNumber(EuropeanArticleNumber13):
@@ -194,7 +194,7 @@ class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
     name = "EAN-8 with guards"
 
     def __init__(self, *args, guardbar=True, **kwargs):
-        return super().__init__(*args, guardbar=guardbar, **kwargs)
+        super().__init__(*args, guardbar=guardbar, **kwargs)
 
 
 class EuropeanArticleNumber14(EuropeanArticleNumber13):
