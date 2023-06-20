@@ -46,19 +46,21 @@ class CODABAR(Barcode):
             )  # Start with [A-D], followed by a narrow space
 
         except KeyError:
-            raise BarcodeError("Codabar should start with either A,B,C or D")
+            raise BarcodeError("Codabar should start with either A,B,C or D") from None
 
         try:
             data += "n".join(
                 [codabar.CODES[c] for c in self.code[1:-1]]
             )  # separated by a narrow space
         except KeyError:
-            raise IllegalCharacterError("Codabar can only contain numerics or $:/.+-")
+            raise IllegalCharacterError(
+                "Codabar can only contain numerics or $:/.+-"
+            ) from None
 
         try:
             data += "n" + codabar.STARTSTOP[self.code[-1]]  # End with [A-D]
         except KeyError:
-            raise BarcodeError("Codabar should end with either A,B,C or D")
+            raise BarcodeError("Codabar should end with either A,B,C or D") from None
 
         raw = ""
         for e in data:
