@@ -4,7 +4,7 @@ Changelog
 unreleased
 ~~~~~~~~~~
 
-* **Breaking** Dropped support for Python 3.6.
+* **Breaking** Dropped support for Python 3.6 and 3.7.
 * Added support for Python 3.11.
 
 v0.14.0
