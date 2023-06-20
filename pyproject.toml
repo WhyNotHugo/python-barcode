@@ -10,13 +10,13 @@ target-version = ['py37']
 
 [tool.ruff]
 select = [
-    "E",
     "F",
+    "E",
     "W",
-    "B0",
     "I",
-    "UP",
     "N",
+    "UP",
+    "B0",
     "C4",
     "PT",
     "SIM",
