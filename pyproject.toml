@@ -34,6 +34,7 @@ select = [
     "TCH",
     "INT",
     "ERA",
+    "RUF",
 ]
 target-version = "py37"
 

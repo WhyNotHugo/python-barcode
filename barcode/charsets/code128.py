@@ -3,45 +3,40 @@ import string
 # Charsets for code 128
 
 _common = (
-    (
-        " ",
-        "!",
-        '"',
-        "#",
-        "$",
-        "%",
-        "&",
-        "'",
-        "(",
-        ")",
-        "*",
-        "+",
-        ",",
-        "-",
-        ".",
-        "/",
-    )
-    + tuple(string.digits)
-    + (
-        ":",
-        ";",
-        "<",
-        "=",
-        ">",
-        "?",
-        "@",
-    )
-    + tuple(string.ascii_uppercase)
-    + (
-        "[",
-        "\\",
-        "]",
-        "^",
-        "_",
-    )
+    " ",
+    "!",
+    '"',
+    "#",
+    "$",
+    "%",
+    "&",
+    "'",
+    "(",
+    ")",
+    "*",
+    "+",
+    ",",
+    "-",
+    ".",
+    "/",
+    *tuple(string.digits),
+    ":",
+    ";",
+    "<",
+    "=",
+    ">",
+    "?",
+    "@",
+    *tuple(string.ascii_uppercase),
+    "[",
+    "\\",
+    "]",
+    "^",
+    "_",
 )
 
-_charset_a = _common + (
+_charset_a = (
+    *_common,
     "\x00",
     "\x01",
     "\x02",
@@ -51,11 +46,11 @@ _charset_a = _common + (
     "\x06",
     "\x07",
     "\x08",
-    "\x09",
-    "\x0a",
+    "\t",
+    "\n",
     "\x0b",
     "\x0c",
-    "\x0d",
+    "\r",
     "\x0e",
     "\x0f",
     "\x10",
@@ -74,33 +69,31 @@ _charset_a = _common + (
     "\x1d",
     "\x1e",
     "\x1f",
-    "\xf3",
-    "\xf2",
+    "ó",
+    "ò",
     "SHIFT",
     "TO_C",
     "TO_B",
-    "\xf4",
-    "\xf1",
+    "ô",
+    "ñ",
 )
 
 _charset_b = (
-    _common
-    + ("`",)
-    + tuple(string.ascii_lowercase)
-    + (
-        "{",
-        "|",
-        "}",
-        "~",
-        "\x7f",
-        "\xf3",
-        "\xf2",
-        "SHIFT",
-        "TO_C",
-        "\xf4",
-        "TO_A",
-        "\xf1",
-    )
+    *_common,
+    "`",
+    *tuple(string.ascii_lowercase),
+    "{",
+    "|",
+    "}",
+    "~",
+    "\x7f",
+    "ó",
+    "ò",
+    "SHIFT",
+    "TO_C",
+    "ô",
+    "TO_A",
+    "ñ",
 )
 
 ALL = set(_common + _charset_a + _charset_b)
