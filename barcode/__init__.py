@@ -115,8 +115,7 @@ def generate(
     barcode = get(name, code, writer)
 
     if isinstance(output, str):
-        fullname = barcode.save(output, writer_options, text)
-        return fullname
+        return barcode.save(output, writer_options, text)
     if output:
         barcode.write(output, writer_options, text)
         return None
