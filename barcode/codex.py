@@ -237,8 +237,7 @@ class Code128(Barcode):
             encoded.extend(self._new_charset("B"))
             encoded.append(self._convert(self._buffer[0]))
             self._buffer = ""
-        encoded = self._try_to_optimize(encoded)
-        return encoded
+        return self._try_to_optimize(encoded)
 
     def build(self):
         encoded = self._build()
