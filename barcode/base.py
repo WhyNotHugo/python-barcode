@@ -1,6 +1,7 @@
 """barcode.base
 
 """
+from typing import ClassVar
 from typing import List
 from typing import Optional
 
@@ -15,7 +16,7 @@ class Barcode:
 
     default_writer = SVGWriter
 
-    default_writer_options = {
+    default_writer_options: ClassVar[dict] = {
         "module_width": 0.2,
         "module_height": 15.0,
         "quiet_zone": 6.5,
