@@ -1,11 +1,14 @@
 Changelog
 ---------
 
-unreleased
+v0.15.0
 ~~~~~~~~~~
 
 * **Breaking** Dropped support for Python 3.6.
 * Added support for Python 3.11.
+* Fixed compatibility with Pillow 10.0.
+* Updated ISBN to support newer allocated ranges.
+* Improved type hints.
 
 v0.14.0
 ~~~~~~~
