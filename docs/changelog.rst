@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v0.15.1
+~~~~~~~~~~
+
+* Add missing dependency to release script.
+
 v0.15.0
 ~~~~~~~~~~
 
