@@ -47,19 +47,14 @@ class EuropeanArticleNumber13(Barcode):
             raise IllegalCharacterError("EAN code can only contain numbers.")
         if len(ean) != self.digits:
             raise NumberOfDigitsError(
-                "EAN must have {} digits, not {}.".format(
-                    self.digits,
-                    len(ean),
-                )
+                f"EAN must have {self.digits} digits, not {len(ean)}."
             )
         self.ean = ean
         # If no checksum
         if no_checksum:
             # Add a thirteen char if given in parameter,
             # otherwise pad with zero
-            self.ean = "{}{}".format(
-                ean, ean[self.digits] if len(ean) > self.digits else 0
-            )
+            self.ean = f"{ean}{ean[self.digits] if len(ean) > self.digits else 0}"
         else:
             self.ean = f"{ean}{self.calculate_checksum()}"
 
