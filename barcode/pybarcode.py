@@ -26,16 +26,12 @@ def create_barcode(args, parser):
     args.type = args.type.upper()
     if args.type != "SVG" and args.type not in IMG_FORMATS:
         parser.error(
-            "Unknown type {type}. Try list action for available types.".format(
-                type=args.type
-            )
+            f"Unknown type {args.type}. Try list action for available types."
         )
     args.barcode = args.barcode.lower()
     if args.barcode not in barcode.PROVIDED_BARCODES:
         parser.error(
-            "Unknown barcode {bc}. Try list action for available barcodes.".format(
-                bc=args.barcode
-            )
+            f"Unknown barcode {args.barcode}. Try list action for available barcodes."
         )
     if args.type != "SVG":
         opts = {"format": args.type}

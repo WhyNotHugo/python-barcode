@@ -68,9 +68,7 @@ def test_generating_barcodes():
             options["center_text"] = True
         filename = bcode.save(os.path.join(TESTPATH, codename), options=options)
         print(
-            "Code: {}, Input: {}, Output: {}".format(
-                bcode.name, code, bcode.get_fullcode()
-            )
+            f"Code: {bcode.name}, Input: {code}, Output: {bcode.get_fullcode()}"
         )
         append(os.path.basename(filename), bcode.name)
         if ImageWriter is not None:
