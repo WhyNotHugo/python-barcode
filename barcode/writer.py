@@ -322,14 +322,15 @@ class SVGWriter(BaseWriter):
         attributes = {"id": "barcode_group"}
         _set_attributes(group, **attributes)
         self._group = self._root.appendChild(group)
-        background = self._document.createElement("rect")
-        attributes = {
-            "width": "100%",
-            "height": "100%",
-            "style": f"fill:{self.background}",
-        }
-        _set_attributes(background, **attributes)
-        self._group.appendChild(background)
+        if self.background and self.background != (255, 255, 255, 0):
+            background = self._document.createElement("rect")
+            attributes = {
+                "width": "100%",
+                "height": "100%",
+                "style": f"fill:{self.background}",
+            }
+            _set_attributes(background, **attributes)
+            self._group.appendChild(background)
 
     def _create_module(self, xpos, ypos, width, color):
         # Background rect has been provided already, so skipping "spaces"
