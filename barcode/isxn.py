@@ -40,8 +40,7 @@ class InternationalStandardBookNumber13(EuropeanArticleNumber13):
 
     name = "ISBN-13"
 
-    def __init__(self, isbn, writer=None, no_checksum=False, guardbar=False
-                 ) -> None:
+    def __init__(self, isbn, writer=None, no_checksum=False, guardbar=False) -> None:
         isbn = isbn.replace("-", "")
         self.isbn13 = isbn
         if isbn[:3] not in ("978", "979"):
