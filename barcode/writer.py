@@ -155,7 +155,7 @@ class BaseWriter:
         number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
             height += (
-                pt2mm(self.font_size) / 2 * number_of_text_lines + self.text_distance
+                pt2mm(self.font_size) * number_of_text_lines + self.text_distance
             )
             height += self.text_line_distance * (number_of_text_lines - 1)
         return width, height
