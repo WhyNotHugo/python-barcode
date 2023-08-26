@@ -293,7 +293,7 @@ class BaseWriter:
                 # The last text block is always put after the last guard end
                 text["xpos"].append(text["end"][-1] + 4 * self.module_width)
 
-                ypos += pt2mm(self.font_size)
+                ypos += pt2mm(self.font_size) + self.text_distance
 
                 # Split the ean into its blocks
                 blocks = self.text.split(" ")
