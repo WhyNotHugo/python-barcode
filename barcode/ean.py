@@ -84,8 +84,9 @@ class EuropeanArticleNumber13(Barcode):
 
         def sum_(x, y):
             return int(x) + int(y)
-        ean_without_checksum = self.ean[:self.digits]
-        
+
+        ean_without_checksum = self.ean[: self.digits]
+
         evensum = reduce(sum_, ean_without_checksum[-2::-2])
         oddsum = reduce(sum_, ean_without_checksum[-1::-2])
         return (10 - ((evensum + oddsum * 3) % 10)) % 10
