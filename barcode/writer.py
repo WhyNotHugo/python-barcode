@@ -322,7 +322,7 @@ class SVGWriter(BaseWriter):
         attributes = {"id": "barcode_group"}
         _set_attributes(group, **attributes)
         self._group = self._root.appendChild(group)
-        if self.background and self.background != (255, 255, 255, 0):
+        if self.background is not None:
             background = self._document.createElement("rect")
             attributes = {
                 "width": "100%",
