@@ -189,7 +189,7 @@ class BaseWriter:
         """
         line += " "
         c = 1
-        for i in range(0, len(line) - 1):
+        for i in range(len(line) - 1):
             if line[i] == line[i + 1]:
                 c += 1
             else:
