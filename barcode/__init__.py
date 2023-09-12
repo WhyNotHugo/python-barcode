@@ -1,5 +1,5 @@
-"""This package provides a simple way to create standard barcodes.
-It needs no external packages to be installed, the barcodes are
+"""This package provides a simple way to create standard barcodes.  It needs no
+external packages to be installed (exception: 'luhn' for MSI), the barcodes are
 created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
@@ -10,6 +10,7 @@ from typing import Optional
 from typing import Union
 
 from barcode.codabar import CODABAR
+from barcode.codex import MSI
 from barcode.codex import PZN
 from barcode.codex import Code39
 from barcode.codex import Code128
@@ -51,6 +52,7 @@ __BARCODE_MAP = {
     "gs1_128": Gs1_128,
     "codabar": CODABAR,
     "nw-7": CODABAR,
+    "msi": MSI,
 }
 
 PROVIDED_BARCODES = list(__BARCODE_MAP)
