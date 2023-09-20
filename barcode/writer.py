@@ -44,7 +44,7 @@ except ImportError:
         Image = ImageDraw = ImageFont = None
 
 
-def mm2px(mm, dpi=300):
+def mm2px(mm, dpi: int):
     return (mm * dpi) / 25.4
 
 
@@ -409,7 +409,7 @@ else:
         mode: str
         dpi: int
 
-        def __init__(self, format="PNG", mode="RGB") -> None:
+        def __init__(self, format="PNG", mode="RGB", dpi=300) -> None:
             """Initialise a new write instance.
 
             :params format: The file format for the generated image. This parameter can
@@ -417,12 +417,15 @@ else:
             :params mode: The colour-mode for the generated image. Set this to RGBA if
                 you wish to use colours with transparency.
             """
-            BaseWriter.__init__(
-                self, self._init, self._paint_module, self._paint_text, self._finish
+            super().__init__(
+                self._init,
+                self._paint_module,
+                self._paint_text,
+                self._finish,
             )
             self.format = format
             self.mode = mode
-            self.dpi = 300
+            self.dpi = dpi
             self._image = None
             self._draw = None
 
