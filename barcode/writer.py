@@ -31,7 +31,7 @@ try:
     import ImageFont
 except ImportError:
     try:
-        from PIL import Image  # lint:ok
+        from PIL import Image
         from PIL import ImageDraw
         from PIL import ImageFont
     except ImportError:
@@ -39,7 +39,7 @@ except ImportError:
 
         log = logging.getLogger("pyBarcode")
         log.info("Pillow not found. Image output disabled")
-        Image = ImageDraw = ImageFont = None  # lint:ok
+        Image = ImageDraw = ImageFont = None
 
 
 def mm2px(mm, dpi=300):
