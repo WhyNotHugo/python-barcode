@@ -24,13 +24,13 @@ Code 128
 .. autoclass:: barcode.codex.Code128
    :members:
 
-PZN7 (aka: PZN)
+PZN (aka: PZN7)
 ---------------
 
-.. inheritance-diagram:: barcode.codex.PZN7
+.. inheritance-diagram:: barcode.codex.PZN
    :parts: 1
 
-.. autoclass:: barcode.codex.PZN7
+.. autoclass:: barcode.codex.PZN
    :members:
 
 
