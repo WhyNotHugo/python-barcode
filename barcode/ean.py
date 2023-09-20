@@ -43,6 +43,20 @@ class EuropeanArticleNumber13(Barcode):
 
     digits = 12
 
+    @property
+    def ean(self) -> str:
+        """The raw value, with the checksum appended, if applicable.
+
+        This helper exists mainly for backwards compatibility.
+        """
+        ean = self._raw_value
+        # If no checksum
+        if self.no_checksum:
+            # Add a thirteen char if given in parameter,
+            # otherwise pad with zero
+            return f"{ean}{ean[self.digits] if len(ean) > self.digits else 0}"
+        return f"{ean}{self.calculate_checksum()}"
+
     def __init__(self, ean, writer=None, no_checksum=False, guardbar=False) -> None:
         ean = ean[: self.digits]
         if not ean.isdigit():
@@ -51,14 +65,8 @@ class EuropeanArticleNumber13(Barcode):
             raise NumberOfDigitsError(
                 f"EAN must have {self.digits} digits, not {len(ean)}."
             )
-        self.ean = ean
-        # If no checksum
-        if no_checksum:
-            # Add a thirteen char if given in parameter,
-            # otherwise pad with zero
-            self.ean = f"{ean}{ean[self.digits] if len(ean) > self.digits else 0}"
-        else:
-            self.ean = f"{ean}{self.calculate_checksum()}"
+        self._raw_value = ean
+        self.no_checksum = no_checksum
 
         self.guardbar = guardbar
         if guardbar:
@@ -86,8 +94,8 @@ class EuropeanArticleNumber13(Barcode):
         def sum_(x, y):
             return int(x) + int(y)
 
-        evensum = reduce(sum_, self.ean[-2::-2])
-        oddsum = reduce(sum_, self.ean[-1::-2])
+        evensum = reduce(sum_, self._raw_value[-2::-2])
+        oddsum = reduce(sum_, self._raw_value[-1::-2])
         return (10 - ((evensum + oddsum * 3) % 10)) % 10
 
     def build(self):
@@ -220,8 +228,8 @@ class EuropeanArticleNumber14(EuropeanArticleNumber13):
         def sum_(x, y):
             return int(x) + int(y)
 
-        evensum = reduce(sum_, self.ean[::2])
-        oddsum = reduce(sum_, self.ean[1::2])
+        evensum = reduce(sum_, self._raw_value[::2])
+        oddsum = reduce(sum_, self._raw_value[1::2])
         return (10 - (((evensum * 3) + oddsum) % 10)) % 10
 
 
