@@ -72,16 +72,15 @@ class EuropeanArticleNumber13(Barcode):
     def __str__(self) -> str:
         return self.ean
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
         if self.guardbar:
             return self.ean[0] + " " + self.ean[1:7] + " " + self.ean[7:] + " >"
         return self.ean
 
-    def calculate_checksum(self):
+    def calculate_checksum(self) -> int:
         """Calculates the checksum for EAN13-Code.
 
-        :returns: The checksum for `self.ean`.
-        :rtype: Integer
+        :returns: The checksum for ``self.ean``.
         """
 
         def sum_(x, y):
