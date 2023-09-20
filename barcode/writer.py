@@ -11,6 +11,8 @@ from typing import TypedDict
 from barcode.version import version
 
 if TYPE_CHECKING:
+    from typing import Generator
+    from typing import Literal
 
     class InternalText(TypedDict):
         start: list
@@ -77,20 +79,19 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 class BaseWriter:
     """Baseclass for all writers.
 
-    Initializes the basic writer options. Childclasses can add more
-    attributes and can set them directly or using
-    `self.set_options(option=value)`.
+    Initializes the basic writer options. Child classes can add more attributes and can
+    set them directly or using ``self.set_options(option=value)``.
 
     :param initialize: Callback for initializing the inheriting writer.
-        Is called: `callback_initialize(raw_code)`
+        Is called: ``callback_initialize(raw_code)``
     :param paint_module:
         Callback for painting one barcode module.
-        Is called: `callback_paint_module(xpos, ypos, width, color)`
+        Is called: ``callback_paint_module(xpos, ypos, width, color)``
     :param paint_text: Callback for painting the text under the barcode.
-        Is called: `callback_paint_text(xpos, ypos)` using `self.text`
+        Is called: ``callback_paint_text(xpos, ypos)`` using `self.text`
         as text.
     :param finish: Callback for doing something with the completely rendered
-        output. Is called: `return callback_finish()` and must return the
+        output. Is called: ``return callback_finish()`` and must return the
         rendered output.
     """
 
@@ -125,17 +126,13 @@ class BaseWriter:
         self.margin_top = 1
         self.margin_bottom = 1
 
-    def calculate_size(self, modules_per_line, number_of_lines):
+    def calculate_size(self, modules_per_line: int, number_of_lines: int) -> tuple:
         """Calculates the size of the barcode in pixel.
 
-        :parameters:
-            modules_per_line : Integer
-                Number of modules in one line.
-            number_of_lines : Integer
-                Number of lines of the barcode.
+        :param modules_per_line: Number of modules in one line.
+        :param number_of_lines: Number of lines of the barcode.
 
         :returns: Width and height of the barcode in pixel.
-        :rtype: Tuple
         """
         width = 2 * self.quiet_zone + modules_per_line * self.module_width
         height = (
@@ -149,49 +146,41 @@ class BaseWriter:
             height += self.text_line_distance * (number_of_text_lines - 1)
         return width, height
 
-    def save(self, filename, output):
+    def save(self, filename: str, output) -> str:
         """Saves the rendered output to `filename`.
 
-        :parameters:
-            filename : String
-                Filename without extension.
-            output : String
-                The rendered output.
+        :param filename: Filename without extension.
+        :param output: The rendered output.
 
         :returns: The full filename with extension.
-        :rtype: String
         """
         raise NotImplementedError
 
-    def register_callback(self, action, callback):
-        """Register one of the three callbacks if not given at instance
-        creation.
+    def register_callback(
+        self,
+        action: Literal["initialize", "paint_module", "paint_text", "finish"],
+        callback: Callable,
+    ) -> None:
+        """Register one of the three callbacks if not given at instance creation.
 
-        :parameters:
-            action : String
-                One of 'initialize', 'paint_module', 'paint_text', 'finish'.
-            callback : Function
-                The callback function for the given action.
+        :param action: One of 'initialize', 'paint_module', 'paint_text', 'finish'.
+        :param callback: The callback function for the given action.
         """
         self._callbacks[action] = callback
 
-    def set_options(self, options):
+    def set_options(self, options: dict) -> None:
         """Sets the given options as instance attributes (only
         if they are known).
 
-        :parameters:
-            options : Dict
-                All known instance attributes and more if the childclass
-                has defined them before this call.
-
-        :rtype: None
+        :param options: All known instance attributes and more if the child class
+            has defined them before this call.
         """
         for key, val in options.items():
             key = key.lstrip("_")
             if hasattr(self, key):
                 setattr(self, key, val)
 
-    def packed(self, line):
+    def packed(self, line: str) -> Generator[tuple[int, float], str, None]:
         """
         Pack line to list give better gfx result, otherwise in can
         result in aliasing gaps
@@ -199,10 +188,7 @@ class BaseWriter:
 
         This method will yield a sequence of pairs (width, height_factor).
 
-        :parameters:
-            line: String
-                A string matching the writer spec
-                (only contain 0 or 1 or G).
+        :param line: A string matching the writer spec (only contain 0 or 1 or G).
         """
         line += " "
         c = 1
@@ -314,8 +300,11 @@ class BaseWriter:
 
 class SVGWriter(BaseWriter):
     def __init__(self) -> None:
-        BaseWriter.__init__(
-            self, self._init, self._create_module, self._create_text, self._finish
+        super().__init__(
+            self._init,
+            self._create_module,
+            self._create_text,
+            self._finish,
         )
         self.compress = False
         self.with_doctype = True
@@ -391,12 +380,12 @@ class SVGWriter(BaseWriter):
             indent=4 * " ", newl=os.linesep, encoding="UTF-8"
         )
 
-    def save(self, filename, output):
+    def save(self, filename: str, output) -> str:
         if self.compress:
             _filename = f"{filename}.svgz"
-            f = gzip.open(_filename, "wb")
-            f.write(output)
-            f.close()
+            with gzip.open(_filename, "wb") as f:
+                f.write(output)
+                f.close()
         else:
             _filename = f"{filename}.svg"
             with open(_filename, "wb") as f:
