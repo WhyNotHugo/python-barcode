@@ -1,9 +1,29 @@
+from __future__ import annotations
+
 import gzip
 import os
 import xml.dom
+from typing import TYPE_CHECKING
 from typing import BinaryIO
+from typing import Callable
+from typing import TypedDict
 
 from barcode.version import version
+
+if TYPE_CHECKING:
+
+    class InternalText(TypedDict):
+        start: list
+        end: list
+        xpos: list
+        was_guard: bool
+
+    class Callbacks(TypedDict):
+        initialize: Callable | None
+        paint_module: Callable
+        paint_text: Callable | None
+        finish: Callable
+
 
 try:
     import Image
@@ -61,30 +81,27 @@ class BaseWriter:
     attributes and can set them directly or using
     `self.set_options(option=value)`.
 
-    :parameters:
-        initialize : Function
-            Callback for initializing the inheriting writer.
-            Is called: `callback_initialize(raw_code)`
-        paint_module : Function
-            Callback for painting one barcode module.
-            Is called: `callback_paint_module(xpos, ypos, width, color)`
-        paint_text : Function
-            Callback for painting the text under the barcode.
-            Is called: `callback_paint_text(xpos, ypos)` using `self.text`
-            as text.
-        finish : Function
-            Callback for doing something with the completely rendered
-            output.
-            Is called: `return callback_finish()` and must return the
-            rendered output.
+    :param initialize: Callback for initializing the inheriting writer.
+        Is called: `callback_initialize(raw_code)`
+    :param paint_module:
+        Callback for painting one barcode module.
+        Is called: `callback_paint_module(xpos, ypos, width, color)`
+    :param paint_text: Callback for painting the text under the barcode.
+        Is called: `callback_paint_text(xpos, ypos)` using `self.text`
+        as text.
+    :param finish: Callback for doing something with the completely rendered
+        output. Is called: `return callback_finish()` and must return the
+        rendered output.
     """
+
+    _callbacks: Callbacks
 
     def __init__(
         self,
-        initialize=None,
-        paint_module=None,
-        paint_text=None,
-        finish=None,
+        initialize: Callable | None,
+        paint_module: Callable,
+        paint_text: Callable | None,
+        finish: Callable,
     ) -> None:
         self._callbacks = {
             "initialize": initialize,
@@ -218,7 +235,7 @@ class BaseWriter:
             # Left quiet zone is x startposition
             xpos = self.quiet_zone
             bxs = xpos  # x start of barcode
-            text = {
+            text: InternalText = {
                 "start": [],  # The x start of a guard
                 "end": [],  # The x end of a guard
                 "xpos": [],  # The x position where to write a text block
@@ -281,12 +298,10 @@ class BaseWriter:
                 # The last text block is always put after the last guard end
                 text["xpos"].append(text["end"][-1] + 4 * self.module_width)
 
-                # Split the ean into its blocks
-                self.text = self.text.split(" ")
-
                 ypos += pt2mm(self.font_size)
 
-                blocks = self.text
+                # Split the ean into its blocks
+                blocks = self.text.split(" ")
                 for text_, xpos in zip(blocks, text["xpos"]):
                     self.text = text_
                     self._callbacks["paint_text"](xpos, ypos)
