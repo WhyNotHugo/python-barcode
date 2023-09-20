@@ -12,17 +12,17 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 TESTPATH = os.path.join(PATH, "test_outputs")
 
 
-def test_generate_without_output():
+def test_generate_without_output() -> None:
     with pytest.raises(TypeError, match="'output' cannot be None"):
         barcode.generate("ean13", "123455559121112")
 
 
-def test_generate_with_file():
+def test_generate_with_file() -> None:
     with open(os.path.join(TESTPATH, "generate_with_file.jpeg"), "wb") as f:
         barcode.generate("ean13", "123455559121112", output=f)
 
 
-def test_generate_with_filepath():
+def test_generate_with_filepath() -> None:
     # FIXME: extension is added to the filepath even if you include it.
     rv = barcode.generate(
         "ean13",
@@ -32,12 +32,12 @@ def test_generate_with_filepath():
     assert rv == os.path.abspath(os.path.join(TESTPATH, "generate_with_filepath.svg"))
 
 
-def test_generate_with_file_and_writer():
+def test_generate_with_file_and_writer() -> None:
     with open(os.path.join(TESTPATH, "generate_with_file_and_writer.jpeg"), "wb") as f:
         barcode.generate("ean13", "123455559121112", output=f, writer=SVGWriter())
 
 
-def test_generate_with_bytesio():
+def test_generate_with_bytesio() -> None:
     bio = BytesIO()
     barcode.generate("ean13", "123455559121112", output=bio)
     # XXX: File is not 100% deterministic; needs to be addressed at some point.

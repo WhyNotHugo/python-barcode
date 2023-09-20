@@ -5,13 +5,14 @@ from argparse import ArgumentParser
 
 import barcode
 from barcode.version import version
+from barcode.writer import BaseWriter
 from barcode.writer import ImageWriter
 from barcode.writer import SVGWriter
 
 IMG_FORMATS = ("BMP", "GIF", "JPEG", "MSP", "PCX", "PNG", "TIFF", "XBM")
 
 
-def list_types(args, parser=None):
+def list_types(args, parser=None) -> None:
     print("\npython-barcode available barcode formats:")
     print(", ".join(barcode.PROVIDED_BARCODES))
     print("\n")
@@ -24,7 +25,7 @@ def list_types(args, parser=None):
     print("\n")
 
 
-def create_barcode(args, parser):
+def create_barcode(args, parser) -> None:
     args.type = args.type.upper()
     if args.type != "SVG" and args.type not in IMG_FORMATS:
         parser.error(f"Unknown type {args.type}. Try list action for available types.")
@@ -34,8 +35,9 @@ def create_barcode(args, parser):
             f"Unknown barcode {args.barcode}. Try list action for available barcodes."
         )
     if args.type != "SVG":
+        assert ImageWriter is not None
         opts = {"format": args.type}
-        writer = ImageWriter()
+        writer: BaseWriter = ImageWriter()
     else:
         opts = {"compress": args.compress}
         writer = SVGWriter()
@@ -44,7 +46,7 @@ def create_barcode(args, parser):
     print(f"New barcode saved as {name}.")
 
 
-def main():
+def main() -> None:
     msg = []
     if ImageWriter is None:
         msg.append("Image output disabled (Pillow not found), --type option disabled.")

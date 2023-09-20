@@ -10,16 +10,20 @@ from barcode.writer import SVGWriter
 PATH = os.path.dirname(os.path.abspath(__file__))
 TESTPATH = os.path.join(PATH, "test_outputs")
 
-if ImageWriter:
+if ImageWriter is not None:
 
-    def test_saving_image_to_byteio():
+    def test_saving_image_to_byteio() -> None:
+        assert ImageWriter is not None  # workaround for mypy
+
         rv = BytesIO()
         EAN13(str(100000902922), writer=ImageWriter()).write(rv)
 
         with open(f"{TESTPATH}/somefile.jpeg", "wb") as f:
             EAN13("100000011111", writer=ImageWriter()).write(f)
 
-    def test_saving_rgba_image():
+    def test_saving_rgba_image() -> None:
+        assert ImageWriter is not None  # workaround for mypy
+
         rv = BytesIO()
         EAN13(str(100000902922), writer=ImageWriter()).write(rv)
 
@@ -31,7 +35,7 @@ if ImageWriter:
             )
 
 
-def test_saving_svg_to_byteio():
+def test_saving_svg_to_byteio() -> None:
     rv = BytesIO()
     EAN13(str(100000902922), writer=SVGWriter()).write(rv)
 
@@ -39,7 +43,7 @@ def test_saving_svg_to_byteio():
         EAN13("100000011111", writer=SVGWriter()).write(f)
 
 
-def test_saving_svg_to_byteio_with_guardbar():
+def test_saving_svg_to_byteio_with_guardbar() -> None:
     rv = BytesIO()
     EAN13(str(100000902922), writer=SVGWriter(), guardbar=True).write(rv)
 

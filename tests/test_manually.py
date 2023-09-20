@@ -50,15 +50,15 @@ TESTCODES = (
 )
 
 
-def test_generating_barcodes():
+def test_generating_barcodes() -> None:
     os.makedirs(TESTPATH, exist_ok=True)
 
     objects = []
 
-    def append(x, y):
+    def append(x, y) -> None:
         objects.append(OBJECTS.format(filename=x, name=y))
 
-    def append_img(x, y):
+    def append_img(x, y) -> None:
         objects.append(IMAGES.format(filename=x, name=y))
 
     options = {}

@@ -3,10 +3,14 @@
 """
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from typing import ClassVar
 
 from barcode.writer import BaseWriter
 from barcode.writer import SVGWriter
+
+if TYPE_CHECKING:
+    from typing import BinaryIO
 
 
 class Barcode:
@@ -65,17 +69,18 @@ class Barcode:
 
         return self.writer.save(filename, output)
 
-    def write(self, fp, options=None, text=None):
+    def write(
+        self,
+        fp: BinaryIO,
+        options: dict | None = None,
+        text: str | None = None,
+    ) -> None:
         """Renders the barcode and writes it to the file like object
         `fp`.
 
-        :parameters:
-            fp : File like object
-                Object to write the raw data in.
-            options : Dict
-                The same as in `self.render`.
-            text : str
-                Text to render under the barcode.
+        :param fp: Object to write the raw data in.
+        :param options: The same as in `self.render`.
+        :param text: Text to render under the barcode.
         """
         output = self.render(options, text)
         self.writer.write(output, fp)

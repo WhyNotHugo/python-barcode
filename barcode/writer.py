@@ -308,6 +308,9 @@ class BaseWriter:
 
         return self._callbacks["finish"]()
 
+    def write(self, content, fp: BinaryIO) -> None:
+        raise NotImplementedError
+
 
 class SVGWriter(BaseWriter):
     def __init__(self) -> None:
@@ -400,7 +403,7 @@ class SVGWriter(BaseWriter):
                 f.write(output)
         return _filename
 
-    def write(self, content, fp: BinaryIO):
+    def write(self, content, fp: BinaryIO) -> None:
         """Write `content` into a file-like object.
 
         Content should be a barcode rendered by this writer.
@@ -409,7 +412,7 @@ class SVGWriter(BaseWriter):
 
 
 if Image is None:
-    ImageWriter = None
+    ImageWriter: type | None = None
 else:
 
     class ImageWriter(BaseWriter):  # type: ignore[no-redef]
@@ -463,15 +466,15 @@ else:
                 )
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
-        def _finish(self):
+        def _finish(self) -> Image:
             return self._image
 
-        def save(self, filename, output):
+        def save(self, filename: str, output) -> str:
             filename = f"{filename}.{self.format.lower()}"
             output.save(filename, self.format.upper())
             return filename
 
-        def write(self, content, fp: BinaryIO):
+        def write(self, content, fp: BinaryIO) -> None:
             """Write `content` into a file-like object.
 
             Content should be a barcode rendered by this writer.

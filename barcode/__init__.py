@@ -30,6 +30,8 @@ from barcode.version import version  # noqa: F401
 if TYPE_CHECKING:
     import os
 
+    from barcode.writer import BaseWriter
+
 __BARCODE_MAP = {
     "ean8": EAN8,
     "ean8-guard": EAN8_GUARD,
@@ -62,7 +64,7 @@ PROVIDED_BARCODES.sort()
 def get(
     name: str,
     code: str | None = None,
-    writer=None,
+    writer: BaseWriter | None = None,
     options: dict | None = None,
 ):
     """Helper method for getting a generator or even a generated code.
@@ -87,18 +89,18 @@ def get(
     return barcode
 
 
-def get_class(name):
+def get_class(name: str):
     return get_barcode(name)
 
 
 def generate(
     name: str,
     code: str,
-    writer=None,
+    writer: BaseWriter | None = None,
     output: str | (os.PathLike | (BinaryIO | None)) = None,
     writer_options: dict | None = None,
     text: str | None = None,
-):
+) -> str | None:
     """Shortcut to generate a barcode in one line.
 
     :param name: Name of the type of barcode to use.
