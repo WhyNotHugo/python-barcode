@@ -37,6 +37,8 @@ Documentation
 
 Full documentation is published at http://python-barcode.rtfd.io/
 
+You can build the documentation locally using ``make -C docs html``.
+
 Licence
 -------
 
