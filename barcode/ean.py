@@ -124,6 +124,8 @@ class EuropeanArticleNumber13(Barcode):
 
 
 class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
+    """A shortcut to EAN-13 with ``guardbar=True``."""
+
     name = "EAN-13 with guards"
 
     def __init__(self, ean, writer=None, no_checksum=False, guardbar=True) -> None:
@@ -188,6 +190,8 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
 
 
 class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
+    """A shortcut to EAN-8 with ``guardbar=True``."""
+
     name = "EAN-8 with guards"
 
     def __init__(self, ean, writer=None, no_checksum=False, guardbar=True) -> None:

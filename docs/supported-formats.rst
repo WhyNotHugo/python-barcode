@@ -4,6 +4,15 @@ Supported Formats
 The following are the supported barcode formats.
 PRs for other code formats are welcome!
 
+Codabar
+-------
+
+.. inheritance-diagram:: barcode.codabar.CODABAR
+   :parts: 1
+
+.. autoclass:: barcode.codabar.CODABAR
+   :members:
+
 Code 39
 -------
 
@@ -33,23 +42,37 @@ PZN (aka: PZN7)
 .. autoclass:: barcode.codex.PZN
    :members:
 
-
 EAN-13
 ------
 
-.. inheritance-diagram:: barcode.ean.EuropeanArticleNumber13
+.. inheritance-diagram:: barcode.ean.EuropeanArticleNumber13WithGuard
    :parts: 1
 
 .. autoclass:: barcode.ean.EuropeanArticleNumber13
    :members:
 
+.. autoclass:: barcode.ean.EuropeanArticleNumber13WithGuard
+   :members:
+
 EAN-8
 -----
 
-.. inheritance-diagram:: barcode.ean.EuropeanArticleNumber8
+.. inheritance-diagram:: barcode.ean.EuropeanArticleNumber8WithGuard
    :parts: 1
 
 .. autoclass:: barcode.ean.EuropeanArticleNumber8
+   :members:
+
+.. autoclass:: barcode.ean.EuropeanArticleNumber8WithGuard
+   :members:
+
+EAN-14
+------
+
+.. inheritance-diagram:: barcode.ean.EuropeanArticleNumber14
+   :parts: 1
+
+.. autoclass:: barcode.ean.EuropeanArticleNumber14
    :members:
 
 JAN
@@ -61,8 +84,8 @@ JAN
 .. autoclass:: barcode.ean.JapanArticleNumber
    :members:
 
-ISBN-13
--------
+ISBN-13 (aka: GS1, ISBN)
+------------------------
 
 .. inheritance-diagram:: barcode.isxn.InternationalStandardBookNumber13
    :parts: 1
@@ -97,8 +120,8 @@ UPC-A
 .. autoclass:: barcode.upc.UniversalProductCodeA
    :members:
 
-EAN14
------
+EAN14 (aka: GTIN)
+-----------------
 
 .. inheritance-diagram:: barcode.ean.EuropeanArticleNumber14
    :parts: 1
@@ -115,4 +138,24 @@ GS1-128
    :parts: 1
 
 .. autoclass:: barcode.codex.Gs1_128
+   :members:
+
+ITF
+---
+
+.. versionadded:: 0.8.0
+
+.. inheritance-diagram:: barcode.itf.ITF
+   :parts: 1
+
+.. autoclass:: barcode.itf.ITF
+   :members:
+
+UPCA (aka UPC)
+--------------
+
+.. inheritance-diagram:: barcode.upc.UPCA
+   :parts: 1
+
+.. autoclass:: barcode.upc.UPCA
    :members:
