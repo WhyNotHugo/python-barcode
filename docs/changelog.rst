@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v0.16.0
+~~~~~~~
+
+* **Breaking** Drop support for Python 3.7.
+
 v0.15.1
 ~~~~~~~~~~
 
