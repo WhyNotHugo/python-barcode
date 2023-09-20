@@ -7,12 +7,12 @@ v0.16.0
 * **Breaking** Drop support for Python 3.7.
 
 v0.15.1
-~~~~~~~~~~
+~~~~~~~
 
 * Add missing dependency to release script.
 
 v0.15.0
-~~~~~~~~~~
+~~~~~~~
 
 * **Breaking** Dropped support for Python 3.6 and 3.7.
 * Added support for Python 3.11.
