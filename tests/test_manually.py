@@ -1,4 +1,6 @@
 """Generates barcodes for visually inspecting the results."""
+from __future__ import annotations
+
 import codecs
 import os
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # W = Wide bar
 # w = wide space
 # N = Narrow bar

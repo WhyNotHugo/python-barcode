@@ -2,6 +2,8 @@
 
 :Provided barcodes: Interleaved 2 of 5
 """
+from __future__ import annotations
+
 __docformat__ = "restructuredtext en"
 
 from barcode.base import Barcode

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 EDGE = "101"
 MIDDLE = "01010"
 CODES = {

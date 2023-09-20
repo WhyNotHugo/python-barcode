@@ -3,11 +3,10 @@ It needs no external packages to be installed, the barcodes are
 created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
-import os
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from typing import BinaryIO
-from typing import Dict
-from typing import Optional
-from typing import Union
 
 from barcode.codabar import CODABAR
 from barcode.codex import PZN
@@ -27,6 +26,9 @@ from barcode.isxn import ISSN
 from barcode.itf import ITF
 from barcode.upc import UPCA
 from barcode.version import version  # noqa: F401
+
+if TYPE_CHECKING:
+    import os
 
 __BARCODE_MAP = {
     "ean8": EAN8,
@@ -59,9 +61,9 @@ PROVIDED_BARCODES.sort()
 
 def get(
     name: str,
-    code: Optional[str] = None,
+    code: str | None = None,
     writer=None,
-    options: Optional[dict] = None,
+    options: dict | None = None,
 ):
     """Helper method for getting a generator or even a generated code.
 
@@ -93,9 +95,9 @@ def generate(
     name: str,
     code: str,
     writer=None,
-    output: Union[str, os.PathLike, BinaryIO, None] = None,
-    writer_options: Union[Dict, None] = None,
-    text: Union[str, None] = None,
+    output: str | (os.PathLike | (BinaryIO | None)) = None,
+    writer_options: dict | None = None,
+    text: str | None = None,
 ):
     """Shortcut to generate a barcode in one line.
 

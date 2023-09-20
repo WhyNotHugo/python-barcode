@@ -43,3 +43,4 @@ target-version = "py38"
 
 [tool.ruff.isort]
 force-single-line = true
+required-imports = ["from __future__ import annotations"]

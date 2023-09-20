@@ -2,6 +2,8 @@
 
 :Provided barcodes: Codabar (NW-7)
 """
+from __future__ import annotations
+
 __docformat__ = "restructuredtext en"
 
 from barcode.base import Barcode

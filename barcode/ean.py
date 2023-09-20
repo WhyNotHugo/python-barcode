@@ -2,6 +2,8 @@
 
 :Provided barcodes: EAN-14, EAN-13, EAN-8, JAN
 """
+from __future__ import annotations
+
 __docformat__ = "restructuredtext en"
 
 from functools import reduce

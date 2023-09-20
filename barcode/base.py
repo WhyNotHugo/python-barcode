@@ -1,9 +1,9 @@
 """barcode.base
 
 """
+from __future__ import annotations
+
 from typing import ClassVar
-from typing import List
-from typing import Optional
 
 from barcode.writer import BaseWriter
 from barcode.writer import SVGWriter
@@ -39,7 +39,7 @@ class Barcode:
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__}({self.get_fullcode()!r})>"
 
-    def build(self) -> List[str]:
+    def build(self) -> list[str]:
         raise NotImplementedError
 
     def get_fullcode(self):
@@ -51,7 +51,7 @@ class Barcode:
         raise NotImplementedError
 
     def save(
-        self, filename: str, options: Optional[dict] = None, text: Optional[str] = None
+        self, filename: str, options: dict | None = None, text: str | None = None
     ) -> str:
         """Renders the barcode and saves it in `filename`.
 
@@ -80,7 +80,7 @@ class Barcode:
         output = self.render(options, text)
         self.writer.write(output, fp)
 
-    def render(self, writer_options: Optional[dict] = None, text: Optional[str] = None):
+    def render(self, writer_options: dict | None = None, text: str | None = None):
         """Renders the barcode using `self.writer`.
 
         :param writer_options: Options for `self.writer`, see writer docs for details.

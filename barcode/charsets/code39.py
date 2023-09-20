@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import string
 
 # Charsets for code 39

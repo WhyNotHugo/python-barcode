@@ -21,6 +21,8 @@ Example::
     '0132354187'
 
 """
+from __future__ import annotations
+
 from barcode.ean import EuropeanArticleNumber13
 from barcode.errors import BarcodeError
 from barcode.errors import WrongCountryCodeError

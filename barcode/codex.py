@@ -2,6 +2,7 @@
 
 :Provided barcodes: Code 39, Code 128, PZN
 """
+from __future__ import annotations
 
 from typing import Collection
 
