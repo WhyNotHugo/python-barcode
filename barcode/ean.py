@@ -212,18 +212,19 @@ class EuropeanArticleNumber14(EuropeanArticleNumber13):
     name = "EAN-14"
     digits = 13
 
-    def calculate_checksum(self):
+    def calculate_checksum(self) -> int:
         """Calculates the checksum for EAN13-Code.
 
-        :returns: The checksum for `self.ean`.
-        :rtype: Integer
+        :returns: The checksum for ``self.ean``.
         """
 
         def sum_(x, y):
             return int(x) + int(y)
 
-        evensum = reduce(sum_, self.ean[::2])
-        oddsum = reduce(sum_, self.ean[1::2])
+        ean_without_checksum = self.ean[: self.digits]
+
+        evensum = reduce(sum_, ean_without_checksum[::2])
+        oddsum = reduce(sum_, ean_without_checksum[1::2])
         return (10 - (((evensum * 3) + oddsum) % 10)) % 10
 
 
