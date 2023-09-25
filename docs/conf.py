@@ -16,7 +16,7 @@ import barcode
 # -- Project information -----------------------------------------------------
 
 project = "python-barcode"
-copyright = "2020, Hugo Osvaldo Barrera, et al"
+copyright = "2017-2023, Hugo Osvaldo Barrera, et al"
 author = "Hugo Osvaldo Barrera, et al"
 
 # The short X.Y version.
