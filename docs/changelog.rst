@@ -10,6 +10,8 @@ v0.16.0
   multiple times for EAN barcodes.
 * Update the documentation with some barcodes that were not previously
   documented.
+* Specifying ``None`` as a background for the ``SVGWriter``, no background is
+  included resulting in a transparent background.
 
 v0.15.1
 ~~~~~~~
