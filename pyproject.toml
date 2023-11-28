@@ -5,9 +5,6 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 write_to = "barcode/version.py"
 version_scheme = "post-release"
 
-[tool.black]
-target-version = ['py38']
-
 [tool.ruff]
 select = [
     "F",
