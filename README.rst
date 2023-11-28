@@ -26,7 +26,7 @@ python-barcode
 There are no external dependencies when generating SVG files.
 Pillow is required for generating images (e.g.: PNGs).
 
-Support Python 3.8 to 3.11.
+Support Python 3.8 to 3.12.
 
 .. image:: example-ean13.png
   :target: https://github.com/WhyNotHugo/python-barcode
