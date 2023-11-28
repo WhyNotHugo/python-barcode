@@ -1,7 +1,7 @@
 python-barcode
 ==============
 
-.. image:: https://action-badges.now.sh/WhyNotHugo/python-barcode
+.. image:: https://github.com/WhyNotHugo/python-barcode/actions/workflows/tests.yml/badge.svg
   :target: https://github.com/WhyNotHugo/python-barcode/actions
   :alt: CI status
 
