@@ -7,17 +7,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04 ]
-        python: [ '3.8', '3.9', '3.10', '3.11' ]
+        os: [ ubuntu-22.04 ]
+        python: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
         variant: [ "py", "py-images" ]
         include:
-          - os: macOS-11
-            python: "3.10"
+          - os: macOS-12
+            python: "3.12"
             variant: py-images
-          - os: windows-2019
-            python: "3.10"
+          - os: windows-2022
+            python: "3.12"
             variant: py-images
-          - os: windows-2019
+          - os: windows-2022
     name: python${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.variant }}
     steps:
       - uses: actions/checkout@v4
