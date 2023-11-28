@@ -448,6 +448,8 @@ else:
 
         def _paint_text(self, xpos, ypos):
             font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
+            if font_size <= 0:
+                return
             font = ImageFont.truetype(self.font_path, font_size)
             for subtext in self.text.split("\n"):
                 pos = (
