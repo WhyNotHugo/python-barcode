@@ -12,6 +12,8 @@ v0.16.0
   documented.
 * Specifying ``None`` as a background for the ``SVGWriter``, no background is
   included resulting in a transparent background.
+* Do not paint text if its size would be zero, to avoid an "invalid ppem value"
+  error with newer versions of Pillow.
 
 v0.15.1
 ~~~~~~~
