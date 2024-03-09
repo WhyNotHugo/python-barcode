@@ -11,7 +11,7 @@ setup(
     url="https://github.com/WhyNotHugo/python-barcode",
     license="MIT",
     author="Hugo Osvaldo Barrera et al",
-    author_email="hugo@barrera.io",
+    author_email="hugo@whynothugo.nl",
     description=(
         "Create standard barcodes with Python. No external modules needed. "
         "(optional Pillow support included)."
