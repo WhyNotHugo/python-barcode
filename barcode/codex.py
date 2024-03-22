@@ -136,11 +136,13 @@ class Code128(Barcode):
 
     name = "Code 128"
 
-    def __init__(self, code, writer=None) -> None:
+    def __init__(self, code, writer=None, charset="B", enable_optimization=True, enable_hybrid_charset=True) -> None:
         self.code = code
         self.writer = writer or self.default_writer()
-        self._charset = "B"
+        self._charset = charset
         self._buffer = ""
+        self._enable_optimization = enable_optimization
+        self._enable_hybrid_charset = enable_hybrid_charset
         check_code(self.code, self.name, code128.ALL)
 
     def __str__(self) -> str:
@@ -229,7 +231,8 @@ class Code128(Barcode):
     def _build(self):
         encoded = [code128.START_CODES[self._charset]]
         for i, char in enumerate(self.code):
-            encoded.extend(self._maybe_switch_charset(i))
+            if self._enable_hybrid_charset == True:
+                encoded.extend(self._maybe_switch_charset(i))
             code_num = self._convert(char)
             if code_num is not None:
                 encoded.append(code_num)
@@ -238,7 +241,10 @@ class Code128(Barcode):
             encoded.extend(self._new_charset("B"))
             encoded.append(self._convert(self._buffer[0]))
             self._buffer = ""
-        return self._try_to_optimize(encoded)
+        if self._enable_optimization == True:
+            return self._try_to_optimize(encoded)
+        else:
+            return encoded
 
     def build(self):
         encoded = self._build()
