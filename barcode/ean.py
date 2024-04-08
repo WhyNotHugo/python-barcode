@@ -32,18 +32,18 @@ SIZES = {
 class EuropeanArticleNumber13(Barcode):
     """Initializes EAN13 object.
 
-    :parameters:
-        ean : String
-            The ean number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param ean: The ean number as string.
+    :param writer: The writer to render the barcode (default: SVGWriter).
+    :param no_checksum: Don't calculate the checksum. Use the provided input instead.
     """
 
     name = "EAN-13"
 
     digits = 12
 
-    def __init__(self, ean, writer=None, no_checksum=False, guardbar=False) -> None:
+    def __init__(
+        self, ean: str, writer=None, no_checksum=False, guardbar=False
+    ) -> None:
         ean = ean[: self.digits]
         if not ean.isdigit():
             raise IllegalCharacterError("EAN code can only contain numbers.")
@@ -202,11 +202,9 @@ class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
 class EuropeanArticleNumber14(EuropeanArticleNumber13):
     """Represents an EAN-14 barcode. See EAN13's __init__ for details.
 
-    :parameters:
-        ean : String
-            The ean number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param ean: The ean number as string.
+    :param writer: The writer to render the barcode (default: SVGWriter).
+    :param no_checksum: Don't calculate the checksum. Use the provided input instead.
     """
 
     name = "EAN-14"
