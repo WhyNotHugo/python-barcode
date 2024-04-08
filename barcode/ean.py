@@ -2,6 +2,7 @@
 
 :Provided barcodes: EAN-14, EAN-13, EAN-8, JAN
 """
+
 from __future__ import annotations
 
 __docformat__ = "restructuredtext en"
@@ -31,7 +32,7 @@ SIZES = {
 class EuropeanArticleNumber13(Barcode):
     """Initializes EAN13 object.
 
-    :param ean: The ean number as string.
+    :param ean: The ean number as string. If the value is too long, it is trimmed.
     :param writer: The writer to render the barcode (default: SVGWriter).
     :param no_checksum: Don't calculate the checksum. Use the provided input instead.
     """
@@ -43,21 +44,25 @@ class EuropeanArticleNumber13(Barcode):
     def __init__(
         self, ean: str, writer=None, no_checksum=False, guardbar=False
     ) -> None:
-        ean = ean[: self.digits]
-        if not ean.isdigit():
-            raise IllegalCharacterError("EAN code can only contain numbers.")
-        if len(ean) != self.digits:
+        if not ean[: self.digits].isdigit():
+            raise IllegalCharacterError(f"EAN code can only contain numbers {ean}.")
+
+        if len(ean) < self.digits:
             raise NumberOfDigitsError(
-                f"EAN must have {self.digits} digits, not {len(ean)}."
+                f"EAN must have {self.digits} digits, received {len(ean)}."
             )
-        self.ean = ean
-        # If no checksum
+
+        base = ean[: self.digits]
         if no_checksum:
-            # Add a thirteen char if given in parameter,
-            # otherwise pad with zero
-            self.ean = f"{ean}{ean[self.digits] if len(ean) > self.digits else 0}"
+            # Use the thirteenth digit if given in parameter, otherwise pad with zero
+            if len(ean) > self.digits and ean[self.digits].isdigit():
+                last = int(ean[self.digits])
+            else:
+                last = 0
         else:
-            self.ean = f"{ean}{self.calculate_checksum()}"
+            last = self.calculate_checksum(base)
+
+        self.ean = f"{base}{last}"
 
         self.guardbar = guardbar
         if guardbar:
@@ -76,13 +81,14 @@ class EuropeanArticleNumber13(Barcode):
             return self.ean[0] + " " + self.ean[1:7] + " " + self.ean[7:] + " >"
         return self.ean
 
-    def calculate_checksum(self) -> int:
-        """Calculates the checksum for EAN13-Code.
+    def calculate_checksum(self, value: str | None = None) -> int:
+        """Calculates and returns the checksum for EAN13-Code.
 
-        :returns: The checksum for ``self.ean``.
+        Calculates the checksum for the supplied `value` (if any) or for this barcode's
+        internal ``self.ean`` property.
         """
 
-        ean_without_checksum = self.ean[: self.digits]
+        ean_without_checksum = value or self.ean[: self.digits]
 
         evensum = sum(int(x) for x in ean_without_checksum[-2::-2])
         oddsum = sum(int(x) for x in ean_without_checksum[-1::-2])
@@ -206,13 +212,14 @@ class EuropeanArticleNumber14(EuropeanArticleNumber13):
     name = "EAN-14"
     digits = 13
 
-    def calculate_checksum(self) -> int:
-        """Calculates the checksum for EAN13-Code.
+    def calculate_checksum(self, value: str | None = None) -> int:
+        """Calculates and returns the checksum for EAN14-Code.
 
-        :returns: The checksum for ``self.ean``.
+        Calculates the checksum for the supplied `value` (if any) or for this barcode's
+        internal ``self.ean`` property.
         """
 
-        ean_without_checksum = self.ean[: self.digits]
+        ean_without_checksum = value or self.ean[: self.digits]
 
         evensum = sum(int(x) for x in ean_without_checksum[::2])
         oddsum = sum(int(x) for x in ean_without_checksum[1::2])
