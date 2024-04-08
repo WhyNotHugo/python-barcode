@@ -6,7 +6,6 @@ from __future__ import annotations
 
 __docformat__ = "restructuredtext en"
 
-from functools import reduce
 
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
@@ -83,13 +82,10 @@ class EuropeanArticleNumber13(Barcode):
         :returns: The checksum for ``self.ean``.
         """
 
-        def sum_(x, y):
-            return int(x) + int(y)
-
         ean_without_checksum = self.ean[: self.digits]
 
-        evensum = reduce(sum_, ean_without_checksum[-2::-2])
-        oddsum = reduce(sum_, ean_without_checksum[-1::-2])
+        evensum = sum(int(x) for x in ean_without_checksum[-2::-2])
+        oddsum = sum(int(x) for x in ean_without_checksum[-1::-2])
         return (10 - ((evensum + oddsum * 3) % 10)) % 10
 
     def build(self):
@@ -216,13 +212,10 @@ class EuropeanArticleNumber14(EuropeanArticleNumber13):
         :returns: The checksum for ``self.ean``.
         """
 
-        def sum_(x, y):
-            return int(x) + int(y)
-
         ean_without_checksum = self.ean[: self.digits]
 
-        evensum = reduce(sum_, ean_without_checksum[::2])
-        oddsum = reduce(sum_, ean_without_checksum[1::2])
+        evensum = sum(int(x) for x in ean_without_checksum[::2])
+        oddsum = sum(int(x) for x in ean_without_checksum[1::2])
         return (10 - (((evensum * 3) + oddsum) % 10)) % 10
 
 
