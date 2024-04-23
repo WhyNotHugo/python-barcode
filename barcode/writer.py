@@ -465,11 +465,16 @@ else:
 
         def _paint_text(self, xpos, ypos):
             assert ImageFont is not None
+
+            # check option to override self.text with self.human (barcode as
+            # human readable data, can be used to print own formats)
+            barcodetext = self.human if self.human != "" else self.text
+
             font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
             if font_size <= 0:
                 return
             font = ImageFont.truetype(self.font_path, font_size)
-            for subtext in self.text.split("\n"):
+            for subtext in barcodetext.split("\n"):
                 pos = (
                     mm2px(xpos, self.dpi),
                     mm2px(ypos, self.dpi),
