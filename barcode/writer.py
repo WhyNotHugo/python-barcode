@@ -32,20 +32,15 @@ if TYPE_CHECKING:
 
 
 try:
-    import Image
-    import ImageDraw
-    import ImageFont
+    from PIL import Image
+    from PIL import ImageDraw
+    from PIL import ImageFont
 except ImportError:
-    try:
-        from PIL import Image
-        from PIL import ImageDraw
-        from PIL import ImageFont
-    except ImportError:
-        import logging
+    import logging
 
-        log = logging.getLogger("pyBarcode")
-        log.info("Pillow not found. Image output disabled")
-        Image = ImageDraw = ImageFont = None
+    log = logging.getLogger("pyBarcode")
+    log.info("Pillow not found. Image output disabled")
+    Image = ImageDraw = ImageFont = None
 
 
 def mm2px(mm: float, dpi: int) -> float:
