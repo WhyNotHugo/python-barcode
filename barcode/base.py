@@ -34,6 +34,9 @@ class Barcode:
 
     writer: BaseWriter
 
+    def __init__(self, code: str, writer: BaseWriter | None = None, **options) -> None:
+        raise NotImplementedError
+
     def to_ascii(self) -> str:
         code_list = self.build()
         if not len(code_list) == 1:

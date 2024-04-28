@@ -15,6 +15,9 @@ if TYPE_CHECKING:
     from typing import Generator
     from typing import Literal
 
+    from PIL.Image import Image as T_Image
+    from PIL.ImageDraw import ImageDraw as T_ImageDraw
+
     class InternalText(TypedDict):
         start: list
         end: list
@@ -45,11 +48,11 @@ except ImportError:
         Image = ImageDraw = ImageFont = None
 
 
-def mm2px(mm, dpi: int):
+def mm2px(mm: float, dpi: int) -> float:
     return (mm * dpi) / 25.4
 
 
-def pt2mm(pt):
+def pt2mm(pt: float) -> float:
     return pt * 0.352777778
 
 
@@ -58,8 +61,9 @@ def _set_attributes(element, **attributes):
         element.setAttribute(key, value)
 
 
-def create_svg_object(with_doctype=False):
+def create_svg_object(with_doctype=False) -> xml.dom.minidom.Document:
     imp = xml.dom.minidom.getDOMImplementation()
+    assert imp is not None
     doctype = imp.createDocumentType(
         "svg",
         "-//W3C//DTD SVG 1.1//EN",
@@ -317,13 +321,13 @@ class SVGWriter(BaseWriter):
             self._create_text,
             self._finish,
         )
-        self.compress = False
-        self.with_doctype = True
-        self._document = None
-        self._root = None
-        self._group = None
+        self.compress: bool = False
+        self.with_doctype: bool = True
+        self._document: xml.dom.minidom.Document
+        self._root: xml.dom.minidom.Element
+        self._group: xml.dom.minidom.Element
 
-    def _init(self, code):
+    def _init(self, code: list[str]):
         width, height = self.calculate_size(len(code[0]), len(code))
         self._document = create_svg_object(self.with_doctype)
         self._root = self._document.documentElement
@@ -438,16 +442,18 @@ else:
             self.format = format
             self.mode = mode
             self.dpi = dpi
-            self._image = None
-            self._draw = None
+            self._image: T_Image
+            self._draw: T_ImageDraw
 
-        def _init(self, code):
+        def _init(self, code: list[str]) -> None:
+            if ImageDraw is None:
+                raise RuntimeError("Pillow not found. Cannot create image.")
             width, height = self.calculate_size(len(code[0]), len(code))
             size = (int(mm2px(width, self.dpi)), int(mm2px(height, self.dpi)))
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
 
-        def _paint_module(self, xpos, ypos, width, color):
+        def _paint_module(self, xpos: float, ypos: float, width: float, color):
             size = [
                 (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi)),
                 (
@@ -458,6 +464,7 @@ else:
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):
+            assert ImageFont is not None
             font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
             if font_size <= 0:
                 return
@@ -472,7 +479,7 @@ else:
                 )
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
-        def _finish(self) -> Image:
+        def _finish(self) -> T_Image:
             return self._image
 
         def save(self, filename: str, output) -> str:
