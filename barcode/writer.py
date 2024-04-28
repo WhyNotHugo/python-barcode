@@ -323,7 +323,10 @@ class SVGWriter(BaseWriter):
         self._group: xml.dom.minidom.Element
 
     def _init(self, code: list[str]):
-        width, height = self.calculate_size(len(code[0]), len(code))
+        if len(code) != 1:
+            raise NotImplementedError("Only one line of code is supported")
+        line = code[0]
+        width, height = self.calculate_size(len(line), 1)
         self._document = create_svg_object(self.with_doctype)
         self._root = self._document.documentElement
         attributes = {
@@ -443,7 +446,10 @@ else:
         def _init(self, code: list[str]) -> None:
             if ImageDraw is None:
                 raise RuntimeError("Pillow not found. Cannot create image.")
-            width, height = self.calculate_size(len(code[0]), len(code))
+            if len(code) != 1:
+                raise NotImplementedError("Only one line of code is supported")
+            line = code[0]
+            width, height = self.calculate_size(len(line), 1)
             size = (int(mm2px(width, self.dpi)), int(mm2px(height, self.dpi)))
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
