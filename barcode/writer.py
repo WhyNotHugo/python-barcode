@@ -362,9 +362,9 @@ class SVGWriter(BaseWriter):
             attributes = {
                 "x": SIZE.format(xpos),
                 "y": SIZE.format(ypos),
-                "style": "fill:{};font-size:{}pt;text-anchor:middle;".format(
-                    self.foreground,
-                    self.font_size,
+                "style": (
+                    f"fill:{self.foreground};"
+                    f"font-size:{self.font_size}pt;text-anchor:middle;"
                 ),
             }
             _set_attributes(element, **attributes)

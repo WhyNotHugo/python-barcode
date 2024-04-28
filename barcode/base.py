@@ -35,15 +35,17 @@ class Barcode:
     writer: BaseWriter
 
     def to_ascii(self) -> str:
-        code = self.build()
-        for i, line in enumerate(code):
-            code[i] = line.replace("1", "X").replace("0", " ")
-        return "\n".join(code)
+        code_list = self.build()
+        if not len(code_list) == 1:
+            raise RuntimeError("Code list must contain a single element.")
+        code = code_list[0]
+        return code.replace("1", "X").replace("0", " ")
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__}({self.get_fullcode()!r})>"
 
     def build(self) -> list[str]:
+        """Return a singleton list with a string encoding the barcode as 1s and 0s."""
         raise NotImplementedError
 
     def get_fullcode(self):
@@ -101,5 +103,8 @@ class Barcode:
             else:
                 options["text"] = self.get_fullcode()
         self.writer.set_options(options)
-        code = self.build()
-        return self.writer.render(code)
+        code_list = self.build()
+        if not len(code_list) == 1:
+            raise RuntimeError("Code list must contain a single element.")
+        code = code_list[0]
+        return self.writer.render([code])
