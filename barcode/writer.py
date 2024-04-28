@@ -4,6 +4,7 @@ import gzip
 import os
 import xml.dom.minidom
 from typing import TYPE_CHECKING
+from typing import Any
 from typing import BinaryIO
 from typing import Callable
 from typing import TypedDict
@@ -96,6 +97,21 @@ class BaseWriter:
     """
 
     _callbacks: Callbacks
+    module_width: float
+    module_height: float
+    font_path: str
+    font_size: float
+    quiet_zone: float
+    background: str | int
+    foreground: str | int
+    text: str
+    human: str
+    text_distance: float
+    text_line_distance: float
+    center_text: bool
+    guard_height_factor: float
+    margin_top: float
+    margin_bottom: float
 
     def __init__(
         self,
@@ -204,65 +220,60 @@ class BaseWriter:
                     yield (-c, self.guard_height_factor)
                 c = 1
 
-    def render(self, code):
+    def render(self, code: list[str]) -> Any:
         """Renders the barcode to whatever the inheriting writer provides,
         using the registered callbacks.
 
         :parameters:
             code : List
-                List of strings matching the writer spec
+                List consisting of a single string matching the writer spec
                 (only contain 0 or 1 or G).
         """
         if self._callbacks["initialize"] is not None:
             self._callbacks["initialize"](code)
         ypos = self.margin_top
         base_height = self.module_height
-        for cc, line in enumerate(code):
-            # Left quiet zone is x startposition
-            xpos = self.quiet_zone
-            bxs = xpos  # x start of barcode
-            text: InternalText = {
-                "start": [],  # The x start of a guard
-                "end": [],  # The x end of a guard
-                "xpos": [],  # The x position where to write a text block
-                # Flag that indicates if the previous mod was part of an guard block:
-                "was_guard": False,
-            }
-            for mod, height_factor in self.packed(line):
-                if mod < 1:
-                    color = self.background
-                else:
-                    color = self.foreground
-
-                    if text["was_guard"] and height_factor == 1:
-                        # The current guard ended, store its x position
-                        text["end"].append(xpos)
-                        text["was_guard"] = False
-                    elif not text["was_guard"] and height_factor != 1:
-                        # A guard started, store its x position
-                        text["start"].append(xpos)
-                        text["was_guard"] = True
-
-                self.module_height = base_height * height_factor
-                # remove painting for background colored tiles?
-                self._callbacks["paint_module"](
-                    xpos, ypos, self.module_width * abs(mod), color
-                )
-                xpos += self.module_width * abs(mod)
+        if len(code) != 1:
+            raise NotImplementedError("Only one line of code is supported")
+        line = code[0]
+        # Left quiet zone is x startposition
+        xpos = self.quiet_zone
+        bxs = xpos  # x start of barcode
+        text: InternalText = {
+            "start": [],  # The x start of a guard
+            "end": [],  # The x end of a guard
+            "xpos": [],  # The x position where to write a text block
+            # Flag that indicates if the previous mod was part of an guard block:
+            "was_guard": False,
+        }
+        for mod, height_factor in self.packed(line):
+            if mod < 1:
+                color = self.background
             else:
-                if height_factor != 1:
-                    text["end"].append(xpos)
-                self.module_height = base_height
+                color = self.foreground
 
-            bxe = xpos
-            # Add right quiet zone to every line, except last line,
-            # quiet zone already provided with background,
-            # should it be removed completely?
-            if (cc + 1) != len(code):
-                self._callbacks["paint_module"](
-                    xpos, ypos, self.quiet_zone, self.background
-                )
-            ypos += self.module_height
+                if text["was_guard"] and height_factor == 1:
+                    # The current guard ended, store its x position
+                    text["end"].append(xpos)
+                    text["was_guard"] = False
+                elif not text["was_guard"] and height_factor != 1:
+                    # A guard started, store its x position
+                    text["start"].append(xpos)
+                    text["was_guard"] = True
+
+            self.module_height = base_height * height_factor
+            # remove painting for background colored tiles?
+            self._callbacks["paint_module"](
+                xpos, ypos, self.module_width * abs(mod), color
+            )
+            xpos += self.module_width * abs(mod)
+        else:
+            if height_factor != 1:
+                text["end"].append(xpos)
+            self.module_height = base_height
+
+        bxe = xpos
+        ypos += self.module_height
 
         if self.text and self._callbacks["paint_text"] is not None:
             if not text["start"]:
