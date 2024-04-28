@@ -211,9 +211,9 @@ class Code128(Barcode):
                     value = int(self._buffer)
                     self._buffer = ""
                     return value
-                return None
-            return None
-        return None
+        raise RuntimeError(
+            f"Character {char} could not be converted in charset {self._charset}."
+        )
 
     def _try_to_optimize(self, encoded):
         if encoded[1] in code128.TO:
