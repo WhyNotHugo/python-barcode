@@ -5,8 +5,10 @@ rendered as images (all formats supported by Pillow).
 """
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING
 from typing import BinaryIO
+from typing import overload
 
 from barcode.codabar import CODABAR
 from barcode.codex import PZN
@@ -28,11 +30,10 @@ from barcode.upc import UPCA
 from barcode.version import version  # noqa: F401
 
 if TYPE_CHECKING:
-    import os
-
+    from barcode.base import Barcode
     from barcode.writer import BaseWriter
 
-__BARCODE_MAP = {
+__BARCODE_MAP: dict[str, type[Barcode]] = {
     "codabar": CODABAR,
     "code128": Code128,
     "code39": Code39,
@@ -61,12 +62,29 @@ PROVIDED_BARCODES = list(__BARCODE_MAP)
 PROVIDED_BARCODES.sort()
 
 
+@overload
+def get(
+    name: str, code: str, writer: BaseWriter | None = None, options: dict | None = None
+) -> Barcode:
+    ...
+
+
+@overload
+def get(
+    name: str,
+    code: None = None,
+    writer: BaseWriter | None = None,
+    options: dict | None = None,
+) -> type[Barcode]:
+    ...
+
+
 def get(
     name: str,
     code: str | None = None,
     writer: BaseWriter | None = None,
     options: dict | None = None,
-):
+) -> Barcode | type[Barcode]:
     """Helper method for getting a generator or even a generated code.
 
     :param name: The name of the type of barcode desired.
@@ -79,6 +97,7 @@ def get(
         generating.
     """
     options = options or {}
+    barcode: type[Barcode]
     try:
         barcode = __BARCODE_MAP[name.lower()]
     except KeyError as e:
@@ -89,15 +108,15 @@ def get(
     return barcode
 
 
-def get_class(name: str):
+def get_class(name: str) -> type[Barcode]:
     return get_barcode(name)
 
 
 def generate(
     name: str,
     code: str,
-    writer: BaseWriter | None = None,
-    output: str | (os.PathLike | (BinaryIO | None)) = None,
+    writer: BaseWriter | None,
+    output: str | os.PathLike | BinaryIO,
     writer_options: dict | None = None,
     text: str | None = None,
 ) -> str | None:
@@ -113,6 +132,9 @@ def generate(
     """
     from barcode.base import Barcode
 
+    if output is None:
+        raise TypeError("'output' cannot be None")
+
     writer = writer or Barcode.default_writer()
     writer.set_options(writer_options or {})
 
@@ -120,11 +142,12 @@ def generate(
 
     if isinstance(output, str):
         return barcode.save(output, writer_options, text)
-    if output:
-        barcode.write(output, writer_options, text)
+    if isinstance(output, os.PathLike):
+        with open(output, "wb") as fp:
+            barcode.write(fp, writer_options, text)
         return None
-
-    raise TypeError("'output' cannot be None")
+    barcode.write(output, writer_options, text)
+    return None
 
 
 get_barcode = get
