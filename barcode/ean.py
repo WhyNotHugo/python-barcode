@@ -94,11 +94,11 @@ class EuropeanArticleNumber13(Barcode):
         oddsum = sum(int(x) for x in ean_without_checksum[-1::-2])
         return (10 - ((evensum + oddsum * 3) % 10)) % 10
 
-    def build(self):
+    def build(self) -> list[str]:
         """Builds the barcode pattern from `self.ean`.
 
         :returns: The pattern as string
-        :rtype: String
+        :rtype: List containing the string as a single element
         """
         code = self.EDGE[:]
         pattern = _ean.LEFT_PATTERN[int(self.ean[0])]
@@ -110,15 +110,16 @@ class EuropeanArticleNumber13(Barcode):
         code += self.EDGE
         return [code]
 
-    def to_ascii(self):
+    def to_ascii(self) -> str:
         """Returns an ascii representation of the barcode.
 
         :rtype: String
         """
-        code = self.build()
-        for i, line in enumerate(code):
-            code[i] = line.replace("G", "|").replace("1", "|").replace("0", " ")
-        return "\n".join(code)
+        code_list = self.build()
+        if not len(code_list) == 1:
+            raise RuntimeError("Code list must contain a single element.")
+        code = code_list[0]
+        return code.replace("G", "|").replace("1", "|").replace("0", " ")
 
     def render(self, writer_options=None, text=None):
         options = {"module_width": SIZES["SC2"]}
@@ -171,11 +172,10 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
 
     digits = 7
 
-    def build(self):
+    def build(self) -> list[str]:
         """Builds the barcode pattern from `self.ean`.
 
-        :returns: The pattern as string
-        :rtype: String
+        :returns: A list containing the string as a single element
         """
         code = self.EDGE[:]
         for number in self.ean[:4]:
