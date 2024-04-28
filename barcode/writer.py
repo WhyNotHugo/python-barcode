@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import gzip
 import os
-import xml.dom
+import xml.dom.minidom
 from typing import TYPE_CHECKING
 from typing import BinaryIO
 from typing import Callable
@@ -58,7 +58,7 @@ def _set_attributes(element, **attributes):
 
 
 def create_svg_object(with_doctype=False):
-    imp = xml.dom.getDOMImplementation()
+    imp = xml.dom.minidom.getDOMImplementation()
     doctype = imp.createDocumentType(
         "svg",
         "-//W3C//DTD SVG 1.1//EN",
