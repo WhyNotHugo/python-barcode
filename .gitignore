@@ -9,6 +9,7 @@
 *.kpf
 *.svg
 *.db
+.idea/*
 barcode/__pycache*
 build/*
 dist/*
