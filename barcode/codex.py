@@ -154,7 +154,7 @@ class Code128(Barcode):
         self.code = code
         self.writer = writer or self.default_writer()
         self._charset = "C"
-        self._buffer = ""
+        self._digit_buffer = ""  # Accumulate pairs of digits for charset C
         check_code(self.code, self.name, code128.ALL)
 
     def __str__(self) -> str:
@@ -204,15 +204,15 @@ class Code128(Barcode):
 
         codes: list[int] = []
         if self._charset == "C" and not char.isdigit():
-            if self._is_char_fnc1_char(char) and not self._buffer:
+            if self._is_char_fnc1_char(char) and not self._digit_buffer:
                 return codes
             if char in code128.B:
                 codes = self._new_charset("B")
             elif char in code128.A:
                 codes = self._new_charset("A")
-            if len(self._buffer) == 1:
-                codes.append(self._convert(self._buffer[0]))
-                self._buffer = ""
+            if len(self._digit_buffer) == 1:
+                codes.append(self._convert(self._digit_buffer[0]))
+                self._digit_buffer = ""
         elif self._charset == "B":
             if look_next():
                 codes = self._new_charset("C")
@@ -254,13 +254,13 @@ class Code128(Barcode):
         if char in code128.C:
             return code128.C[char]
         if char.isdigit():
-            self._buffer += char
-            if len(self._buffer) == 1:
+            self._digit_buffer += char
+            if len(self._digit_buffer) == 1:
                 # Wait for the second digit to group in pairs
                 return None
-            assert len(self._buffer) == 2
-            value = int(self._buffer)
-            self._buffer = ""
+            assert len(self._digit_buffer) == 2
+            value = int(self._digit_buffer)
+            self._digit_buffer = ""
             return value
         raise RuntimeError(f"Character {char} could not be converted in charset C.")
 
@@ -283,10 +283,10 @@ class Code128(Barcode):
             if code_num is not None:
                 encoded.append(code_num)
         # Finally look in the buffer
-        if len(self._buffer) == 1:
+        if len(self._digit_buffer) == 1:
             encoded.extend(self._new_charset("B"))
-            encoded.append(self._convert(self._buffer[0]))
-            self._buffer = ""
+            encoded.append(self._convert(self._digit_buffer[0]))
+            self._digit_buffer = ""
         return self._try_to_optimize(encoded)
 
     def build(self) -> list[str]:
