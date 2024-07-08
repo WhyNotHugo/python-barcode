@@ -35,7 +35,7 @@ def test_ean14_checksum() -> None:
 
 def test_isbn10_checksum() -> None:
     isbn = get_barcode("isbn10", "376926085")
-    assert isbn.isbn10 == "3769260856"
+    assert isbn.isbn10 == "3769260856"  # type: ignore[attr-defined]
 
 
 def test_isbn13_checksum() -> None:
