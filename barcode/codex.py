@@ -66,12 +66,14 @@ class Code39(Barcode):
         """:returns: The full code as it will be encoded."""
         return self.code
 
-    def calculate_checksum(self):
+    def calculate_checksum(self) -> str:
         check = sum(code39.MAP[x][0] for x in self.code) % 43
         for k, v in code39.MAP.items():
             if check == v[0]:
                 return k
-        return None
+        raise RuntimeError(
+            "All possible values for the checksum should have been included in the map."
+        )
 
     def build(self) -> list[str]:
         chars = [code39.EDGE]
