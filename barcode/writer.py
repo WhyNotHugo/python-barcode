@@ -4,7 +4,6 @@ import gzip
 import os
 import xml.dom.minidom
 from typing import TYPE_CHECKING
-from typing import Any
 from typing import BinaryIO
 from typing import Callable
 from typing import TypedDict
@@ -219,7 +218,7 @@ class BaseWriter:
                     yield (-c, self.guard_height_factor)
                 c = 1
 
-    def render(self, code: list[str]) -> Any:
+    def render(self, code: list[str]):
         """Renders the barcode to whatever the inheriting writer provides,
         using the registered callbacks.
 
