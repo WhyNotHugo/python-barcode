@@ -115,8 +115,8 @@ def get_class(name: str) -> type[Barcode]:
 def generate(
     name: str,
     code: str,
-    writer: BaseWriter | None,
-    output: str | os.PathLike | BinaryIO,
+    writer: BaseWriter | None = None,
+    output: str | os.PathLike | BinaryIO | None = None,
     writer_options: dict | None = None,
     text: str | None = None,
 ) -> str | None:
