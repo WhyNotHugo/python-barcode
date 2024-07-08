@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import codecs
 import os
+from typing import Iterator
+
+import pytest
 
 from barcode import get_barcode
 from barcode import get_barcode_class
@@ -50,10 +53,13 @@ TESTCODES = (
 )
 
 
-def test_generating_barcodes() -> None:
+@pytest.mark.parametrize(("codename", "code"), TESTCODES)
+def test_generating_barcodes(
+    codename: str, code: str, gather_image_elements_into_html: list[str]
+) -> None:
     os.makedirs(TESTPATH, exist_ok=True)
 
-    objects = []
+    objects = gather_image_elements_into_html
 
     def append(x, y) -> None:
         objects.append(OBJECTS.format(filename=x, name=y))
@@ -62,7 +68,7 @@ def test_generating_barcodes() -> None:
         objects.append(IMAGES.format(filename=x, name=y))
 
     options = {}
-    for codename, code in TESTCODES:
+    if True:
         bcode = get_barcode(codename, code)
         if codename.startswith("i"):
             options["center_text"] = False
@@ -83,9 +89,16 @@ def test_generating_barcodes() -> None:
             append_img(os.path.basename(filename), bcode.name)
         else:
             objects.append(NO_PIL)
+
+
+@pytest.fixture(scope="module")
+def gather_image_elements_into_html() -> Iterator[list[str]]:
+    image_elements: list[str] = []
+    yield image_elements
+
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, "w", encoding="utf-8") as f:
-        obj = "\n".join(objects)
+        obj = "\n".join(image_elements)
         f.write(HTML.format(version=version, body=obj))
 
     print(f"\nNow open {HTMLFILE} in your browser.")
