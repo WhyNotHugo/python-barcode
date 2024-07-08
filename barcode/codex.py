@@ -223,12 +223,33 @@ class Code128(Barcode):
                 codes = self._new_charset("B")
         return codes
 
-    def _convert(self, char: str):
+    def _convert(self, char: str) -> int:
+        """Convert a character to a code number for the current charset.
+
+        NOTE: encoding digits with charset C requires buffering and is not supported
+        here. Use _convert_or_buffer instead.
+        """
         if self._charset == "A":
             return code128.A[char]
         if self._charset == "B":
             return code128.B[char]
         if self._charset == "C":
+            if char in ["TO_A", "TO_B"]:
+                return code128.C[char]
+            raise RuntimeError("Use _convert_or_buffer for charset C.")
+        raise RuntimeError(
+            f"Character {char} could not be converted in charset {self._charset}."
+        )
+
+    def _convert_or_buffer(self, char: str) -> int | None:
+        """Convert a character to a code number for the current charset.
+
+        If charset C is active then digits are encoded in pairs. When the first digit
+        is encountered, it is buffered and None is returned.
+        """
+        if self._charset != "C":
+            return self._convert(char)
+        else:
             if char in code128.C:
                 return code128.C[char]
             if char.isdigit():
@@ -257,7 +278,7 @@ class Code128(Barcode):
         encoded: list[int] = [code128.START_CODES[self._charset]]
         for i, char in enumerate(self.code):
             encoded.extend(self._maybe_switch_charset(i))
-            code_num = self._convert(char)
+            code_num = self._convert_or_buffer(char)
             if code_num is not None:
                 encoded.append(code_num)
         # Finally look in the buffer
