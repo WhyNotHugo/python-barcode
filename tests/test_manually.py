@@ -59,13 +59,13 @@ def test_generating_barcodes(
 ) -> None:
     os.makedirs(TESTPATH, exist_ok=True)
 
-    objects = gather_image_elements_into_html
+    image_elements = gather_image_elements_into_html
 
     def append(x, y) -> None:
-        objects.append(OBJECTS.format(filename=x, name=y))
+        image_elements.append(OBJECTS.format(filename=x, name=y))
 
     def append_img(x, y) -> None:
-        objects.append(IMAGES.format(filename=x, name=y))
+        image_elements.append(IMAGES.format(filename=x, name=y))
 
     options = {}
     bcode = get_barcode(codename, code)
@@ -87,7 +87,7 @@ def test_generating_barcodes(
         filename = bcode.save(os.path.join(TESTPATH, codename), options=opts)
         append_img(os.path.basename(filename), bcode.name)
     else:
-        objects.append(NO_PIL)
+        image_elements.append(NO_PIL)
 
 
 @pytest.fixture(scope="module")
