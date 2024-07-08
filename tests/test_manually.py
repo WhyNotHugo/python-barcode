@@ -68,27 +68,26 @@ def test_generating_barcodes(
         objects.append(IMAGES.format(filename=x, name=y))
 
     options = {}
-    if True:
-        bcode = get_barcode(codename, code)
+    bcode = get_barcode(codename, code)
+    if codename.startswith("i"):
+        options["center_text"] = False
+    else:
+        options["center_text"] = True
+    filename = bcode.save(os.path.join(TESTPATH, codename), options=options)
+    print(f"Code: {bcode.name}, Input: {code}, Output: {bcode.get_fullcode()}")
+    append(os.path.basename(filename), bcode.name)
+    if ImageWriter is not None:
+        bcodec = get_barcode_class(codename)
+        bcode = bcodec(code, writer=ImageWriter())
+        opts = {}
         if codename.startswith("i"):
-            options["center_text"] = False
+            opts["center_text"] = False
         else:
-            options["center_text"] = True
-        filename = bcode.save(os.path.join(TESTPATH, codename), options=options)
-        print(f"Code: {bcode.name}, Input: {code}, Output: {bcode.get_fullcode()}")
-        append(os.path.basename(filename), bcode.name)
-        if ImageWriter is not None:
-            bcodec = get_barcode_class(codename)
-            bcode = bcodec(code, writer=ImageWriter())
-            opts = {}
-            if codename.startswith("i"):
-                opts["center_text"] = False
-            else:
-                opts["center_text"] = True
-            filename = bcode.save(os.path.join(TESTPATH, codename), options=opts)
-            append_img(os.path.basename(filename), bcode.name)
-        else:
-            objects.append(NO_PIL)
+            opts["center_text"] = True
+        filename = bcode.save(os.path.join(TESTPATH, codename), options=opts)
+        append_img(os.path.basename(filename), bcode.name)
+    else:
+        objects.append(NO_PIL)
 
 
 @pytest.fixture(scope="module")
