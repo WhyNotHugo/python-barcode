@@ -249,18 +249,17 @@ class Code128(Barcode):
         """
         if self._charset != "C":
             return self._convert(char)
-        else:
-            if char in code128.C:
-                return code128.C[char]
-            if char.isdigit():
-                self._buffer += char
-                if len(self._buffer) == 1:
-                    # Wait for the second digit to group in pairs
-                    return None
-                assert len(self._buffer) == 2
-                value = int(self._buffer)
-                self._buffer = ""
-                return value
+        if char in code128.C:
+            return code128.C[char]
+        if char.isdigit():
+            self._buffer += char
+            if len(self._buffer) == 1:
+                # Wait for the second digit to group in pairs
+                return None
+            assert len(self._buffer) == 2
+            value = int(self._buffer)
+            self._buffer = ""
+            return value
         raise RuntimeError(f"Character {char} could not be converted in charset C.")
 
     def _try_to_optimize(self, encoded: list[int]) -> list[int]:
