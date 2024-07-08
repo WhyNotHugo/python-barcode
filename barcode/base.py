@@ -48,7 +48,10 @@ class Barcode:
         return f"<{self.__class__.__name__}({self.get_fullcode()!r})>"
 
     def build(self) -> list[str]:
-        """Return a singleton list with a string encoding the barcode as 1s and 0s."""
+        """Return a single-element list with a string encoding the barcode.
+
+        Typically the string consists of 1s and 0s, although it can contain
+        other characters such as G for guard lines (e.g. in EAN13)."""
         raise NotImplementedError
 
     def get_fullcode(self):
