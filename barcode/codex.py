@@ -209,7 +209,7 @@ class Code128(Barcode):
                 codes = self._new_charset("B")
         return codes
 
-    def _convert(self, char: str) -> int:
+    def _convert(self, char: str):
         if self._charset == "A":
             return code128.A[char]
         if self._charset == "B":
@@ -223,6 +223,7 @@ class Code128(Barcode):
                     value = int(self._buffer)
                     self._buffer = ""
                     return value
+                return None
         raise RuntimeError(
             f"Character {char} could not be converted in charset {self._charset}."
         )
