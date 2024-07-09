@@ -210,7 +210,9 @@ class Code128(Barcode):
                 codes = self._new_charset("B")
             elif char in code128.A:
                 codes = self._new_charset("A")
+            assert self._charset != "C"
             if len(self._digit_buffer) == 1:
+                # Flush the remaining single digit from the buffer
                 codes.append(self._convert(self._digit_buffer[0]))
                 self._digit_buffer = ""
         elif self._charset == "B":
@@ -282,7 +284,8 @@ class Code128(Barcode):
             code_num = self._convert_or_buffer(char)
             if code_num is not None:
                 encoded.append(code_num)
-        # Finally look in the buffer
+        # If we finish in charset C with a single digit remaining in the buffer,
+        # switch to charset B and flush out the buffer.
         if len(self._digit_buffer) == 1:
             encoded.extend(self._new_charset("B"))
             encoded.append(self._convert(self._digit_buffer[0]))
