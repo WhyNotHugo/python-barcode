@@ -139,7 +139,7 @@ class Code128(Barcode):
     def __init__(self, code, writer=None) -> None:
         self.code = code
         self.writer = writer or self.default_writer()
-        self._charset = "B"
+        self._charset = "C"
         self._buffer = ""
         check_code(self.code, self.name, code128.ALL)
 
@@ -163,9 +163,15 @@ class Code128(Barcode):
         self._charset = which
         return [code]
 
+    # to be redefined in subclass if required
+    def _is_char_FNC1_CHAR(self, char):
+        # FNC1 char is defined in GS1-128 specification and it is defined just the same for all encodings
+        # therefore this sing should be treated in a special way.
+        return False
+
     def _maybe_switch_charset(self, pos):
         char = self.code[pos]
-        next_ = self.code[pos : pos + 10]
+        next_ = self.code[pos: pos + 10]
 
         def look_next():
             digits = 0
@@ -178,13 +184,16 @@ class Code128(Barcode):
 
         codes = []
         if self._charset == "C" and not char.isdigit():
-            if char in code128.B:
-                codes = self._new_charset("B")
-            elif char in code128.A:
-                codes = self._new_charset("A")
-            if len(self._buffer) == 1:
-                codes.append(self._convert(self._buffer[0]))
-                self._buffer = ""
+            if self._is_char_FNC1_CHAR(char) and not self._buffer:
+                return codes
+            else:
+                if char in code128.B:
+                    codes = self._new_charset("B")
+                elif char in code128.A:
+                    codes = self._new_charset("A")
+                if len(self._buffer) == 1:
+                    codes.append(self._convert(self._buffer[0]))
+                    self._buffer = ""
         elif self._charset == "B":
             if look_next():
                 codes = self._new_charset("C")
@@ -274,6 +283,9 @@ class Gs1_128(Code128):  # noqa: N801
 
     def get_fullcode(self):
         return super().get_fullcode()[1:]
+
+    def _is_char_FNC1_CHAR(self, char):
+        return char == self.FNC1_CHAR
 
 
 # For pre 0.8 compatibility
