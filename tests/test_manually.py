@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import codecs
 import os
+from typing import Iterator
+
+import pytest
 
 from barcode import get_barcode
 from barcode import get_barcode_class
@@ -50,42 +53,51 @@ TESTCODES = (
 )
 
 
-def test_generating_barcodes() -> None:
+@pytest.mark.parametrize(("codename", "code"), TESTCODES)
+def test_generating_barcodes(
+    codename: str, code: str, gather_image_elements_into_html: list[str]
+) -> None:
     os.makedirs(TESTPATH, exist_ok=True)
 
-    objects = []
+    image_elements = gather_image_elements_into_html
 
     def append(x, y) -> None:
-        objects.append(OBJECTS.format(filename=x, name=y))
+        image_elements.append(OBJECTS.format(filename=x, name=y))
 
     def append_img(x, y) -> None:
-        objects.append(IMAGES.format(filename=x, name=y))
+        image_elements.append(IMAGES.format(filename=x, name=y))
 
     options = {}
-    for codename, code in TESTCODES:
-        bcode = get_barcode(codename, code)
+    bcode = get_barcode(codename, code)
+    if codename.startswith("i"):
+        options["center_text"] = False
+    else:
+        options["center_text"] = True
+    filename = bcode.save(os.path.join(TESTPATH, codename), options=options)
+    print(f"Code: {bcode.name}, Input: {code}, Output: {bcode.get_fullcode()}")
+    append(os.path.basename(filename), bcode.name)
+    if ImageWriter is not None:
+        bcodec = get_barcode_class(codename)
+        bcode = bcodec(code, writer=ImageWriter())
+        opts = {}
         if codename.startswith("i"):
-            options["center_text"] = False
+            opts["center_text"] = False
         else:
-            options["center_text"] = True
-        filename = bcode.save(os.path.join(TESTPATH, codename), options=options)
-        print(f"Code: {bcode.name}, Input: {code}, Output: {bcode.get_fullcode()}")
-        append(os.path.basename(filename), bcode.name)
-        if ImageWriter is not None:
-            bcodec = get_barcode_class(codename)
-            bcode = bcodec(code, writer=ImageWriter())
-            opts = {}
-            if codename.startswith("i"):
-                opts["center_text"] = False
-            else:
-                opts["center_text"] = True
-            filename = bcode.save(os.path.join(TESTPATH, codename), options=opts)
-            append_img(os.path.basename(filename), bcode.name)
-        else:
-            objects.append(NO_PIL)
+            opts["center_text"] = True
+        filename = bcode.save(os.path.join(TESTPATH, codename), options=opts)
+        append_img(os.path.basename(filename), bcode.name)
+    else:
+        image_elements.append(NO_PIL)
+
+
+@pytest.fixture(scope="module")
+def gather_image_elements_into_html() -> Iterator[list[str]]:
+    image_elements: list[str] = []
+    yield image_elements
+
     # Save htmlfile with all objects
     with codecs.open(HTMLFILE, "w", encoding="utf-8") as f:
-        obj = "\n".join(objects)
+        obj = "\n".join(image_elements)
         f.write(HTML.format(version=version, body=obj))
 
     print(f"\nNow open {HTMLFILE} in your browser.")
