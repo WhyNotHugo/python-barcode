@@ -48,7 +48,7 @@ class ITF(Barcode):
     def get_fullcode(self):
         return self.code
 
-    def build(self):
+    def build(self) -> list[str]:
         data = itf.START
         for i in range(0, len(self.code), 2):
             bars_digit = int(self.code[i])

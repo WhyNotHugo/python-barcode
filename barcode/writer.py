@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import gzip
 import os
-import xml.dom
+import xml.dom.minidom
 from typing import TYPE_CHECKING
 from typing import BinaryIO
 from typing import Callable
@@ -13,6 +13,9 @@ from barcode.version import version
 if TYPE_CHECKING:
     from typing import Generator
     from typing import Literal
+
+    from PIL.Image import Image as T_Image
+    from PIL.ImageDraw import ImageDraw as T_ImageDraw
 
     class InternalText(TypedDict):
         start: list
@@ -28,27 +31,22 @@ if TYPE_CHECKING:
 
 
 try:
-    import Image
-    import ImageDraw
-    import ImageFont
+    from PIL import Image
+    from PIL import ImageDraw
+    from PIL import ImageFont
 except ImportError:
-    try:
-        from PIL import Image
-        from PIL import ImageDraw
-        from PIL import ImageFont
-    except ImportError:
-        import logging
+    import logging
 
-        log = logging.getLogger("pyBarcode")
-        log.info("Pillow not found. Image output disabled")
-        Image = ImageDraw = ImageFont = None
+    log = logging.getLogger("pyBarcode")
+    log.info("Pillow not found. Image output disabled")
+    Image = ImageDraw = ImageFont = None
 
 
-def mm2px(mm, dpi: int):
+def mm2px(mm: float, dpi: int) -> float:
     return (mm * dpi) / 25.4
 
 
-def pt2mm(pt):
+def pt2mm(pt: float) -> float:
     return pt * 0.352777778
 
 
@@ -57,8 +55,9 @@ def _set_attributes(element, **attributes):
         element.setAttribute(key, value)
 
 
-def create_svg_object(with_doctype=False):
-    imp = xml.dom.getDOMImplementation()
+def create_svg_object(with_doctype=False) -> xml.dom.minidom.Document:
+    imp = xml.dom.minidom.getDOMImplementation()
+    assert imp is not None
     doctype = imp.createDocumentType(
         "svg",
         "-//W3C//DTD SVG 1.1//EN",
@@ -96,6 +95,21 @@ class BaseWriter:
     """
 
     _callbacks: Callbacks
+    module_width: float
+    module_height: float
+    font_path: str
+    font_size: float
+    quiet_zone: float
+    background: str | int
+    foreground: str | int
+    text: str
+    human: str
+    text_distance: float
+    text_line_distance: float
+    center_text: bool
+    guard_height_factor: float
+    margin_top: float
+    margin_bottom: float
 
     def __init__(
         self,
@@ -204,65 +218,60 @@ class BaseWriter:
                     yield (-c, self.guard_height_factor)
                 c = 1
 
-    def render(self, code):
+    def render(self, code: list[str]):
         """Renders the barcode to whatever the inheriting writer provides,
         using the registered callbacks.
 
         :parameters:
             code : List
-                List of strings matching the writer spec
+                List consisting of a single string matching the writer spec
                 (only contain 0 or 1 or G).
         """
         if self._callbacks["initialize"] is not None:
             self._callbacks["initialize"](code)
         ypos = self.margin_top
         base_height = self.module_height
-        for cc, line in enumerate(code):
-            # Left quiet zone is x startposition
-            xpos = self.quiet_zone
-            bxs = xpos  # x start of barcode
-            text: InternalText = {
-                "start": [],  # The x start of a guard
-                "end": [],  # The x end of a guard
-                "xpos": [],  # The x position where to write a text block
-                # Flag that indicates if the previous mod was part of an guard block:
-                "was_guard": False,
-            }
-            for mod, height_factor in self.packed(line):
-                if mod < 1:
-                    color = self.background
-                else:
-                    color = self.foreground
-
-                    if text["was_guard"] and height_factor == 1:
-                        # The current guard ended, store its x position
-                        text["end"].append(xpos)
-                        text["was_guard"] = False
-                    elif not text["was_guard"] and height_factor != 1:
-                        # A guard started, store its x position
-                        text["start"].append(xpos)
-                        text["was_guard"] = True
-
-                self.module_height = base_height * height_factor
-                # remove painting for background colored tiles?
-                self._callbacks["paint_module"](
-                    xpos, ypos, self.module_width * abs(mod), color
-                )
-                xpos += self.module_width * abs(mod)
+        if len(code) != 1:
+            raise NotImplementedError("Only one line of code is supported")
+        line = code[0]
+        # Left quiet zone is x startposition
+        xpos = self.quiet_zone
+        bxs = xpos  # x start of barcode
+        text: InternalText = {
+            "start": [],  # The x start of a guard
+            "end": [],  # The x end of a guard
+            "xpos": [],  # The x position where to write a text block
+            # Flag that indicates if the previous mod was part of an guard block:
+            "was_guard": False,
+        }
+        for mod, height_factor in self.packed(line):
+            if mod < 1:
+                color = self.background
             else:
-                if height_factor != 1:
-                    text["end"].append(xpos)
-                self.module_height = base_height
+                color = self.foreground
 
-            bxe = xpos
-            # Add right quiet zone to every line, except last line,
-            # quiet zone already provided with background,
-            # should it be removed completely?
-            if (cc + 1) != len(code):
-                self._callbacks["paint_module"](
-                    xpos, ypos, self.quiet_zone, self.background
-                )
-            ypos += self.module_height
+                if text["was_guard"] and height_factor == 1:
+                    # The current guard ended, store its x position
+                    text["end"].append(xpos)
+                    text["was_guard"] = False
+                elif not text["was_guard"] and height_factor != 1:
+                    # A guard started, store its x position
+                    text["start"].append(xpos)
+                    text["was_guard"] = True
+
+            self.module_height = base_height * height_factor
+            # remove painting for background colored tiles?
+            self._callbacks["paint_module"](
+                xpos, ypos, self.module_width * abs(mod), color
+            )
+            xpos += self.module_width * abs(mod)
+        else:
+            if height_factor != 1:
+                text["end"].append(xpos)
+            self.module_height = base_height
+
+        bxe = xpos
+        ypos += self.module_height
 
         if self.text and self._callbacks["paint_text"] is not None:
             if not text["start"]:
@@ -306,14 +315,17 @@ class SVGWriter(BaseWriter):
             self._create_text,
             self._finish,
         )
-        self.compress = False
-        self.with_doctype = True
-        self._document = None
-        self._root = None
-        self._group = None
+        self.compress: bool = False
+        self.with_doctype: bool = True
+        self._document: xml.dom.minidom.Document
+        self._root: xml.dom.minidom.Element
+        self._group: xml.dom.minidom.Element
 
-    def _init(self, code):
-        width, height = self.calculate_size(len(code[0]), len(code))
+    def _init(self, code: list[str]):
+        if len(code) != 1:
+            raise NotImplementedError("Only one line of code is supported")
+        line = code[0]
+        width, height = self.calculate_size(len(line), 1)
         self._document = create_svg_object(self.with_doctype)
         self._root = self._document.documentElement
         attributes = {
@@ -362,9 +374,9 @@ class SVGWriter(BaseWriter):
             attributes = {
                 "x": SIZE.format(xpos),
                 "y": SIZE.format(ypos),
-                "style": "fill:{};font-size:{}pt;text-anchor:middle;".format(
-                    self.foreground,
-                    self.font_size,
+                "style": (
+                    f"fill:{self.foreground};"
+                    f"font-size:{self.font_size}pt;text-anchor:middle;"
                 ),
             }
             _set_attributes(element, **attributes)
@@ -427,16 +439,21 @@ else:
             self.format = format
             self.mode = mode
             self.dpi = dpi
-            self._image = None
-            self._draw = None
+            self._image: T_Image
+            self._draw: T_ImageDraw
 
-        def _init(self, code):
-            width, height = self.calculate_size(len(code[0]), len(code))
+        def _init(self, code: list[str]) -> None:
+            if ImageDraw is None:
+                raise RuntimeError("Pillow not found. Cannot create image.")
+            if len(code) != 1:
+                raise NotImplementedError("Only one line of code is supported")
+            line = code[0]
+            width, height = self.calculate_size(len(line), 1)
             size = (int(mm2px(width, self.dpi)), int(mm2px(height, self.dpi)))
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
 
-        def _paint_module(self, xpos, ypos, width, color):
+        def _paint_module(self, xpos: float, ypos: float, width: float, color):
             size = [
                 (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi)),
                 (
@@ -447,6 +464,7 @@ else:
             self._draw.rectangle(size, outline=color, fill=color)
 
         def _paint_text(self, xpos, ypos):
+            assert ImageFont is not None
             font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
             if font_size <= 0:
                 return
@@ -461,7 +479,7 @@ else:
                 )
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
-        def _finish(self) -> Image:
+        def _finish(self) -> T_Image:
             return self._image
 
         def save(self, filename: str, output) -> str:
