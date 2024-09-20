@@ -469,6 +469,11 @@ else:
             barcodetext = self.human if self.human != "" else self.text
             
             assert ImageFont is not None
+
+            # check option to override self.text with self.human (barcode as
+            # human readable data, can be used to print own formats)
+            barcodetext = self.human if self.human != "" else self.text
+
             font_size = int(mm2px(pt2mm(self.font_size), self.dpi))
             if font_size <= 0:
                 return
