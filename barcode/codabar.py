@@ -41,7 +41,7 @@ class CODABAR(Barcode):
     def get_fullcode(self):
         return self.code
 
-    def build(self):
+    def build(self) -> list[str]:
         try:
             data = (
                 codabar.STARTSTOP[self.code[0]] + "n"

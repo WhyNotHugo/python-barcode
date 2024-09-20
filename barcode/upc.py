@@ -77,11 +77,11 @@ class UniversalProductCodeA(Barcode):
 
         return 10 - check
 
-    def build(self):
+    def build(self) -> list[str]:
         """Builds the barcode pattern from 'self.upc'
 
         :return: The pattern as string
-        :rtype: str
+        :rtype: List containing the string as a single element
         """
         code = _upc.EDGE[:]
 
@@ -97,16 +97,17 @@ class UniversalProductCodeA(Barcode):
 
         return [code]
 
-    def to_ascii(self):
+    def to_ascii(self) -> str:
         """Returns an ascii representation of the barcode.
 
         :rtype: str
         """
 
-        code = self.build()
-        for i, line in enumerate(code):
-            code[i] = line.replace("1", "|").replace("0", "_")
-        return "\n".join(code)
+        code_list = self.build()
+        if len(code_list) != 1:
+            raise RuntimeError("Code list must contain a single element.")
+        code = code_list[0]
+        return code.replace("1", "|").replace("0", "_")
 
     def render(self, writer_options=None, text=None):
         options = {"module_width": 0.33}
