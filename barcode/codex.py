@@ -2,6 +2,7 @@
 
 :Provided barcodes: Code 39, Code 128, PZN
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -176,14 +177,18 @@ class Code128(Barcode):
         return [code]
 
     # to be redefined in subclass if required
-    def _is_char_FNC1_CHAR(self, char):
-        # FNC1 char is defined in GS1-128 specification and it is defined just the same for all encodings
-        # therefore this sing should be treated in a special way.
+    def _is_char_fnc1_char(self, char):
+        """Whether a character is the FNC1 character.
+
+        May be redefined by subclasses if required. FNC1 char is defined in GS1-128
+        specification and it is defined just the same for all encodings therefore this
+        sign should be treated in a special way.
+        """
         return False
 
     def _maybe_switch_charset(self, pos: int) -> list[int]:
         char = self.code[pos]
-        next_ = self.code[pos: pos + 10]
+        next_ = self.code[pos : pos + 10]
 
         def look_next() -> bool:
             digits = 0
@@ -196,16 +201,15 @@ class Code128(Barcode):
 
         codes: list[int] = []
         if self._charset == "C" and not char.isdigit():
-            if self._is_char_FNC1_CHAR(char) and not self._buffer:
+            if self._is_char_fnc1_char(char) and not self._buffer:
                 return codes
-            else:
-                if char in code128.B:
-                    codes = self._new_charset("B")
-                elif char in code128.A:
-                    codes = self._new_charset("A")
-                if len(self._buffer) == 1:
-                    codes.append(self._convert(self._buffer[0]))
-                    self._buffer = ""
+            if char in code128.B:
+                codes = self._new_charset("B")
+            elif char in code128.A:
+                codes = self._new_charset("A")
+            if len(self._buffer) == 1:
+                codes.append(self._convert(self._buffer[0]))
+                self._buffer = ""
         elif self._charset == "B":
             if look_next():
                 codes = self._new_charset("C")
@@ -297,7 +301,7 @@ class Gs1_128(Code128):  # noqa: N801
     def get_fullcode(self):
         return super().get_fullcode()[1:]
 
-    def _is_char_FNC1_CHAR(self, char):
+    def _is_char_fnc1_char(self, char):
         return char == self.FNC1_CHAR
 
 
