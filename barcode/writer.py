@@ -331,6 +331,7 @@ class SVGWriter(BaseWriter):
         attributes = {
             "width": SIZE.format(width),
             "height": SIZE.format(height),
+            "viewBox": f"0 0 {width} {height}",
         }
         _set_attributes(self._root, **attributes)
         if COMMENT:
