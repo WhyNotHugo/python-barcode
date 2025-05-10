@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v0.16.2
+~~~~~~~
+* Add support for Python 3.13.
+
 v0.16.1
 ~~~~~~~
 * Switch from ``setup.py`` to ``pyproject.toml``. Only affects how installation
