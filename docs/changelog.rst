@@ -23,6 +23,9 @@ v0.16.0
   included resulting in a transparent background.
 * Do not paint text if its size would be zero, to avoid an "invalid ppem value"
   error with newer versions of Pillow.
+* Optimization of code creation, avoiding to many charset switch.
+  This results in shorter codes; according to GS1 codes should not
+  be longer than 165 mm (6.5"). (#232)
 
 v0.15.1
 ~~~~~~~
