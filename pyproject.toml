@@ -90,3 +90,11 @@ required-imports = ["from __future__ import annotations"]
 exclude_lines = [
     "if TYPE_CHECKING:",
 ]
+
+[tool.pytest.ini_options]
+addopts = [
+  "-vv",
+  "--cov=barcode",
+  "--cov-report=term-missing:skip-covered",
+  "--no-cov-on-fail",
+]
