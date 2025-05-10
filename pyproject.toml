@@ -51,7 +51,7 @@ exclude = ["tests"]
 write_to = "barcode/version.py"
 version_scheme = "post-release"
 
-[tool.ruff]
+[tool.ruff.lint]
 select = [
     "F",
     "E",
@@ -83,7 +83,7 @@ select = [
     "RUF",
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-single-line = true
 required-imports = ["from __future__ import annotations"]
 

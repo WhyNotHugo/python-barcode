@@ -3,6 +3,7 @@ It needs no external packages to be installed, the barcodes are
 created as SVG objects. If Pillow is installed, the barcodes can also be
 rendered as images (all formats supported by Pillow).
 """
+
 from __future__ import annotations
 
 import os
@@ -65,8 +66,7 @@ PROVIDED_BARCODES.sort()
 @overload
 def get(
     name: str, code: str, writer: BaseWriter | None = None, options: dict | None = None
-) -> Barcode:
-    ...
+) -> Barcode: ...
 
 
 @overload
@@ -75,8 +75,7 @@ def get(
     code: None = None,
     writer: BaseWriter | None = None,
     options: dict | None = None,
-) -> type[Barcode]:
-    ...
+) -> type[Barcode]: ...
 
 
 def get(
