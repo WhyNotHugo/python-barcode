@@ -154,9 +154,7 @@ class BaseWriter:
         )
         number_of_text_lines = len(self.text.splitlines())
         if self.font_size and self.text:
-            height += (
-                pt2mm(self.font_size) / 2 * number_of_text_lines + self.text_distance
-            )
+            height += pt2mm(self.font_size) * number_of_text_lines + self.text_distance
             height += self.text_line_distance * (number_of_text_lines - 1)
         return width, height
 
@@ -293,7 +291,7 @@ class BaseWriter:
                 # The last text block is always put after the last guard end
                 text["xpos"].append(text["end"][-1] + 4 * self.module_width)
 
-                ypos += pt2mm(self.font_size)
+                ypos += pt2mm(self.font_size) + self.text_distance
 
                 # Split the ean into its blocks
                 blocks = self.text.split(" ")
