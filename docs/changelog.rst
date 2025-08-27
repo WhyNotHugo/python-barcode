@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v0.16.1
+~~~~~~~
+* Switch from ``setup.py`` to ``pyproject.toml``. Only affects how installation
+  from source is performed, and has no runtime impact.
+
 v0.16.0
 ~~~~~~~
 

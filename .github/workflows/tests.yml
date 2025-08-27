@@ -27,7 +27,6 @@ jobs:
           cache: pip
           cache-dependency-path: |
             pyproject.toml
-            setup.py
       - name: Install test dependency
         run: pip install tox
       - name: Run tests

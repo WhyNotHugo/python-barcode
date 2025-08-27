@@ -1,5 +1,50 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+requires = ["setuptools>=61", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-barcode"
+description = "Create standard barcodes with Python. No external modules needed. (optional Pillow support included)."
+readme = "README.rst"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+  { name = "Hugo Osvaldo Barrera et al", email = "hugo@whynothugo.nl" }
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Multimedia :: Graphics",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+images = ["pillow"]
+
+[project.scripts]
+python-barcode = "barcode.pybarcode:main"
+
+[project.urls]
+documentation =  "https://python-barcode.readthedocs.io/"
+repository = "https://github.com/WhyNotHugo/python-barcode"
+issues = "https://github.com/WhyNotHugo/python-barcode/issues"
+funding= "https://whynothugo.nl/sponsor/"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+exclude = ["tests"]
 
 [tool.setuptools_scm]
 write_to = "barcode/version.py"
