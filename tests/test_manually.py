@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import codecs
 import os
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -12,6 +12,9 @@ from barcode import get_barcode
 from barcode import get_barcode_class
 from barcode import version
 from barcode.writer import ImageWriter
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 TESTPATH = os.path.join(PATH, "test_outputs")

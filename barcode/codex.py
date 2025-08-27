@@ -6,7 +6,6 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from typing import Collection
 from typing import Literal
 
 from barcode.base import Barcode
@@ -17,6 +16,8 @@ from barcode.errors import IllegalCharacterError
 from barcode.errors import NumberOfDigitsError
 
 if TYPE_CHECKING:
+    from collections.abc import Collection
+
     from barcode.writer import BaseWriter
 
 __docformat__ = "restructuredtext en"

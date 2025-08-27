@@ -11,7 +11,7 @@ from typing import TypedDict
 from barcode.version import version
 
 if TYPE_CHECKING:
-    from typing import Generator
+    from collections.abc import Generator
     from typing import Literal
 
     from PIL.Image import Image as T_Image
