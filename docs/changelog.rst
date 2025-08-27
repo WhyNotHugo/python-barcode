@@ -4,7 +4,7 @@ Changelog
 v0.16.0
 ~~~~~~~
 
-* **Breaking** Drop support for Python 3.7.
+* **Breaking** Drop support for Python 3.7 and 3.8.
 * Make image DPI configurable.
 * Fixed inconsistent checksum calculation when calculating the checksum
   multiple times for EAN barcodes.
