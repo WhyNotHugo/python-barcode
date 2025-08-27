@@ -1,0 +1,25 @@
+# Run this with:
+#   hut builds submit -f publish-release.yaml
+image: archlinux
+packages:
+  - python-build
+  - python-setuptools-scm
+  - python-wheel
+  - twine
+sources:
+  - https://github.com/WhyNotHugo/python-barcode/
+secrets:
+  - 0dd39b49-3530-4002-a197-e0ca7fc3fde7 # PyPI token.
+tasks:
+  - check: |
+      cd python-barcode
+      git fetch --tags
+
+      # Stop here unless this is a tag.
+      git describe --exact-match --tags || complete-build
+  - build: |
+      cd python-barcode
+      python -m build --no-isolation
+  - publish: |
+      cd python-barcode
+      twine upload --non-interactive dist/*
