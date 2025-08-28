@@ -50,12 +50,15 @@ def pt2mm(pt: float) -> float:
     return pt * 0.352777778
 
 
-def _set_attributes(element, **attributes):
+def _set_attributes(
+    element: xml.dom.minidom.Element,
+    **attributes: str,
+) -> None:
     for key, value in attributes.items():
         element.setAttribute(key, value)
 
 
-def create_svg_object(with_doctype=False) -> xml.dom.minidom.Document:
+def create_svg_object(with_doctype: bool = False) -> xml.dom.minidom.Document:
     imp = xml.dom.minidom.getDOMImplementation()
     assert imp is not None
     doctype = imp.createDocumentType(
@@ -64,6 +67,7 @@ def create_svg_object(with_doctype=False) -> xml.dom.minidom.Document:
         "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd",
     )
     document = imp.createDocument(None, "svg", doctype if with_doctype else None)
+    assert document.documentElement is not None
     _set_attributes(
         document.documentElement, version="1.1", xmlns="http://www.w3.org/2000/svg"
     )
@@ -385,7 +389,7 @@ class SVGWriter(BaseWriter):
             self._group.appendChild(element)
             ypos += pt2mm(self.font_size) + self.text_line_distance
 
-    def _finish(self):
+    def _finish(self) -> bytes:
         if self.compress:
             return self._document.toxml(encoding="UTF-8")
 
@@ -422,7 +426,12 @@ else:
         mode: str
         dpi: int
 
-        def __init__(self, format="PNG", mode="RGB", dpi=300) -> None:
+        def __init__(
+            self,
+            format: str = "PNG",
+            mode: str = "RGB",
+            dpi: int = 300,
+        ) -> None:
             """Initialise a new write instance.
 
             :params format: The file format for the generated image. This parameter can

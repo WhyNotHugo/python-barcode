@@ -42,7 +42,11 @@ class EuropeanArticleNumber13(Barcode):
     digits = 12
 
     def __init__(
-        self, ean: str, writer=None, no_checksum=False, guardbar=False
+        self,
+        ean: str,
+        writer=None,
+        no_checksum: bool = False,
+        guardbar: bool = False,
     ) -> None:
         if not ean[: self.digits].isdigit():
             raise IllegalCharacterError(f"EAN code can only contain numbers {ean}.")
@@ -121,7 +125,7 @@ class EuropeanArticleNumber13(Barcode):
         code = code_list[0]
         return code.replace("G", "|").replace("1", "|").replace("0", " ")
 
-    def render(self, writer_options=None, text=None):
+    def render(self, writer_options: dict | None = None, text: str | None = None):
         options = {"module_width": SIZES["SC2"]}
         options.update(writer_options or {})
         return super().render(options, text)
@@ -161,11 +165,8 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 class EuropeanArticleNumber8(EuropeanArticleNumber13):
     """Represents an EAN-8 barcode. See EAN13's __init__ for details.
 
-    :parameters:
-        ean : String
-            The ean number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param ean: The ean number as string.
+    :param writer: The writer to render the barcode (default: SVGWriter).
     """
 
     name = "EAN-8"
@@ -197,7 +198,13 @@ class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
 
     name = "EAN-8 with guards"
 
-    def __init__(self, ean, writer=None, no_checksum=False, guardbar=True) -> None:
+    def __init__(
+        self,
+        ean: str,
+        writer=None,
+        no_checksum: bool = False,
+        guardbar: bool = True,
+    ) -> None:
         super().__init__(ean, writer, no_checksum, guardbar)
 
 
