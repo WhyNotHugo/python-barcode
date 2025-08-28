@@ -4,15 +4,20 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 from typing import ClassVar
+from typing import Generic
+from typing import TypeVar
 
 from barcode.writer import BaseWriter
 from barcode.writer import SVGWriter
+from barcode.writer import T_Output
 
 if TYPE_CHECKING:
     from typing import BinaryIO
 
+W = TypeVar("W", bound=BaseWriter[object])
 
-class Barcode:
+
+class Barcode(Generic[W, T_Output]):
     name = ""
 
     digits = 0
@@ -31,9 +36,9 @@ class Barcode:
         "text": "",
     }
 
-    writer: BaseWriter
+    writer: W
 
-    def __init__(self, code: str, writer: BaseWriter | None = None, **options) -> None:
+    def __init__(self, code: str, writer: W | None = None, **options) -> None:
         raise NotImplementedError
 
     def to_ascii(self) -> str:
@@ -62,7 +67,10 @@ class Barcode:
         raise NotImplementedError
 
     def save(
-        self, filename: str, options: dict | None = None, text: str | None = None
+        self,
+        filename: str,
+        options: dict | None = None,
+        text: str | None = None,
     ) -> str:
         """Renders the barcode and saves it in `filename`.
 
@@ -72,7 +80,7 @@ class Barcode:
 
         :returns: The full filename with extension.
         """
-        output = self.render(options, text) if text else self.render(options)
+        output: T_Output = self.render(options, text) if text else self.render(options)
 
         return self.writer.save(filename, output)
 
@@ -92,7 +100,11 @@ class Barcode:
         output = self.render(options, text)
         self.writer.write(output, fp)
 
-    def render(self, writer_options: dict | None = None, text: str | None = None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> T_Output:
         """Renders the barcode using `self.writer`.
 
         :param writer_options: Options for `self.writer`, see writer docs for details.
