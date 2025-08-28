@@ -52,8 +52,7 @@ write_to = "barcode/version.py"
 version_scheme = "post-release"
 
 [tool.ruff.lint]
-select = [
-    "F",
+extend-select = [
     "E",
     "W",
     "I",
