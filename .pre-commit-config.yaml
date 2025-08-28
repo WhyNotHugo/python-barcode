@@ -6,10 +6,6 @@ repos:
         args: [--markdown-linebreak-ext=md]
       - id: end-of-file-fixer
       - id: debug-statements
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.15.0'
-    hooks:
-    -   id: mypy
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 'v0.11.9'
     hooks:
