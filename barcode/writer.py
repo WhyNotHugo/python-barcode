@@ -39,7 +39,7 @@ except ImportError:
 
     log = logging.getLogger("pyBarcode")
     log.info("Pillow not found. Image output disabled")
-    Image = ImageDraw = ImageFont = None
+    Image = ImageDraw = ImageFont = None  # type: ignore[assignment]
 
 
 def mm2px(mm: float, dpi: int) -> float:
