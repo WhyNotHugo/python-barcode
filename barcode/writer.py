@@ -331,6 +331,7 @@ class SVGWriter(BaseWriter):
         line = code[0]
         width, height = self.calculate_size(len(line), 1)
         self._document = create_svg_object(self.with_doctype)
+        assert self._document.documentElement is not None
         self._root = self._document.documentElement
         attributes = {
             "width": SIZE.format(width),
