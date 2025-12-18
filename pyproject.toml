@@ -41,11 +41,8 @@ repository = "https://github.com/WhyNotHugo/python-barcode"
 issues = "https://github.com/WhyNotHugo/python-barcode/issues"
 funding= "https://whynothugo.nl/sponsor/"
 
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.packages.find]
-exclude = ["tests"]
+[tool.setuptools.package-data]
+barcode = ["barcode/fonts/*.ttf"]
 
 [tool.setuptools_scm]
 write_to = "barcode/version.py"
