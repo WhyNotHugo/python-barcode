@@ -31,6 +31,7 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 images = ["pillow"]
+test_with_pyzbar = ["pillow", "cairosvg", "pyzbar"]
 
 [project.scripts]
 python-barcode = "barcode.pybarcode:main"
