@@ -44,11 +44,8 @@ funding= "https://whynothugo.nl/sponsor/"
 [dependency-groups]
 test = ["pytest", "coverage", "pillow", "cairosvg", "pyzbar"]
 
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.packages.find]
-exclude = ["tests"]
+[tool.setuptools.package-data]
+barcode = ["barcode/fonts/*.ttf"]
 
 [tool.setuptools_scm]
 write_to = "barcode/version.py"
