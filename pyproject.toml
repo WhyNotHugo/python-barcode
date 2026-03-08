@@ -31,7 +31,6 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 images = ["pillow"]
-test_with_pyzbar = ["pillow", "cairosvg", "pyzbar"]
 
 [project.scripts]
 python-barcode = "barcode.pybarcode:main"
@@ -41,6 +40,9 @@ documentation =  "https://python-barcode.readthedocs.io/"
 repository = "https://github.com/WhyNotHugo/python-barcode"
 issues = "https://github.com/WhyNotHugo/python-barcode/issues"
 funding= "https://whynothugo.nl/sponsor/"
+
+[dependency-groups]
+test = ["pytest", "coverage", "pillow", "cairosvg", "pyzbar"]
 
 [tool.setuptools]
 include-package-data = true
