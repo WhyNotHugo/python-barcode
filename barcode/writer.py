@@ -205,8 +205,12 @@ class BaseWriter:
         '11010111' -> [2, -1, 1, -1, 3]
 
         This method will yield a sequence of pairs (width, height_factor).
+        Height factors:
+        - 1.0: normal bar
+        - guard_height_factor: guard bar (taller)
+        - -1.0: addon bar (shorter, positioned lower to leave space for text above)
 
-        :param line: A string matching the writer spec (only contain 0 or 1 or G).
+        :param line: A string matching the writer spec (can contain 0, 1, G, or A).
         """
         line += " "
         c = 1
@@ -218,6 +222,9 @@ class BaseWriter:
                     yield (c, 1)
                 elif line[i] == "G":
                     yield (c, self.guard_height_factor)
+                elif line[i] == "A":
+                    # Addon bar - use negative to signal special handling
+                    yield (c, -1.0)
                 else:
                     yield (-c, self.guard_height_factor)
                 c = 1
@@ -248,6 +255,16 @@ class BaseWriter:
             # Flag that indicates if the previous mod was part of an guard block:
             "was_guard": False,
         }
+
+        # Track addon bar positions
+        addon_start_x: float | None = None
+        addon_end_x: float | None = None
+        in_addon = False
+
+        # Calculate addon bar offset: space needed for text above addon
+        # Just the font size should be enough space for text
+        addon_text_space = pt2mm(self.font_size)
+
         for mod, height_factor in self.packed(line):
             if mod < 1:
                 color = self.background
@@ -258,52 +275,113 @@ class BaseWriter:
                     # The current guard ended, store its x position
                     text["end"].append(xpos)
                     text["was_guard"] = False
-                elif not text["was_guard"] and height_factor != 1:
+                elif not text["was_guard"] and height_factor not in (1, -1.0):
                     # A guard started, store its x position
                     text["start"].append(xpos)
                     text["was_guard"] = True
 
-            self.module_height = base_height * height_factor
+            # Handle addon bars specially
+            if height_factor == -1.0:
+                # Track addon bar positions
+                if not in_addon:
+                    addon_start_x = xpos
+                    in_addon = True
+                addon_end_x = xpos + self.module_width * abs(mod)
+
+                # Addon bars: same height as main bars, but start lower
+                # Space for text above = font_size + text_distance
+                bar_ypos = ypos + addon_text_space
+                self.module_height = base_height  # Same height as main bars
+            else:
+                # Normal or guard bars
+                bar_ypos = ypos
+                self.module_height = base_height * abs(height_factor)
+
             # remove painting for background colored tiles?
             self._callbacks["paint_module"](
-                xpos, ypos, self.module_width * abs(mod), color
+                xpos, bar_ypos, self.module_width * abs(mod), color
             )
             xpos += self.module_width * abs(mod)
         else:
-            if height_factor != 1:
+            if height_factor not in (1, -1.0):
                 text["end"].append(xpos)
             self.module_height = base_height
 
-        bxe = xpos
-        ypos += self.module_height
+        bxe = xpos  # End of all bars (including addon)
+        bars_ypos = ypos  # Save original ypos where bars start
+        ypos += base_height  # Use base_height for text positioning
 
         if self.text and self._callbacks["paint_text"] is not None:
-            if not text["start"]:
-                # If we don't have any start value, print the entire ean
-                ypos += self.text_distance
-                xpos = bxs + (bxe - bxs) / 2.0 if self.center_text else bxs
-                self._callbacks["paint_text"](xpos, ypos)
+            # Parse text blocks and detect addon
+            blocks = self.text.split(" ")
+            has_guard = blocks[-1] == ">"
+            working_blocks = blocks[:-1] if has_guard else blocks
+
+            # Check if last block is addon (2 or 5 digits)
+            addon_code: str | None = None
+            if working_blocks and len(working_blocks[-1]) in (2, 5):
+                addon_code = working_blocks[-1]
+                working_blocks = working_blocks[:-1]
+
+            # Calculate addon text position if addon exists
+            addon_ypos = bars_ypos + addon_text_space - self.margin_top
+            if addon_start_x is not None and addon_end_x is not None:
+                addon_xpos = (addon_start_x + addon_end_x) / 2
             else:
-                # Else, divide the ean into blocks and print each block
-                # in the expected position.
+                addon_xpos = bxe  # Fallback
+
+            if not text["start"]:
+                # No guards - single centered text line
+                ypos += self.text_distance
+
+                if addon_code is not None and addon_start_x is not None:
+                    # Draw main text centered over main barcode (excluding addon)
+                    main_end_x = addon_start_x - 9 * self.module_width
+                    main_text = " ".join(working_blocks)
+                    xpos = bxs + (main_end_x - bxs) / 2.0 if self.center_text else bxs
+                    self.text = main_text
+                    self._callbacks["paint_text"](xpos, ypos)
+
+                    # Draw addon text above addon bars
+                    self.text = addon_code
+                    self._callbacks["paint_text"](addon_xpos, addon_ypos)
+                else:
+                    # No addon - draw full text centered
+                    xpos = bxs + (bxe - bxs) / 2.0 if self.center_text else bxs
+                    self._callbacks["paint_text"](xpos, ypos)
+            else:
+                # Guards present - divide text into positioned blocks
                 text["xpos"] = [bxs - 4 * self.module_width]
 
-                # Calculates the position of the text by getting the difference
-                # between a guard end and the next start
+                # Calculate positions between guard ends and starts
                 text["start"].pop(0)
                 for s, e in zip(text["start"], text["end"]):
                     text["xpos"].append(e + (s - e) / 2)
 
-                # The last text block is always put after the last guard end
+                # Last text block after last guard end
                 text["xpos"].append(text["end"][-1] + 4 * self.module_width)
 
                 ypos += pt2mm(self.font_size)
 
-                # Split the ean into its blocks
-                blocks = self.text.split(" ")
-                for text_, xpos in zip(blocks, text["xpos"]):
+                # Draw main EAN blocks on the baseline
+                for text_, xpos in zip(working_blocks, text["xpos"]):
                     self.text = text_
                     self._callbacks["paint_text"](xpos, ypos)
+
+                # Draw addon and/or guard marker if present
+                if addon_code is not None:
+                    self.text = addon_code
+                    self._callbacks["paint_text"](addon_xpos, addon_ypos)
+
+                    # Draw '>' marker after the last addon bar
+                    marker_xpos = bxe + 2 * self.module_width
+                    self.text = ">"
+                    self._callbacks["paint_text"](marker_xpos, addon_ypos)
+                elif has_guard:
+                    # No addon, but guard present - draw '>' on main baseline
+                    marker_xpos = bxe + 2 * self.module_width
+                    self.text = ">"
+                    self._callbacks["paint_text"](marker_xpos, ypos)
 
         return self._callbacks["finish"]()
 
@@ -457,8 +535,7 @@ else:
                 raise RuntimeError("Pillow not found. Cannot create image.")
             if len(code) != 1:
                 raise NotImplementedError("Only one line of code is supported")
-            line = code[0]
-            width, height = self.calculate_size(len(line), 1)
+            width, height = self.calculate_size(len(code[0]), 1)
             size = (int(mm2px(width, self.dpi)), int(mm2px(height, self.dpi)))
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
