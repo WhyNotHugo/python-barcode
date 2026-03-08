@@ -191,16 +191,14 @@ class Code128(Barcode):
 
     def _maybe_switch_charset(self, pos: int) -> list[int]:
         char = self.code[pos]
-        next_ = self.code[pos : pos + 10]
 
         def look_next() -> bool:
-            digits = 0
-            for c in next_:
-                if c.isdigit():
-                    digits += 1
-                else:
-                    break
-            return digits > 3
+            if pos == 0 and self._is_char_fnc1_char(self.code[0]):
+                return True
+            
+            minimum_sequential_digits = 4
+            code_slice = self.code[pos : pos + minimum_sequential_digits]
+            return len(code_slice) == minimum_sequential_digits and code_slice.isdigit()
 
         codes: list[int] = []
         if self._charset == "C" and not char.isdigit():
@@ -267,8 +265,12 @@ class Code128(Barcode):
         raise RuntimeError(f"Character {char} could not be converted in charset C.")
 
     def _try_to_optimize(self, encoded: list[int]) -> list[int]:
-        if encoded[1] in code128.TO:
-            encoded[:2] = [code128.TO[encoded[1]]]
+        if len(encoded) < 2 or encoded[0] not in (code128.START_CODES["A"], code128.START_CODES["B"], code128.START_CODES["C"]):
+            return encoded
+
+        if encoded[1] in code128.TO and not ((encoded[0] == code128.START_CODES["C"]) and (encoded[1] < 100)):
+            return [code128.TO[encoded[1]]] + encoded[2:]
+
         return encoded
 
     def _calculate_checksum(self, encoded: list[int]) -> int:
