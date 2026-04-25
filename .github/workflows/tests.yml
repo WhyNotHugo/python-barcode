@@ -17,7 +17,6 @@ jobs:
           - os: windows-2022
             python: "3.12"
             variant: py-images
-          - os: windows-2022
     name: python${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.variant }}
     steps:
       - uses: actions/checkout@v4
