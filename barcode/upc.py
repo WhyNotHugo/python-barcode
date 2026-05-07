@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 from functools import reduce
 
+from barcode import addon_utils
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
 from barcode.errors import IllegalCharacterError
@@ -25,7 +26,13 @@ class UniversalProductCodeA(Barcode):
 
     digits = 11
 
-    def __init__(self, upc, writer=None, make_ean=False) -> None:
+    def __init__(
+        self,
+        upc: str,
+        writer=None,
+        make_ean: bool = False,
+        addon: str | None = None,
+    ) -> None:
         """Initializes new UPC-A barcode.
 
         :param str upc: The upc number as string.
@@ -34,6 +41,7 @@ class UniversalProductCodeA(Barcode):
         :param bool make_ean: Indicates if a leading zero should be added to
             the barcode. This converts the UPC into a valid European Article
             Number (EAN).
+        :param addon: Optional 2 or 5 digit addon (EAN-2 or EAN-5).
         """
         self.ean = make_ean
         upc = upc[: self.digits]
@@ -45,19 +53,35 @@ class UniversalProductCodeA(Barcode):
             )
         self.upc = upc
         self.upc = f"{upc}{self.calculate_checksum()}"
+
+        # Validate and store addon
+        self.addon: str | None = None
+        if addon is not None:
+            addon = addon.strip()
+            if addon:
+                if not addon.isdigit():
+                    raise IllegalCharacterError(
+                        f"Addon can only contain numbers, got {addon}."
+                    )
+                if len(addon) not in (2, 5):
+                    raise NumberOfDigitsError(
+                        f"Addon must be 2 or 5 digits, received {len(addon)}."
+                    )
+                self.addon = addon
+
         self.writer = writer or self.default_writer()
 
     def __str__(self) -> str:
-        if self.ean:
-            return "0" + self.upc
-
-        return self.upc
+        base = "0" + self.upc if self.ean else self.upc
+        if self.addon:
+            return f"{base} {self.addon}"
+        return base
 
     def get_fullcode(self):
-        if self.ean:
-            return "0" + self.upc
-
-        return self.upc
+        base = "0" + self.upc if self.ean else self.upc
+        if self.addon:
+            return f"{base} {self.addon}"
+        return base
 
     def calculate_checksum(self):
         """Calculates the checksum for UPCA/UPC codes
@@ -86,7 +110,7 @@ class UniversalProductCodeA(Barcode):
         """
         code = _upc.EDGE[:]
 
-        for _i, number in enumerate(self.upc[0:6]):
+        for number in self.upc[0:6]:
             code += _upc.CODES["L"][int(number)]
 
         code += _upc.MIDDLE
@@ -96,7 +120,18 @@ class UniversalProductCodeA(Barcode):
 
         code += _upc.EDGE
 
+        # Add addon if present
+        if self.addon:
+            code += self._build_addon()
+
         return [code]
+
+    def _build_addon(self) -> str:
+        """Builds the addon barcode pattern (EAN-2 or EAN-5).
+
+        :returns: The addon pattern as string (including quiet zone separator)
+        """
+        return addon_utils.build_addon(self.addon or "")
 
     def to_ascii(self) -> str:
         """Returns an ascii representation of the barcode.

@@ -46,3 +46,20 @@ def test_isbn13_checksum() -> None:
 def test_gs1_128_checksum() -> None:
     gs1_128 = get_barcode("gs1_128", "00376401856400470087")
     assert gs1_128.get_fullcode() == "00376401856400470087"
+
+
+def test_issn_short_form_checksum() -> None:
+    """Test ISSN with short form (7-8 digits)."""
+    issn = get_barcode("issn", "0317-8471")
+    assert issn.issn == "03178471"  # type: ignore[attr-defined]
+    # Default sequence digits "00", EAN checksum is calculated by EAN13
+    assert issn.get_fullcode() == "9770317847001"
+
+
+def test_issn_full_ean13_form_checksum() -> None:
+    """Test ISSN with full EAN-13 form, preserving digits 11-12."""
+    # Input: 977 + 1234567 (ISSN) + 89 (sequence) + 8 (EAN checksum - ignored)
+    issn = get_barcode("issn", "9771234567898")
+    assert issn.issn == "12345679"  # type: ignore[attr-defined]
+    # Sequence digits "89" preserved, EAN checksum recalculated to 8
+    assert issn.get_fullcode() == "9771234567898"

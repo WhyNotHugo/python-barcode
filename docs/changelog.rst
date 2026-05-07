@@ -1,6 +1,25 @@
 Changelog
 ---------
 
+current
+~~~~~~~
+* Added support for EAN-2 and EAN-5 addons. These supplemental barcodes can be
+  added to EAN-13, EAN-8, ISBN-13, ISBN-10, and ISSN barcodes via the ``addon``
+  parameter. EAN-2 is commonly used for periodical issue numbers, EAN-5 for
+  book prices.
+* Added support for EAN-2 and EAN-5 addons to UPC-A barcodes via the ``addon``
+  parameter, following the same interface as EAN-13.
+* Addon rendering includes a 9-module quiet zone separator between the
+  main barcode and the addon, as required by the GS1 specification. This ensures
+  proper scanning of barcodes with addons.
+* Added scannability tests for EAN-2 and EAN-5 addons using the ``pyzbar`` library.
+* Adjusted rendering of EAN barcodes when using ``guardbar=True`` together with an
+  EAN-2/EAN-5 ``addon``: the addon label is placed above the addon bars per
+  GS1 layout, rather than being mixed into the main text line.
+* Fixed ISSN to accept full EAN-13 format (13 digits starting with 977) and
+  preserve digits 11-12 (sequence variant) instead of always replacing them
+  with "00".
+
 v0.16.2
 ~~~~~~~
 * Add support for Python 3.13.

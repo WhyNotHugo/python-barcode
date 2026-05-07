@@ -132,6 +132,46 @@ Using an interactive python interpreter to generate PNG files.
 You can check the generated files (e.g.: ``ean13_barcode.png``) by opening them with
 any graphical app (e.g.: Firefox).
 
+Using EAN-2 and EAN-5 Addons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: |version|
+
+EAN-2 and EAN-5 are supplemental barcodes that can be added to EAN-13, EAN-8,
+ISBN, ISSN, and UPC-A barcodes. They are commonly used for:
+
+- **EAN-2**: Periodical issue numbers (e.g., magazine week/month)
+- **EAN-5**: Suggested retail prices (e.g., book prices)
+
+.. code:: python
+
+    from barcode import EAN13
+    from barcode.isxn import ISSN, ISBN13
+
+    # EAN-13 with 2-digit addon (e.g., issue number 05)
+    ean = EAN13("5901234123457", addon="05")
+    ean.save("ean13_with_addon2")
+
+    # EAN-13 with 5-digit addon (e.g., price $24.95 = 52495)
+    ean = EAN13("5901234123457", addon="52495")
+    ean.save("ean13_with_addon5")
+
+    # ISSN with issue number addon
+    issn = ISSN("03178471", addon="05")
+    issn.save("issn_with_issue")
+
+    # ISBN with price addon
+    isbn = ISBN13("978-3-16-148410-0", addon="52495")
+    isbn.save("isbn_with_price")
+
+The addon appears in the output of ``get_fullcode()`` separated by a space:
+
+.. code:: pycon
+
+    >>> ean = EAN13("5901234123457", addon="12")
+    >>> ean.get_fullcode()
+    '5901234123457 12'
+
 Command Line usage
 ~~~~~~~~~~~~~~~~~~
 
