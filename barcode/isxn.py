@@ -66,17 +66,15 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
     name = "ISBN-10"
 
-    digits = 9
+    isbn_digits = 9
 
     def __init__(self, isbn, writer=None) -> None:
-        isbn = isbn.replace("-", "")
-        isbn = isbn[: self.digits]
+        isbn = isbn.replace("-", "")[:self.isbn_digits]
+        self.isbn10 = f"{isbn}{self._calculate_checksum(isbn)}"
         super().__init__("978" + isbn, writer)
-        self.isbn10 = isbn
-        self.isbn10 = f"{isbn}{self._calculate_checksum()}"
 
-    def _calculate_checksum(self):
-        tmp = sum(x * int(y) for x, y in enumerate(self.isbn10[:9], start=1)) % 11
+    def _calculate_checksum(self, isbn):
+        tmp = sum(x * int(y) for x, y in enumerate(isbn[:self.isbn_digits], start=1)) % 11
         if tmp == 10:
             return "X"
 
@@ -99,28 +97,24 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
     name = "ISSN"
 
-    digits = 7
+    issn_digits = 7
 
     def __init__(self, issn, writer=None) -> None:
-        issn = issn.replace("-", "")
-        issn = issn[: self.digits]
-        self.issn = issn
-        self.issn = f"{issn}{self._calculate_checksum()}"
-        super().__init__(self.make_ean(), writer)
+        issn = issn.replace("-", "")[: self.issn_digits]
+        self.issn = f"{issn}{self._calculate_checksum(issn)}"
+        super().__init__(f"977{issn}00", writer) #checksum is overwritten by on .build
 
-    def _calculate_checksum(self):
+
+    def _calculate_checksum(self, issn):
         tmp = (
             11
-            - sum(x * int(y) for x, y in enumerate(reversed(self.issn[:7]), start=2))
+            - sum(x * int(y) for x, y in enumerate(reversed(issn[:self.issn_digits]), start=2))
             % 11
         )
         if tmp == 10:
             return "X"
 
         return tmp
-
-    def make_ean(self):
-        return f"977{self.issn[:7]}00{self._calculate_checksum()}"
 
     def __str__(self) -> str:
         return self.issn
