@@ -113,7 +113,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
             11
             - sum(x * int(y) for x, y in enumerate(reversed(self.issn[:7]), start=2))
             % 11
-        )
+        ) % 11
         if tmp == 10:
             return "X"
 

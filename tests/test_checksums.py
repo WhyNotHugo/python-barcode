@@ -46,3 +46,16 @@ def test_isbn13_checksum() -> None:
 def test_gs1_128_checksum() -> None:
     gs1_128 = get_barcode("gs1_128", "00376401856400470087")
     assert gs1_128.get_fullcode() == "00376401856400470087"
+
+
+def test_issn_checksum_zero() -> None:
+    # When the weighted sum is divisible by 11, the checksum should be 0,
+    # not 11. Regression test for issue #238.
+    issn = get_barcode("issn", "6727893")
+    assert issn.issn == "67278930"  # type: ignore[attr-defined]
+
+
+def test_issn_checksum_x() -> None:
+    # When (11 - weighted_sum % 11) % 11 == 10, checksum should be "X".
+    issn = get_barcode("issn", "0000006")
+    assert issn.issn == "0000006X"  # type: ignore[attr-defined]
