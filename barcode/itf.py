@@ -70,7 +70,7 @@ class ITF(Barcode):
                 raw += "0" * self.narrow
         return [raw]
 
-    def render(self, writer_options, text=None):
+    def render(self, writer_options: dict | None = None, text: str | None = None):
         options = {
             "module_width": MIN_SIZE / self.narrow,
             "quiet_zone": MIN_QUIET_ZONE,
