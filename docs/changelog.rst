@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+Unreleased
+~~~~~~~~~~
+* Migrate ``project.license`` to an SPDX expression and drop the deprecated
+  ``License ::`` trove classifier, silencing the ``setuptools >=77``
+  deprecation warning. (#260)
+
 v0.16.2
 ~~~~~~~
 * Add support for Python 3.13.
