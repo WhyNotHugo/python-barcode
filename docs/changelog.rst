@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v0.16.3
+~~~~~~~
+* Add support for Python 3.14.
+
 v0.16.2
 ~~~~~~~
 * Add support for Python 3.13.
