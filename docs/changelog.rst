@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+Unreleased
+~~~~~~~~~~
+* Fixed a leading ``99`` digit pair being silently dropped from Code128
+  barcodes: in charset C the value ``99`` collided with the charset-C start
+  marker and was mistaken for a redundant switch code. (#251)
+
 v0.16.2
 ~~~~~~~
 * Add support for Python 3.13.

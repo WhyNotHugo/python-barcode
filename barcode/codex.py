@@ -267,7 +267,14 @@ class Code128(Barcode):
         raise RuntimeError(f"Character {char} could not be converted in charset C.")
 
     def _try_to_optimize(self, encoded: list[int]) -> list[int]:
-        if encoded[1] in code128.TO:
+        # A START_C followed by an immediate charset switch can be folded into a
+        # single START code. In charset C, however, the code number 99 is the
+        # data pair "99" (not the TO_C switch marker), so it must never be folded
+        # away -- doing so silently dropped a leading "99" from the barcode.
+        if encoded[0] == code128.START_CODES["C"] and encoded[1] in (
+            code128.C["TO_A"],
+            code128.C["TO_B"],
+        ):
             encoded[:2] = [code128.TO[encoded[1]]]
         return encoded
 
