@@ -279,6 +279,10 @@ class Code128(Barcode):
         return sum(cs) % 103
 
     def _build(self) -> list[int]:
+        # Reset the state that gets mutated while building so that repeated
+        # calls on the same instance are deterministic (see #143).
+        self._charset = "C"
+        self._digit_buffer = ""
         encoded: list[int] = [code128.START_CODES[self._charset]]
         for i, char in enumerate(self.code):
             encoded.extend(self._maybe_switch_charset(i))
