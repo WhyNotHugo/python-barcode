@@ -36,6 +36,9 @@ def test_ean14_checksum() -> None:
 def test_isbn10_checksum() -> None:
     isbn = get_barcode("isbn10", "376926085")
     assert isbn.isbn10 == "3769260856"  # type: ignore[attr-defined]
+    # ISBN-10 is rendered as EAN-13 with a 978 prefix; digits=9 must not
+    # poison EuropeanArticleNumber13 slicing.
+    assert isbn.get_fullcode() == "9783769260854"
 
 
 def test_isbn13_checksum() -> None:
@@ -53,6 +56,7 @@ def test_issn_checksum_zero() -> None:
     # not 11. Regression test for issue #238.
     issn = get_barcode("issn", "6727893")
     assert issn.issn == "67278930"  # type: ignore[attr-defined]
+    assert issn.get_fullcode() == "9776727893003"
 
 
 def test_issn_checksum_x() -> None:

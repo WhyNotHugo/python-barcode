@@ -66,11 +66,11 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
     name = "ISBN-10"
 
-    digits = 9
+    isbn_digits = 9
 
     def __init__(self, isbn, writer=None) -> None:
         isbn = isbn.replace("-", "")
-        isbn = isbn[: self.digits]
+        isbn = isbn[: self.isbn_digits]
         super().__init__("978" + isbn, writer)
         self.isbn10 = isbn
         self.isbn10 = f"{isbn}{self._calculate_checksum()}"
@@ -99,11 +99,11 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
     name = "ISSN"
 
-    digits = 7
+    issn_digits = 7
 
     def __init__(self, issn, writer=None) -> None:
         issn = issn.replace("-", "")
-        issn = issn[: self.digits]
+        issn = issn[: self.issn_digits]
         self.issn = issn
         self.issn = f"{issn}{self._calculate_checksum()}"
         super().__init__(self.make_ean(), writer)
