@@ -36,8 +36,7 @@ def test_ean14_checksum() -> None:
 def test_isbn10_checksum() -> None:
     isbn = get_barcode("isbn10", "376926085")
     assert isbn.isbn10 == "3769260856"  # type: ignore[attr-defined]
-    # ISBN-10 is rendered as EAN-13 with a 978 prefix; digits=9 must not
-    # poison EuropeanArticleNumber13 slicing.
+    # ISBN-10 renders as EAN-13; isbn_digits must not shadow EAN digits.
     assert isbn.get_fullcode() == "9783769260854"
 
 
