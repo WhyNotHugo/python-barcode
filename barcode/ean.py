@@ -8,11 +8,17 @@ from __future__ import annotations
 __docformat__ = "restructuredtext en"
 
 
+from typing import TYPE_CHECKING
+
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
 from barcode.errors import IllegalCharacterError
 from barcode.errors import NumberOfDigitsError
 from barcode.errors import WrongCountryCodeError
+from barcode.writer import T_Output
+
+if TYPE_CHECKING:
+    from barcode.writer import BaseWriter
 
 # EAN13 Specs (all sizes in mm)
 SIZES = {
@@ -29,7 +35,7 @@ SIZES = {
 }
 
 
-class EuropeanArticleNumber13(Barcode):
+class EuropeanArticleNumber13(Barcode[T_Output]):
     """Initializes EAN13 object.
 
     :param ean: The ean number as string. If the value is too long, it is trimmed.
@@ -44,7 +50,7 @@ class EuropeanArticleNumber13(Barcode):
     def __init__(
         self,
         ean: str,
-        writer=None,
+        writer: BaseWriter[T_Output] | None = None,
         no_checksum: bool = False,
         guardbar: bool = False,
     ) -> None:
@@ -75,7 +81,7 @@ class EuropeanArticleNumber13(Barcode):
         else:
             self.EDGE = _ean.EDGE
             self.MIDDLE = _ean.MIDDLE
-        self.writer = writer or self.default_writer()
+        self.writer = self._resolve_writer(writer)
 
     def __str__(self) -> str:
         return self.ean
@@ -125,22 +131,32 @@ class EuropeanArticleNumber13(Barcode):
         code = code_list[0]
         return code.replace("G", "|").replace("1", "|").replace("0", " ")
 
-    def render(self, writer_options: dict | None = None, text: str | None = None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> T_Output:
         options = {"module_width": SIZES["SC2"]}
         options.update(writer_options or {})
         return super().render(options, text)
 
 
-class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
+class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13[T_Output]):
     """A shortcut to EAN-13 with ``guardbar=True``."""
 
     name = "EAN-13 with guards"
 
-    def __init__(self, ean, writer=None, no_checksum=False, guardbar=True) -> None:
+    def __init__(
+        self,
+        ean,
+        writer: BaseWriter[T_Output] | None = None,
+        no_checksum=False,
+        guardbar=True,
+    ) -> None:
         super().__init__(ean, writer, no_checksum, guardbar)
 
 
-class JapanArticleNumber(EuropeanArticleNumber13):
+class JapanArticleNumber(EuropeanArticleNumber13[T_Output]):
     """Initializes JAN barcode.
 
     :param jan: The jan number as string.
@@ -159,7 +175,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
         super().__init__(jan, *args, **kwargs)
 
 
-class EuropeanArticleNumber8(EuropeanArticleNumber13):
+class EuropeanArticleNumber8(EuropeanArticleNumber13[T_Output]):
     """Represents an EAN-8 barcode. See EAN13's __init__ for details.
 
     :param ean: The ean number as string.
@@ -190,7 +206,7 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         return self.ean
 
 
-class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
+class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8[T_Output]):
     """A shortcut to EAN-8 with ``guardbar=True``."""
 
     name = "EAN-8 with guards"
@@ -198,14 +214,14 @@ class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
     def __init__(
         self,
         ean: str,
-        writer=None,
+        writer: BaseWriter[T_Output] | None = None,
         no_checksum: bool = False,
         guardbar: bool = True,
     ) -> None:
         super().__init__(ean, writer, no_checksum, guardbar)
 
 
-class EuropeanArticleNumber14(EuropeanArticleNumber13):
+class EuropeanArticleNumber14(EuropeanArticleNumber13[T_Output]):
     """Represents an EAN-14 barcode. See EAN13's __init__ for details.
 
     :param ean: The ean number as string.

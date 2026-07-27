@@ -24,14 +24,20 @@ Example::
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from barcode.ean import EuropeanArticleNumber13
 from barcode.errors import BarcodeError
 from barcode.errors import WrongCountryCodeError
+from barcode.writer import T_Output
+
+if TYPE_CHECKING:
+    from barcode.writer import BaseWriter
 
 __docformat__ = "restructuredtext en"
 
 
-class InternationalStandardBookNumber13(EuropeanArticleNumber13):
+class InternationalStandardBookNumber13(EuropeanArticleNumber13[T_Output]):
     """Initializes new ISBN-13 barcode.
 
     :param isbn: The isbn number as string.
@@ -40,7 +46,13 @@ class InternationalStandardBookNumber13(EuropeanArticleNumber13):
 
     name = "ISBN-13"
 
-    def __init__(self, isbn, writer=None, no_checksum=False, guardbar=False) -> None:
+    def __init__(
+        self,
+        isbn,
+        writer: BaseWriter[T_Output] | None = None,
+        no_checksum=False,
+        guardbar=False,
+    ) -> None:
         isbn = isbn.replace("-", "")
         self.isbn13 = isbn
         if isbn[:3] not in ("978", "979"):
@@ -50,7 +62,7 @@ class InternationalStandardBookNumber13(EuropeanArticleNumber13):
         super().__init__(isbn, writer, no_checksum, guardbar)
 
 
-class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
+class InternationalStandardBookNumber10(InternationalStandardBookNumber13[T_Output]):
     """Initializes new ISBN-10 barcode. This code is rendered as EAN-13 by
     prefixing it with 978.
 
@@ -62,7 +74,7 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
 
     isbn_digits = 9
 
-    def __init__(self, isbn, writer=None) -> None:
+    def __init__(self, isbn, writer: BaseWriter[T_Output] | None = None) -> None:
         isbn = isbn.replace("-", "")
         isbn = isbn[: self.isbn_digits]
         super().__init__("978" + isbn, writer)
@@ -80,7 +92,7 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
         return self.isbn10
 
 
-class InternationalStandardSerialNumber(EuropeanArticleNumber13):
+class InternationalStandardSerialNumber(EuropeanArticleNumber13[T_Output]):
     """Initializes new ISSN barcode. This code is rendered as EAN-13
     by prefixing it with 977 and adding 00 between code and checksum.
 
@@ -92,7 +104,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
     issn_digits = 7
 
-    def __init__(self, issn, writer=None) -> None:
+    def __init__(self, issn, writer: BaseWriter[T_Output] | None = None) -> None:
         issn = issn.replace("-", "")
         issn = issn[: self.issn_digits]
         self.issn = issn

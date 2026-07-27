@@ -43,11 +43,16 @@ issues = "https://github.com/WhyNotHugo/python-barcode/issues"
 funding= "https://whynothugo.nl/sponsor/"
 
 [tool.setuptools.package-data]
-barcode = ["barcode/fonts/*.ttf"]
+barcode = ["barcode/fonts/*.ttf", "py.typed"]
 
 [tool.setuptools_scm]
 write_to = "barcode/version.py"
 version_scheme = "post-release"
+
+# Pillow is an optional dependency; the plain mypy environment runs without it.
+[[tool.mypy.overrides]]
+module = "PIL.*"
+ignore_missing_imports = true
 
 [tool.ruff.lint]
 extend-select = [

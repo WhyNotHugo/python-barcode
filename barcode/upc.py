@@ -8,14 +8,19 @@ from __future__ import annotations
 __docformat__ = "restructuredtext en"
 
 from functools import reduce
+from typing import TYPE_CHECKING
 
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
 from barcode.errors import IllegalCharacterError
 from barcode.errors import NumberOfDigitsError
+from barcode.writer import T_Output
+
+if TYPE_CHECKING:
+    from barcode.writer import BaseWriter
 
 
-class UniversalProductCodeA(Barcode):
+class UniversalProductCodeA(Barcode[T_Output]):
     """Universal Product Code (UPC) barcode.
 
     UPC-A consists of 12 numeric digits.
@@ -25,7 +30,12 @@ class UniversalProductCodeA(Barcode):
 
     digits = 11
 
-    def __init__(self, upc, writer=None, make_ean=False) -> None:
+    def __init__(
+        self,
+        upc,
+        writer: BaseWriter[T_Output] | None = None,
+        make_ean=False,
+    ) -> None:
         """Initializes new UPC-A barcode.
 
         :param str upc: The upc number as string.
@@ -45,7 +55,7 @@ class UniversalProductCodeA(Barcode):
             )
         self.upc = upc
         self.upc = f"{upc}{self.calculate_checksum()}"
-        self.writer = writer or self.default_writer()
+        self.writer = self._resolve_writer(writer)
 
     def __str__(self) -> str:
         if self.ean:
@@ -110,7 +120,11 @@ class UniversalProductCodeA(Barcode):
         code = code_list[0]
         return code.replace("1", "|").replace("0", "_")
 
-    def render(self, writer_options=None, text=None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> T_Output:
         options = {"module_width": 0.33}
         options.update(writer_options or {})
         return super().render(options, text)

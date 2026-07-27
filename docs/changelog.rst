@@ -8,6 +8,8 @@ v0.16.2
   barcodes. (#251)
 * Fix ISBN-10 and ISSN barcodes being truncated to 10 and 8 digits.
 * Fix Code128 emitting different (but valid) output depending on invocation.
+* Add type annotations for writers and barcode classes. Both are now generic
+  over the writer's output type, and the package ships a ``py.typed`` marker.
 
 v0.16.1
 ~~~~~~~

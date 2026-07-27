@@ -5,24 +5,24 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from typing import ClassVar
 from typing import Generic
-from typing import TypeVar
+from typing import cast
 
 from barcode.writer import BaseWriter
 from barcode.writer import SVGWriter
 from barcode.writer import T_Output
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from typing import Any
     from typing import BinaryIO
 
-W = TypeVar("W", bound=BaseWriter[object])
 
-
-class Barcode(Generic[W, T_Output]):
+class Barcode(Generic[T_Output]):
     name = ""
 
     digits = 0
 
-    default_writer = SVGWriter
+    default_writer: ClassVar[Callable[[], BaseWriter[Any]]] = SVGWriter
 
     default_writer_options: ClassVar[dict] = {
         "module_width": 0.2,
@@ -36,10 +36,27 @@ class Barcode(Generic[W, T_Output]):
         "text": "",
     }
 
-    writer: W
+    writer: BaseWriter[T_Output]
 
-    def __init__(self, code: str, writer: W | None = None, **options) -> None:
+    def __init__(
+        self,
+        code: str,
+        writer: BaseWriter[T_Output] | None = None,
+        **options,
+    ) -> None:
         raise NotImplementedError
+
+    def _resolve_writer(
+        self,
+        writer: BaseWriter[T_Output] | None,
+    ) -> BaseWriter[T_Output]:
+        if writer is not None:
+            return writer
+        # When no writer is given, T_Output falls back to its default (bytes),
+        # which matches what the default writer (SVGWriter) renders. Accessing
+        # default_writer through the class keeps mypy from binding it like a
+        # method.
+        return cast("BaseWriter[T_Output]", type(self).default_writer())
 
     def to_ascii(self) -> str:
         code_list = self.build()
@@ -80,7 +97,7 @@ class Barcode(Generic[W, T_Output]):
 
         :returns: The full filename with extension.
         """
-        output: T_Output = self.render(options, text) if text else self.render(options)
+        output = self.render(options, text) if text else self.render(options)
 
         return self.writer.save(filename, output)
 

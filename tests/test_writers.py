@@ -4,8 +4,8 @@ import os
 from io import BytesIO
 
 from barcode import EAN13
-from barcode.writer import ImageWriter
 from barcode.writer import Image
+from barcode.writer import ImageWriter
 from barcode.writer import SVGWriter
 
 PATH = os.path.dirname(os.path.abspath(__file__))
@@ -14,8 +14,6 @@ TESTPATH = os.path.join(PATH, "test_outputs")
 if Image is not None:
 
     def test_saving_image_to_byteio() -> None:
-        assert ImageWriter is not None  # workaround for mypy
-
         rv = BytesIO()
         EAN13(str(100000902922), writer=ImageWriter()).write(rv)
 
@@ -23,8 +21,6 @@ if Image is not None:
             EAN13("100000011111", writer=ImageWriter()).write(f)
 
     def test_saving_rgba_image() -> None:
-        assert ImageWriter is not None  # workaround for mypy
-
         rv = BytesIO()
         EAN13(str(100000902922), writer=ImageWriter()).write(rv)
 
