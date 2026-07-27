@@ -31,10 +31,12 @@ from barcode.upc import UPCA
 from barcode.version import version  # noqa: F401
 
 if TYPE_CHECKING:
+    from typing import Any
+
     from barcode.base import Barcode
     from barcode.writer import BaseWriter
 
-__BARCODE_MAP: dict[str, type[Barcode]] = {
+__BARCODE_MAP: dict[str, type[Barcode[Any]]] = {
     "codabar": CODABAR,
     "code128": Code128,
     "code39": Code39,
@@ -65,25 +67,28 @@ PROVIDED_BARCODES.sort()
 
 @overload
 def get(
-    name: str, code: str, writer: BaseWriter | None = None, options: dict | None = None
-) -> Barcode: ...
+    name: str,
+    code: str,
+    writer: BaseWriter[Any] | None = None,
+    options: dict | None = None,
+) -> Barcode[Any]: ...
 
 
 @overload
 def get(
     name: str,
     code: None = None,
-    writer: BaseWriter | None = None,
+    writer: BaseWriter[Any] | None = None,
     options: dict | None = None,
-) -> type[Barcode]: ...
+) -> type[Barcode[Any]]: ...
 
 
 def get(
     name: str,
     code: str | None = None,
-    writer: BaseWriter | None = None,
+    writer: BaseWriter[Any] | None = None,
     options: dict | None = None,
-) -> Barcode | type[Barcode]:
+) -> Barcode[Any] | type[Barcode[Any]]:
     """Helper method for getting a generator or even a generated code.
 
     :param name: The name of the type of barcode desired.
@@ -96,7 +101,7 @@ def get(
         generating.
     """
     options = options or {}
-    barcode: type[Barcode]
+    barcode: type[Barcode[Any]]
     try:
         barcode = __BARCODE_MAP[name.lower()]
     except KeyError as e:
@@ -107,14 +112,14 @@ def get(
     return barcode
 
 
-def get_class(name: str) -> type[Barcode]:
+def get_class(name: str) -> type[Barcode[Any]]:
     return get_barcode(name)
 
 
 def generate(
     name: str,
     code: str,
-    writer: BaseWriter | None = None,
+    writer: BaseWriter[Any] | None = None,
     output: str | os.PathLike | BinaryIO | None = None,
     writer_options: dict | None = None,
     text: str | None = None,

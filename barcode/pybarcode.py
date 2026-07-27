@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from argparse import ArgumentParser
+from typing import Any
 
 import barcode
 from barcode.version import version
@@ -37,7 +38,7 @@ def create_barcode(args, parser) -> None:
     if args.type != "SVG":
         assert ImageWriter is not None
         opts = {"format": args.type}
-        writer: BaseWriter = ImageWriter()
+        writer: BaseWriter[Any] = ImageWriter()
     else:
         opts = {"compress": args.compress}
         writer = SVGWriter()

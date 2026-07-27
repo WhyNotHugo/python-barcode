@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from barcode import get_barcode
+from barcode.codex import Code128
 
 
 def test_ean8_builds() -> None:
@@ -32,7 +33,7 @@ def test_code128_leading_99_not_stripped() -> None:
     # number 99, which collided with the TO_C switch marker. ``_try_to_optimize``
     # therefore folded it away, silently dropping the leading "99" from the
     # barcode (e.g. "9912345678" was encoded as "12345678").
-    bc = get_barcode("code128", "9912345678")
+    bc = Code128("9912345678")
     assert bc.encoded == [_START_C, 99, 12, 34, 56, 78]
     assert _decode_code128_c(bc.encoded) == "9912345678"
 
@@ -41,7 +42,7 @@ def test_code128_other_leading_pairs_unaffected() -> None:
     # Pairs whose code number does not collide with a switch code always worked
     # and must keep working.
     for code, first_pair in (("0012345678", 0), ("1212345678", 12)):
-        bc = get_barcode("code128", code)
+        bc = Code128(code)
         assert bc.encoded[:2] == [_START_C, first_pair]
         assert _decode_code128_c(bc.encoded) == code
 
@@ -49,4 +50,4 @@ def test_code128_other_leading_pairs_unaffected() -> None:
 def test_code128_start_charset_folding_preserved() -> None:
     # The START-code folding optimisation (START_C + an immediate charset switch
     # collapsed into a single START code) must still apply for genuine switches.
-    assert get_barcode("code128", "Wikipedia").encoded[0] == 104  # START_B
+    assert Code128("Wikipedia").encoded[0] == 104  # START_B

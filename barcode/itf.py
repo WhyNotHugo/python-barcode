@@ -7,15 +7,21 @@ from __future__ import annotations
 
 __docformat__ = "restructuredtext en"
 
+from typing import TYPE_CHECKING
+
 from barcode.base import Barcode
 from barcode.charsets import itf
 from barcode.errors import IllegalCharacterError
+from barcode.writer import T_Output
+
+if TYPE_CHECKING:
+    from barcode.writer import BaseWriter
 
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 6.4
 
 
-class ITF(Barcode):
+class ITF(Barcode[T_Output]):
     """Initializes a new ITF instance.
 
     :param code: ITF (Interleaved 2 of 5) numeric string
@@ -27,14 +33,20 @@ class ITF(Barcode):
 
     name = "ITF"
 
-    def __init__(self, code, writer=None, narrow=2, wide=5) -> None:
+    def __init__(
+        self,
+        code,
+        writer: BaseWriter[T_Output] | None = None,
+        narrow=2,
+        wide=5,
+    ) -> None:
         if not code.isdigit():
             raise IllegalCharacterError("ITF code can only contain numbers.")
         # Length must be even, prepend 0 if necessary
         if len(code) % 2 != 0:
             code = "0" + code
         self.code = code
-        self.writer = writer or self.default_writer()
+        self.writer = self._resolve_writer(writer)
         self.narrow = narrow
         self.wide = wide
 
@@ -65,7 +77,11 @@ class ITF(Barcode):
                 raw += "0" * self.narrow
         return [raw]
 
-    def render(self, writer_options, text=None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> T_Output:
         options = {
             "module_width": MIN_SIZE / self.narrow,
             "quiet_zone": MIN_QUIET_ZONE,
