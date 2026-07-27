@@ -16,16 +16,11 @@ from barcode.errors import IllegalCharacterError
 class CODABAR(Barcode):
     """Initializes a new CODABAR instance.
 
-    :parameters:
-        code : String
-            Codabar (NW-7) string that matches [ABCD][0-9$:/.+-]+[ABCD]
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
-        narrow: Integer
-            Width of the narrow elements (default: 2)
-        wide: Integer
-            Width of the wide elements (default: 5)
-            wide/narrow must be in the range 2..3
+    :param code: Codabar (NW-7) string that matches [ABCD][0-9$:/.+-]+[ABCD]
+    :param writer: The writer to render the barcode (default: SVGWriter).
+    :param narrow: Width of the narrow elements (default: 2)
+    :param wide: Width of the wide elements (default: 5).
+        wide/narrow must be in the range 2..3
     """
 
     name = "Codabar (NW-7)"

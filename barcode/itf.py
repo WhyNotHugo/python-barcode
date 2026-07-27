@@ -18,16 +18,11 @@ MIN_QUIET_ZONE = 6.4
 class ITF(Barcode):
     """Initializes a new ITF instance.
 
-    :parameters:
-        code : String
-            ITF (Interleaved 2 of 5) numeric string
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
-        narrow: Integer
-            Width of the narrow elements (default: 2)
-        wide: Integer
-            Width of the wide elements (default: 5)
-            wide/narrow must be in the range 2..3
+    :param code: ITF (Interleaved 2 of 5) numeric string
+    :param writer: The writer to render the barcode (default: SVGWriter).
+    :param narrow: Width of the narrow elements (default: 2)
+    :param wide: Width of the wide elements (default: 5).
+        wide/narrow must be in the range 2..3
     """
 
     name = "ITF"

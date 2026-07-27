@@ -143,11 +143,8 @@ class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
 class JapanArticleNumber(EuropeanArticleNumber13):
     """Initializes JAN barcode.
 
-    :parameters:
-        jan : String
-            The jan number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param jan: The jan number as string.
+    :param writer: The writer to render the barcode (default: SVGWriter).
     """
 
     name = "JAN"

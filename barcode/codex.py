@@ -92,11 +92,8 @@ class Code39(Barcode):
 class PZN7(Code39):
     """Initializes new German number for pharmaceutical products.
 
-    :parameters:
-        pzn : String
-            Code to render.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param pzn: Code to render.
+    :param writer: The writer to render the barcode (default: SVGWriter).
     """
 
     name = "Pharmazentralnummer"
@@ -137,11 +134,8 @@ class Code128(Barcode):
     """Initializes a new Code128 instance. The checksum is added automatically
     when building the bars.
 
-    :parameters:
-        code : String
-            Code 128 string without checksum (added automatically).
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param code: Code 128 string without checksum (added automatically).
+    :param writer: The writer to render the barcode (default: SVGWriter).
     """
 
     name = "Code 128"

@@ -34,11 +34,8 @@ __docformat__ = "restructuredtext en"
 class InternationalStandardBookNumber13(EuropeanArticleNumber13):
     """Initializes new ISBN-13 barcode.
 
-    :parameters:
-        isbn : String
-            The isbn number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param isbn: The isbn number as string.
+    :param writer: The writer to render the barcode (default: SVGWriter).
     """
 
     name = "ISBN-13"
@@ -57,11 +54,8 @@ class InternationalStandardBookNumber10(InternationalStandardBookNumber13):
     """Initializes new ISBN-10 barcode. This code is rendered as EAN-13 by
     prefixing it with 978.
 
-    :parameters:
-        isbn : String
-            The isbn number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param isbn: The isbn number as string.
+    :param writer: The writer to render the barcode (default: SVGWriter).
     """
 
     name = "ISBN-10"
@@ -90,11 +84,8 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
     """Initializes new ISSN barcode. This code is rendered as EAN-13
     by prefixing it with 977 and adding 00 between code and checksum.
 
-    :parameters:
-        issn : String
-            The issn number as string.
-        writer : barcode.writer Instance
-            The writer to render the barcode (default: SVGWriter).
+    :param issn: The issn number as string.
+    :param writer: The writer to render the barcode (default: SVGWriter).
     """
 
     name = "ISSN"
