@@ -226,10 +226,8 @@ class BaseWriter:
         """Renders the barcode to whatever the inheriting writer provides,
         using the registered callbacks.
 
-        :parameters:
-            code : List
-                List consisting of a single string matching the writer spec
-                (only contain 0 or 1 or G).
+        :param code: List consisting of a single string matching the writer spec
+            (only contain 0 or 1 or G).
         """
         if self._callbacks["initialize"] is not None:
             self._callbacks["initialize"](code)
