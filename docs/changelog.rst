@@ -4,9 +4,10 @@ Changelog
 v0.16.2
 ~~~~~~~
 * Add support for Python 3.13.
-* Fixed a leading ``99`` digit pair being silently dropped from Code128
+* Fix a leading ``99`` digit pair being silently dropped from Code128
   barcodes. (#251)
-* Fixed ISBN-10 and ISSN barcodes being truncated to 10 and 8 digits.
+* Fix ISBN-10 and ISSN barcodes being truncated to 10 and 8 digits.
+* Fix Code128 emitting different (but valid) output depending on invocation.
 
 v0.16.1
 ~~~~~~~
