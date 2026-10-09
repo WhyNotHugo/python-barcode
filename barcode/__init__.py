@@ -62,8 +62,7 @@ __BARCODE_MAP: dict[str, type[Barcode[Any]]] = {
     "upca": UPCA,
 }
 
-PROVIDED_BARCODES = list(__BARCODE_MAP)
-PROVIDED_BARCODES.sort()
+PROVIDED_BARCODES = sorted(__BARCODE_MAP)
 
 
 @overload
