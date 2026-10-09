@@ -8,17 +8,19 @@ from __future__ import annotations
 __docformat__ = "restructuredtext en"
 
 from typing import TYPE_CHECKING
+from typing import overload
 
 from barcode.base import Barcode
 from barcode.charsets import codabar
 from barcode.errors import BarcodeError
 from barcode.errors import IllegalCharacterError
+from barcode.writer import T_Output
 
 if TYPE_CHECKING:
     from barcode.writer import BaseWriter
 
 
-class CODABAR(Barcode):
+class CODABAR(Barcode[T_Output]):
     """Initializes a new CODABAR instance.
 
     :param code: Codabar (NW-7) string that matches [ABCD][0-9$:/.+-]+[ABCD]
@@ -30,15 +32,33 @@ class CODABAR(Barcode):
 
     name = "Codabar (NW-7)"
 
+    @overload
     def __init__(
         self,
         code: str,
-        writer: BaseWriter | None = None,
+        writer: None = None,
+        narrow: int = 2,
+        wide: int = 5,
+    ) -> None: ...
+
+    @overload
+    def __init__(
+        self,
+        code: str,
+        writer: BaseWriter[T_Output],
+        narrow: int = 2,
+        wide: int = 5,
+    ) -> None: ...
+
+    def __init__(
+        self,
+        code: str,
+        writer: BaseWriter[T_Output] | None = None,
         narrow: int = 2,
         wide: int = 5,
     ) -> None:
         self.code = code
-        self.writer = writer or self.default_writer()
+        self.writer = self._resolve_writer(writer)
         self.narrow = narrow
         self.wide = wide
 

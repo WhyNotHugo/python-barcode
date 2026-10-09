@@ -9,19 +9,19 @@ __docformat__ = "restructuredtext en"
 
 from functools import reduce
 from typing import TYPE_CHECKING
+from typing import overload
 
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
 from barcode.errors import IllegalCharacterError
 from barcode.errors import NumberOfDigitsError
+from barcode.writer import T_Output
 
 if TYPE_CHECKING:
-    from PIL.Image import Image as T_Image
-
     from barcode.writer import BaseWriter
 
 
-class UniversalProductCodeA(Barcode):
+class UniversalProductCodeA(Barcode[T_Output]):
     """Universal Product Code (UPC) barcode.
 
     UPC-A consists of 12 numeric digits.
@@ -31,10 +31,26 @@ class UniversalProductCodeA(Barcode):
 
     digits = 11
 
+    @overload
     def __init__(
         self,
         upc: str,
-        writer: BaseWriter | None = None,
+        writer: None = None,
+        make_ean: bool = False,
+    ) -> None: ...
+
+    @overload
+    def __init__(
+        self,
+        upc: str,
+        writer: BaseWriter[T_Output],
+        make_ean: bool = False,
+    ) -> None: ...
+
+    def __init__(
+        self,
+        upc: str,
+        writer: BaseWriter[T_Output] | None = None,
         make_ean: bool = False,
     ) -> None:
         """Initializes new UPC-A barcode.
@@ -56,7 +72,7 @@ class UniversalProductCodeA(Barcode):
             )
         self.upc = upc
         self.upc = f"{upc}{self.calculate_checksum()}"
-        self.writer = writer or self.default_writer()
+        self.writer = self._resolve_writer(writer)
 
     def __str__(self) -> str:
         if self.ean:
@@ -77,12 +93,12 @@ class UniversalProductCodeA(Barcode):
         :rtype: int
         """
 
-        def sum_(x: str, y: str) -> int:
-            return int(x) + int(y)
+        def sum_(x: int, y: str) -> int:
+            return x + int(y)
 
         upc = self.upc[0 : self.digits]
-        oddsum = reduce(sum_, upc[::2])
-        evensum = reduce(sum_, upc[1::2])
+        oddsum = reduce(sum_, upc[::2], 0)
+        evensum = reduce(sum_, upc[1::2], 0)
         check = (evensum + oddsum * 3) % 10
         if check == 0:
             return 0
@@ -125,7 +141,7 @@ class UniversalProductCodeA(Barcode):
         self,
         writer_options: dict | None = None,
         text: str | None = None,
-    ) -> bytes | T_Image:
+    ) -> T_Output:
         options = {"module_width": 0.33}
         options.update(writer_options or {})
         return super().render(options, text)

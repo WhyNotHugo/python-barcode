@@ -8,21 +8,21 @@ from __future__ import annotations
 __docformat__ = "restructuredtext en"
 
 from typing import TYPE_CHECKING
+from typing import overload
 
 from barcode.base import Barcode
 from barcode.charsets import itf
 from barcode.errors import IllegalCharacterError
+from barcode.writer import T_Output
 
 if TYPE_CHECKING:
-    from PIL.Image import Image as T_Image
-
     from barcode.writer import BaseWriter
 
 MIN_SIZE = 0.2
 MIN_QUIET_ZONE = 6.4
 
 
-class ITF(Barcode):
+class ITF(Barcode[T_Output]):
     """Initializes a new ITF instance.
 
     :param code: ITF (Interleaved 2 of 5) numeric string
@@ -34,10 +34,28 @@ class ITF(Barcode):
 
     name = "ITF"
 
+    @overload
     def __init__(
         self,
         code: str,
-        writer: BaseWriter | None = None,
+        writer: None = None,
+        narrow: int = 2,
+        wide: int = 5,
+    ) -> None: ...
+
+    @overload
+    def __init__(
+        self,
+        code: str,
+        writer: BaseWriter[T_Output],
+        narrow: int = 2,
+        wide: int = 5,
+    ) -> None: ...
+
+    def __init__(
+        self,
+        code: str,
+        writer: BaseWriter[T_Output] | None = None,
         narrow: int = 2,
         wide: int = 5,
     ) -> None:
@@ -47,7 +65,7 @@ class ITF(Barcode):
         if len(code) % 2 != 0:
             code = "0" + code
         self.code = code
-        self.writer = writer or self.default_writer()
+        self.writer = self._resolve_writer(writer)
         self.narrow = narrow
         self.wide = wide
 
@@ -82,7 +100,7 @@ class ITF(Barcode):
         self,
         writer_options: dict | None = None,
         text: str | None = None,
-    ) -> bytes | T_Image:
+    ) -> T_Output:
         options = {
             "module_width": MIN_SIZE / self.narrow,
             "quiet_zone": MIN_QUIET_ZONE,
