@@ -60,4 +60,4 @@ EDGE = "100010111011101"
 MIDDLE = "0"
 
 # MAP for assigning every symbol (REF) to (reference number, barcode)
-MAP = dict(zip(REF, enumerate(CODES)))
+MAP = dict(zip(REF, enumerate(CODES), strict=True))

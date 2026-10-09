@@ -288,7 +288,8 @@ class BaseWriter:
                 # Calculates the position of the text by getting the difference
                 # between a guard end and the next start
                 text["start"].pop(0)
-                for s, e in zip(text["start"], text["end"]):
+                # Dropping the first start leaves the lists deliberately uneven.
+                for s, e in zip(text["start"], text["end"], strict=False):
                     text["xpos"].append(e + (s - e) / 2)
 
                 # The last text block is always put after the last guard end
@@ -298,7 +299,7 @@ class BaseWriter:
 
                 # Split the ean into its blocks
                 blocks = self.text.split(" ")
-                for text_, xpos in zip(blocks, text["xpos"]):
+                for text_, xpos in zip(blocks, text["xpos"], strict=True):
                     self.text = text_
                     self._callbacks["paint_text"](xpos, ypos)
 
