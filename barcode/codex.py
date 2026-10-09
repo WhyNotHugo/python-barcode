@@ -112,7 +112,7 @@ class PZN7(Code39):
         self.pzn = f"{pzn}{self.calculate_checksum()}"
         super().__init__(f"PZN-{self.pzn}", writer, add_checksum=False)
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
         return f"PZN-{self.pzn}"
 
     def calculate_checksum(self):
@@ -174,7 +174,7 @@ class Code128(Barcode):
         return [code]
 
     # to be redefined in subclass if required
-    def _is_char_fnc1_char(self, char):
+    def _is_char_fnc1_char(self, char) -> bool:
         """Whether a character is the FNC1 character.
 
         May be redefined by subclasses if required. FNC1 char is defined in GS1-128

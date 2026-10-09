@@ -110,7 +110,7 @@ class InternationalStandardSerialNumber(EuropeanArticleNumber13):
 
         return tmp
 
-    def make_ean(self):
+    def make_ean(self) -> str:
         return f"977{self.issn[:7]}00{self._calculate_checksum()}"
 
     def __str__(self) -> str:

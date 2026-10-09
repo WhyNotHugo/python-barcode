@@ -323,7 +323,7 @@ class SVGWriter(BaseWriter):
         self._root: xml.dom.minidom.Element
         self._group: xml.dom.minidom.Element
 
-    def _init(self, code: list[str]):
+    def _init(self, code: list[str]) -> None:
         if len(code) != 1:
             raise NotImplementedError("Only one line of code is supported")
         line = code[0]
@@ -354,7 +354,7 @@ class SVGWriter(BaseWriter):
             _set_attributes(background, **attributes)
             self._group.appendChild(background)
 
-    def _create_module(self, xpos, ypos, width, color):
+    def _create_module(self, xpos, ypos, width, color) -> None:
         # Background rect has been provided already, so skipping "spaces"
         if color != self.background:
             element = self._document.createElement("rect")
@@ -368,7 +368,7 @@ class SVGWriter(BaseWriter):
             _set_attributes(element, **attributes)
             self._group.appendChild(element)
 
-    def _create_text(self, xpos, ypos):
+    def _create_text(self, xpos, ypos) -> None:
         # check option to override self.text with self.human (barcode as
         # human readable data, can be used to print own formats)
         barcodetext = self.human if self.human != "" else self.text
@@ -461,7 +461,7 @@ else:
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
 
-        def _paint_module(self, xpos: float, ypos: float, width: float, color):
+        def _paint_module(self, xpos: float, ypos: float, width: float, color) -> None:
             size = [
                 (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi)),
                 (
@@ -471,7 +471,7 @@ else:
             ]
             self._draw.rectangle(size, outline=color, fill=color)
 
-        def _paint_text(self, xpos, ypos):
+        def _paint_text(self, xpos, ypos) -> None:
             assert ImageFont is not None
 
             # check option to override self.text with self.human (barcode as
