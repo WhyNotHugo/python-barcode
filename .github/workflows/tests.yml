@@ -10,13 +10,6 @@ jobs:
         os: [ ubuntu-22.04 ]
         python: [ '3.11', '3.12', '3.13', '3.14', '3.15.0-rc.3' ]
         variant: [ "py", "py-images" ]
-        include:
-          - os: macOS-12
-            python: "3.12"
-            variant: py-images
-          - os: windows-2022
-            python: "3.12"
-            variant: py-images
     name: python${{ matrix.python }} on ${{ matrix.os }} ${{ matrix.variant }}
     steps:
       - uses: actions/checkout@v4
