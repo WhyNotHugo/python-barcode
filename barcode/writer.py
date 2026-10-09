@@ -267,10 +267,9 @@ class BaseWriter:
                 xpos, ypos, self.module_width * abs(mod), color
             )
             xpos += self.module_width * abs(mod)
-        else:
-            if height_factor != 1:
-                text["end"].append(xpos)
-            self.module_height = base_height
+        if height_factor != 1:
+            text["end"].append(xpos)
+        self.module_height = base_height
 
         bxe = xpos
         ypos += self.module_height
