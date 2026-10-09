@@ -5,12 +5,12 @@ import os
 import xml.dom.minidom
 from typing import TYPE_CHECKING
 from typing import BinaryIO
-from typing import Callable
 from typing import TypedDict
 
 from barcode.version import version
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from collections.abc import Generator
     from typing import Literal
 
@@ -164,7 +164,7 @@ class BaseWriter:
             height += self.text_line_distance * (number_of_text_lines - 1)
         return width, height
 
-    def save(self, filename: str, output) -> str:
+    def save(self, filename: str, output: bytes | T_Image) -> str:
         """Saves the rendered output to `filename`.
 
         :param filename: Filename without extension.
@@ -222,7 +222,7 @@ class BaseWriter:
                     yield (-c, self.guard_height_factor)
                 c = 1
 
-    def render(self, code: list[str]):
+    def render(self, code: list[str]) -> bytes | T_Image:
         """Renders the barcode to whatever the inheriting writer provides,
         using the registered callbacks.
 
@@ -304,7 +304,7 @@ class BaseWriter:
 
         return self._callbacks["finish"]()
 
-    def write(self, content, fp: BinaryIO) -> None:
+    def write(self, content: bytes | T_Image, fp: BinaryIO) -> None:
         raise NotImplementedError
 
 
@@ -353,7 +353,13 @@ class SVGWriter(BaseWriter):
             _set_attributes(background, **attributes)
             self._group.appendChild(background)
 
-    def _create_module(self, xpos, ypos, width, color) -> None:
+    def _create_module(
+        self,
+        xpos: float,
+        ypos: float,
+        width: float,
+        color: str | int,
+    ) -> None:
         # Background rect has been provided already, so skipping "spaces"
         if color != self.background:
             element = self._document.createElement("rect")
@@ -367,7 +373,7 @@ class SVGWriter(BaseWriter):
             _set_attributes(element, **attributes)
             self._group.appendChild(element)
 
-    def _create_text(self, xpos, ypos) -> None:
+    def _create_text(self, xpos: float, ypos: float) -> None:
         # check option to override self.text with self.human (barcode as
         # human readable data, can be used to print own formats)
         barcodetext = self.human if self.human != "" else self.text
@@ -395,7 +401,7 @@ class SVGWriter(BaseWriter):
             indent=4 * " ", newl=os.linesep, encoding="UTF-8"
         )
 
-    def save(self, filename: str, output) -> str:
+    def save(self, filename: str, output: bytes) -> str:
         if self.compress:
             _filename = f"{filename}.svgz"
             with gzip.open(_filename, "wb") as f:
@@ -407,7 +413,7 @@ class SVGWriter(BaseWriter):
                 f.write(output)
         return _filename
 
-    def write(self, content, fp: BinaryIO) -> None:
+    def write(self, content: bytes, fp: BinaryIO) -> None:
         """Write `content` into a file-like object.
 
         Content should be a barcode rendered by this writer.
@@ -460,7 +466,13 @@ else:
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
 
-        def _paint_module(self, xpos: float, ypos: float, width: float, color) -> None:
+        def _paint_module(
+            self,
+            xpos: float,
+            ypos: float,
+            width: float,
+            color: str | int,
+        ) -> None:
             size = [
                 (mm2px(xpos, self.dpi), mm2px(ypos, self.dpi)),
                 (
@@ -470,7 +482,7 @@ else:
             ]
             self._draw.rectangle(size, outline=color, fill=color)
 
-        def _paint_text(self, xpos, ypos) -> None:
+        def _paint_text(self, xpos: float, ypos: float) -> None:
             assert ImageFont is not None
 
             # check option to override self.text with self.human (barcode as
@@ -494,12 +506,12 @@ else:
         def _finish(self) -> T_Image:
             return self._image
 
-        def save(self, filename: str, output) -> str:
+        def save(self, filename: str, output: T_Image) -> str:
             filename = f"{filename}.{self.format.lower()}"
             output.save(filename, self.format.upper())
             return filename
 
-        def write(self, content, fp: BinaryIO) -> None:
+        def write(self, content: T_Image, fp: BinaryIO) -> None:
             """Write `content` into a file-like object.
 
             Content should be a barcode rendered by this writer.

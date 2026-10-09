@@ -205,6 +205,6 @@ CODE_BUILD_TEST = (
 
 
 @pytest.mark.parametrize(("target", "answer"), CODE_BUILD_TEST)
-def test_code_build(target, answer) -> None:
+def test_code_build(target: str, answer: list[int]) -> None:
     gs1_128 = Gs1_128(target)
     assert gs1_128._build() == answer

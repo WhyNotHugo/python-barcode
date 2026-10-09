@@ -7,10 +7,15 @@ from __future__ import annotations
 
 __docformat__ = "restructuredtext en"
 
+from typing import TYPE_CHECKING
+
 from barcode.base import Barcode
 from barcode.charsets import codabar
 from barcode.errors import BarcodeError
 from barcode.errors import IllegalCharacterError
+
+if TYPE_CHECKING:
+    from barcode.writer import BaseWriter
 
 
 class CODABAR(Barcode):
@@ -25,7 +30,13 @@ class CODABAR(Barcode):
 
     name = "Codabar (NW-7)"
 
-    def __init__(self, code, writer=None, narrow=2, wide=5) -> None:
+    def __init__(
+        self,
+        code: str,
+        writer: BaseWriter | None = None,
+        narrow: int = 2,
+        wide: int = 5,
+    ) -> None:
         self.code = code
         self.writer = writer or self.default_writer()
         self.narrow = narrow
@@ -34,7 +45,7 @@ class CODABAR(Barcode):
     def __str__(self) -> str:
         return self.code
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
         return self.code
 
     def build(self) -> list[str]:

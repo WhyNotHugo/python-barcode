@@ -7,12 +7,18 @@ from __future__ import annotations
 
 __docformat__ = "restructuredtext en"
 
+from typing import TYPE_CHECKING
 
 from barcode.base import Barcode
 from barcode.charsets import ean as _ean
 from barcode.errors import IllegalCharacterError
 from barcode.errors import NumberOfDigitsError
 from barcode.errors import WrongCountryCodeError
+
+if TYPE_CHECKING:
+    from PIL.Image import Image as T_Image
+
+    from barcode.writer import BaseWriter
 
 # EAN13 Specs (all sizes in mm)
 SIZES = {
@@ -44,7 +50,7 @@ class EuropeanArticleNumber13(Barcode):
     def __init__(
         self,
         ean: str,
-        writer=None,
+        writer: BaseWriter | None = None,
         no_checksum: bool = False,
         guardbar: bool = False,
     ) -> None:
@@ -125,7 +131,11 @@ class EuropeanArticleNumber13(Barcode):
         code = code_list[0]
         return code.replace("G", "|").replace("1", "|").replace("0", " ")
 
-    def render(self, writer_options: dict | None = None, text: str | None = None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> bytes | T_Image:
         options = {"module_width": SIZES["SC2"]}
         options.update(writer_options or {})
         return super().render(options, text)
@@ -136,7 +146,13 @@ class EuropeanArticleNumber13WithGuard(EuropeanArticleNumber13):
 
     name = "EAN-13 with guards"
 
-    def __init__(self, ean, writer=None, no_checksum=False, guardbar=True) -> None:
+    def __init__(
+        self,
+        ean: str,
+        writer: BaseWriter | None = None,
+        no_checksum: bool = False,
+        guardbar: bool = True,
+    ) -> None:
         super().__init__(ean, writer, no_checksum, guardbar)
 
 
@@ -151,7 +167,7 @@ class JapanArticleNumber(EuropeanArticleNumber13):
 
     valid_country_codes = list(range(450, 460)) + list(range(490, 500))
 
-    def __init__(self, jan, *args, **kwargs) -> None:
+    def __init__(self, jan: str, *args, **kwargs) -> None:
         if int(jan[:3]) not in self.valid_country_codes:
             raise WrongCountryCodeError(
                 "Country code isn't between 450-460 or 490-500."
@@ -184,7 +200,7 @@ class EuropeanArticleNumber8(EuropeanArticleNumber13):
         code += self.EDGE
         return [code]
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
         if self.guardbar:
             return "< " + self.ean[:4] + " " + self.ean[4:] + " >"
         return self.ean
@@ -198,7 +214,7 @@ class EuropeanArticleNumber8WithGuard(EuropeanArticleNumber8):
     def __init__(
         self,
         ean: str,
-        writer=None,
+        writer: BaseWriter | None = None,
         no_checksum: bool = False,
         guardbar: bool = True,
     ) -> None:

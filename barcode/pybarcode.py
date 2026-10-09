@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from argparse import ArgumentParser
+from argparse import Namespace
 
 import barcode
 from barcode.version import version
@@ -12,7 +13,7 @@ from barcode.writer import SVGWriter
 IMG_FORMATS = ("BMP", "GIF", "JPEG", "MSP", "PCX", "PNG", "TIFF", "XBM")
 
 
-def list_types(args, parser=None) -> None:
+def list_types(args: Namespace, parser: ArgumentParser | None = None) -> None:
     print("\npython-barcode available barcode formats:")
     print(", ".join(barcode.PROVIDED_BARCODES))
     print("\n")
@@ -25,7 +26,7 @@ def list_types(args, parser=None) -> None:
     print("\n")
 
 
-def create_barcode(args, parser) -> None:
+def create_barcode(args: Namespace, parser: ArgumentParser) -> None:
     args.type = args.type.upper()
     if args.type != "SVG" and args.type not in IMG_FORMATS:
         parser.error(f"Unknown type {args.type}. Try list action for available types.")

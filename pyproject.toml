@@ -50,6 +50,7 @@ version_scheme = "post-release"
 
 [tool.ruff.lint]
 extend-select = [
+    "ANN",
     "E",
     "W",
     "I",
@@ -77,6 +78,10 @@ extend-select = [
     "PGH",
     "PLE",
     "RUF",
+]
+ignore = [
+  "ANN002",  # Annotations for *args
+  "ANN003",  # Annotations for **kwargs
 ]
 
 [tool.ruff.lint.isort]

@@ -64,10 +64,10 @@ def test_generating_barcodes(
 
     image_elements = gather_image_elements_into_html
 
-    def append(x, y) -> None:
+    def append(x: str, y: str) -> None:
         image_elements.append(OBJECTS.format(filename=x, name=y))
 
-    def append_img(x, y) -> None:
+    def append_img(x: str, y: str) -> None:
         image_elements.append(IMAGES.format(filename=x, name=y))
 
     options = {}

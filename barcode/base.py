@@ -11,6 +11,8 @@ from barcode.writer import SVGWriter
 if TYPE_CHECKING:
     from typing import BinaryIO
 
+    from PIL.Image import Image as T_Image
+
 
 class Barcode:
     name = ""
@@ -53,7 +55,7 @@ class Barcode:
         other characters such as G for guard lines (e.g. in EAN13)."""
         raise NotImplementedError
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
         """Returns the full code, encoded in the barcode.
 
         :returns: Full human readable code.
@@ -92,7 +94,11 @@ class Barcode:
         output = self.render(options, text)
         self.writer.write(output, fp)
 
-    def render(self, writer_options: dict | None = None, text: str | None = None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> bytes | T_Image:
         """Renders the barcode using `self.writer`.
 
         :param writer_options: Options for `self.writer`, see writer docs for details.

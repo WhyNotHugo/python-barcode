@@ -18,6 +18,8 @@ from barcode.errors import NumberOfDigitsError
 if TYPE_CHECKING:
     from collections.abc import Collection
 
+    from PIL.Image import Image as T_Image
+
     from barcode.writer import BaseWriter
 
 __docformat__ = "restructuredtext en"
@@ -45,7 +47,12 @@ class Code39(Barcode):
 
     name = "Code 39"
 
-    def __init__(self, code: str, writer=None, add_checksum: bool = True) -> None:
+    def __init__(
+        self,
+        code: str,
+        writer: BaseWriter | None = None,
+        add_checksum: bool = True,
+    ) -> None:
         r"""
         :param code: Code 39 string without \* and without checksum.
         :param writer: A ``barcode.writer`` instance used to render the barcode
@@ -83,7 +90,11 @@ class Code39(Barcode):
         result = code39.MIDDLE.join(chars)
         return [result]
 
-    def render(self, writer_options=None, text=None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> bytes | T_Image:
         options = {"module_width": MIN_SIZE, "quiet_zone": MIN_QUIET_ZONE}
         options.update(writer_options or {})
         return super().render(options, text)
@@ -100,7 +111,7 @@ class PZN7(Code39):
 
     digits = 6
 
-    def __init__(self, pzn, writer=None) -> None:
+    def __init__(self, pzn: str, writer: BaseWriter | None = None) -> None:
         pzn = pzn[: self.digits]
         if not pzn.isdigit():
             raise IllegalCharacterError("PZN can only contain numbers.")
@@ -115,7 +126,7 @@ class PZN7(Code39):
     def get_fullcode(self) -> str:
         return f"PZN-{self.pzn}"
 
-    def calculate_checksum(self):
+    def calculate_checksum(self) -> int:
         sum_ = sum(int(x) * int(y) for x, y in enumerate(self.pzn, start=2))
         checksum = sum_ % 11
         if checksum == 10:
@@ -144,7 +155,7 @@ class Code128(Barcode):
     writer: BaseWriter
     buffer: str
 
-    def __init__(self, code: str, writer=None) -> None:
+    def __init__(self, code: str, writer: BaseWriter | None = None) -> None:
         self.code = code
         self.writer = writer or self.default_writer()
         self._charset = "C"
@@ -174,7 +185,7 @@ class Code128(Barcode):
         return [code]
 
     # to be redefined in subclass if required
-    def _is_char_fnc1_char(self, char) -> bool:
+    def _is_char_fnc1_char(self, char: str) -> bool:
         """Whether a character is the FNC1 character.
 
         May be redefined by subclasses if required. FNC1 char is defined in GS1-128
@@ -307,7 +318,11 @@ class Code128(Barcode):
         code += "11"
         return [code]
 
-    def render(self, writer_options=None, text=None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> bytes | T_Image:
         options = {"module_width": MIN_SIZE, "quiet_zone": MIN_QUIET_ZONE}
         options.update(writer_options or {})
         return super().render(options, text)
@@ -325,14 +340,14 @@ class Gs1_128(Code128):  # noqa: N801
 
     FNC1_CHAR = "\xf1"
 
-    def __init__(self, code, writer=None) -> None:
+    def __init__(self, code: str, writer: BaseWriter | None = None) -> None:
         code = self.FNC1_CHAR + code
         super().__init__(code, writer)
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
         return super().get_fullcode()[1:]
 
-    def _is_char_fnc1_char(self, char):
+    def _is_char_fnc1_char(self, char: str) -> bool:
         return char == self.FNC1_CHAR
 
 

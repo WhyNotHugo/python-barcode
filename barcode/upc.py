@@ -8,11 +8,17 @@ from __future__ import annotations
 __docformat__ = "restructuredtext en"
 
 from functools import reduce
+from typing import TYPE_CHECKING
 
 from barcode.base import Barcode
 from barcode.charsets import upc as _upc
 from barcode.errors import IllegalCharacterError
 from barcode.errors import NumberOfDigitsError
+
+if TYPE_CHECKING:
+    from PIL.Image import Image as T_Image
+
+    from barcode.writer import BaseWriter
 
 
 class UniversalProductCodeA(Barcode):
@@ -25,7 +31,12 @@ class UniversalProductCodeA(Barcode):
 
     digits = 11
 
-    def __init__(self, upc, writer=None, make_ean=False) -> None:
+    def __init__(
+        self,
+        upc: str,
+        writer: BaseWriter | None = None,
+        make_ean: bool = False,
+    ) -> None:
         """Initializes new UPC-A barcode.
 
         :param str upc: The upc number as string.
@@ -53,20 +64,20 @@ class UniversalProductCodeA(Barcode):
 
         return self.upc
 
-    def get_fullcode(self):
+    def get_fullcode(self) -> str:
         if self.ean:
             return "0" + self.upc
 
         return self.upc
 
-    def calculate_checksum(self):
+    def calculate_checksum(self) -> int:
         """Calculates the checksum for UPCA/UPC codes
 
         :return: The checksum for 'self.upc'
         :rtype: int
         """
 
-        def sum_(x, y):
+        def sum_(x: str, y: str) -> int:
             return int(x) + int(y)
 
         upc = self.upc[0 : self.digits]
@@ -110,7 +121,11 @@ class UniversalProductCodeA(Barcode):
         code = code_list[0]
         return code.replace("1", "|").replace("0", "_")
 
-    def render(self, writer_options=None, text=None):
+    def render(
+        self,
+        writer_options: dict | None = None,
+        text: str | None = None,
+    ) -> bytes | T_Image:
         options = {"module_width": 0.33}
         options.update(writer_options or {})
         return super().render(options, text)
