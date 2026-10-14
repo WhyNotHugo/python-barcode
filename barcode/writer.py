@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import gzip
+import math
 import os
 import xml.dom.minidom
 from typing import TYPE_CHECKING
@@ -34,12 +35,13 @@ try:
     from PIL import Image
     from PIL import ImageDraw
     from PIL import ImageFont
+    from PIL import ImageOps
 except ImportError:
     import logging
 
     log = logging.getLogger("pyBarcode")
     log.info("Pillow not found. Image output disabled")
-    Image = ImageDraw = ImageFont = None  # type: ignore[assignment]
+    Image = ImageDraw = ImageFont = ImageOps = None  # type: ignore[assignment]
 
 
 def mm2px(mm: float, dpi: int) -> float:
@@ -466,6 +468,7 @@ else:
             size = (int(mm2px(width, self.dpi)), int(mm2px(height, self.dpi)))
             self._image = Image.new(self.mode, size, self.background)
             self._draw = ImageDraw.Draw(self._image)
+            self._text_offset = 0
 
         def _paint_module(
             self,
@@ -485,6 +488,8 @@ else:
 
         def _paint_text(self, xpos: float, ypos: float) -> None:
             assert ImageFont is not None
+            assert ImageOps is not None
+            assert ImageDraw is not None
 
             # check option to override self.text with self.human (barcode as
             # human readable data, can be used to print own formats)
@@ -496,9 +501,24 @@ else:
             font = ImageFont.truetype(self.font_path, font_size)
             for subtext in barcodetext.split("\n"):
                 pos = (
-                    mm2px(xpos, self.dpi),
+                    mm2px(xpos, self.dpi) + self._text_offset,
                     mm2px(ypos, self.dpi),
                 )
+                left, _, right, _ = self._draw.textbbox(
+                    pos, subtext, font=font, anchor="md"
+                )
+                padding_left = math.ceil(max(0, -left))
+                padding_right = math.ceil(max(0, right - self._image.width))
+                if padding_left or padding_right:
+                    # Shift modules and earlier text together when adding left space.
+                    self._image = ImageOps.expand(
+                        self._image,
+                        border=(padding_left, 0, padding_right, 0),
+                        fill=self.background,
+                    )
+                    self._draw = ImageDraw.Draw(self._image)
+                    self._text_offset += padding_left
+                    pos = (pos[0] + padding_left, pos[1])
                 self._draw.text(
                     pos, subtext, font=font, fill=self.foreground, anchor="md"
                 )

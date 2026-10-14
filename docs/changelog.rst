@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Unreleased
+~~~~~~~~~~
+* Prevent ImageWriter from clipping wide human-readable text at the left and
+  right edges.
+
 v0.17.0
 ~~~~~~~
 * Add support for Python 3.13, 3.14 and 3.15.

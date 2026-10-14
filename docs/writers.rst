@@ -95,6 +95,10 @@ In addition to the common writer options you can give the following special opti
     used for all mm to px calculations.
     Defaults to ``300``
 
+When text extends beyond the barcode width, ``ImageWriter`` expands the image
+horizontally to include it. Module widths and heights are preserved; the quiet
+zones may grow to accommodate the text.
+
 Custom writers
 --------------
 
