@@ -35,11 +35,11 @@ def test_reused_instance_matches_fresh_instance() -> None:
 
 
 def test_empty_code_raises_barcode_error() -> None:
-	"""Empty data must fail with a clear error at construction time.
+    """Empty data must fail with a clear error at construction time.
 
-	Code128("") was accepted by __init__ and then crashed with IndexError
-	inside _try_to_optimize, because the encoded list holds only the start
-	code. Fail fast with the library's own error type instead.
-	"""
-	with pytest.raises(BarcodeError):
-		Code128("")
+    Code128("") was accepted by __init__ and then crashed with IndexError
+    inside _try_to_optimize, because the encoded list holds only the start
+    code. Fail fast with the library's own error type instead.
+    """
+    with pytest.raises(BarcodeError):
+        Code128("")
