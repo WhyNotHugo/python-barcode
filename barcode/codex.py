@@ -156,6 +156,8 @@ class Code128(Barcode):
     buffer: str
 
     def __init__(self, code: str, writer: BaseWriter | None = None) -> None:
+        if not code:
+            raise BarcodeError("Code 128 requires at least one character")
         self.code = code
         self.writer = writer or self.default_writer()
         self._charset = "C"

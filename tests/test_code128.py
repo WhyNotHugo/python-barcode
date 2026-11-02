@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import pytest
+
 from barcode.codex import Code128
+from barcode.errors import BarcodeError
 
 
 def test_build_is_stable_across_repeated_calls() -> None:
@@ -29,3 +32,14 @@ def test_reused_instance_matches_fresh_instance() -> None:
     reused = Code128("123ABC456")
     reused.build()  # dirties the internal charset/buffer state
     assert reused.build() == Code128("123ABC456").build()
+
+
+def test_empty_code_raises_barcode_error() -> None:
+    """Empty data must fail with a clear error at construction time.
+
+    Code128("") was accepted by __init__ and then crashed with IndexError
+    inside _try_to_optimize, because the encoded list holds only the start
+    code. Fail fast with the library's own error type instead.
+    """
+    with pytest.raises(BarcodeError):
+        Code128("")
