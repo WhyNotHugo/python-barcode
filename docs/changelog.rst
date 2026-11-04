@@ -9,6 +9,8 @@ v0.17.0
   barcodes. (#251)
 * Fix ISBN-10 and ISSN barcodes being truncated to 10 and 8 digits.
 * Fix Code128 emitting different (but valid) output depending on invocation.
+* Fix ``center_text=False`` centering the text on the left edge of the barcode
+  instead of left aligning it, which cut off the text. (#145)
 
 v0.16.1
 ~~~~~~~

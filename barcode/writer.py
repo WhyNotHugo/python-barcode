@@ -140,6 +140,7 @@ class BaseWriter:
         self.text_distance = 5
         self.text_line_distance = 1
         self.center_text = True
+        self._left_align_text = False
         self.guard_height_factor = 1.1
         self.margin_top = 1
         self.margin_bottom = 1
@@ -275,6 +276,8 @@ class BaseWriter:
         ypos += self.module_height
 
         if self.text and self._callbacks["paint_text"] is not None:
+            # Text blocks between guards are always positioned by their center.
+            self._left_align_text = not (self.center_text or text["start"])
             if not text["start"]:
                 # If we don't have any start value, print the entire ean
                 ypos += self.text_distance
@@ -378,6 +381,7 @@ class SVGWriter(BaseWriter):
         # check option to override self.text with self.human (barcode as
         # human readable data, can be used to print own formats)
         barcodetext = self.human if self.human != "" else self.text
+        anchor = "start" if self._left_align_text else "middle"
         for subtext in barcodetext.split("\n"):
             element = self._document.createElement("text")
             attributes = {
@@ -385,7 +389,7 @@ class SVGWriter(BaseWriter):
                 "y": SIZE.format(ypos),
                 "style": (
                     f"fill:{self.foreground};"
-                    f"font-size:{self.font_size}pt;text-anchor:middle;"
+                    f"font-size:{self.font_size}pt;text-anchor:{anchor};"
                 ),
             }
             _set_attributes(element, **attributes)
@@ -494,13 +498,14 @@ else:
             if font_size <= 0:
                 return
             font = ImageFont.truetype(self.font_path, font_size)
+            anchor = "ld" if self._left_align_text else "md"
             for subtext in barcodetext.split("\n"):
                 pos = (
                     mm2px(xpos, self.dpi),
                     mm2px(ypos, self.dpi),
                 )
                 self._draw.text(
-                    pos, subtext, font=font, fill=self.foreground, anchor="md"
+                    pos, subtext, font=font, fill=self.foreground, anchor=anchor
                 )
                 ypos += pt2mm(self.font_size) / 2 + self.text_line_distance
 
