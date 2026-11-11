@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from argparse import Namespace
 
 import barcode
+from barcode.errors import BarcodeError
 from barcode.version import version
 from barcode.writer import BaseWriter
 from barcode.writer import ImageWriter
@@ -43,7 +44,10 @@ def create_barcode(args: Namespace, parser: ArgumentParser) -> None:
         opts = {"compress": args.compress}
         writer = SVGWriter()
     out = os.path.normpath(os.path.abspath(args.output))
-    name = barcode.generate(args.barcode, args.code, writer, out, opts, args.text)
+    try:
+        name = barcode.generate(args.barcode, args.code, writer, out, opts, args.text)
+    except BarcodeError as e:
+        parser.error(f"Invalid code for {args.barcode}: {e}")
     print(f"New barcode saved as {name}.")
 
 
